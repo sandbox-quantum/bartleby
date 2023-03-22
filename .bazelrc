@@ -1,0 +1,38 @@
+# Import Aspect bazelrc presets.
+import %workspace%/.aspect/bazelrc/bazel6.bazelrc
+import %workspace%/.aspect/bazelrc/convenience.bazelrc
+import %workspace%/.aspect/bazelrc/correctness.bazelrc
+import %workspace%/.aspect/bazelrc/debug.bazelrc
+import %workspace%/.aspect/bazelrc/performance.bazelrc
+
+test --test_env=LANG=en_US.UTF-8
+test --test_output=errors
+test --build_tests_only
+
+build --copt -fvisibility=hidden
+build --copt -fvisibility-inlines-hidden
+
+build --copt -Wno-deprecated-non-prototype
+build --cxxopt -std=c++17
+build --host_cxxopt -std=c++17
+
+build:asan -c dbg
+build:asan --strip=never
+build:asan --copt -fsanitize=address
+build:asan --copt -DADDRESS_SANITIZER
+build:asan --copt -O1
+build:asan --copt -g
+build:asan --copt -fno-omit-frame-pointer
+build:asan --linkopt -fsanitize=address
+
+
+build --experimental_remote_merkle_tree_cache
+query --experimental_remote_merkle_tree_cache
+
+build --keep_going
+test  --keep_going
+test --test_verbose_timeout_warnings
+
+build:ci --google_default_credentials
+build:ci --remote_upload_local_results
+build:ci --spawn_strategy standalone

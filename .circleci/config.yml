@@ -1,0 +1,97 @@
+version: 2.1
+
+jobs:
+  compile-test-using-bazel:
+    resource_class: xlarge
+    docker:
+      - image: cimg/base:2023.04
+    steps:
+      - run:
+          name: "Install clang-15, git and rsync"
+          command: |
+            sudo apt update
+            sudo apt install -y clang-15 lld-15 git rsync
+      - run:
+          name: "Fetch bazelisk"
+          command: |
+            curl -Lo bazelisk-linux-amd64 'https://github.com/bazelbuild/bazelisk/releases/download/v1.16.0/bazelisk-linux-amd64'
+            sha384sum -c \<<< "${BAZELISK_LINUX_AMD64_SHA384SUM}"
+            sudo mv bazelisk-linux-amd64 /usr/bin/bazel
+            sudo chmod +x /usr/bin/bazel
+      - checkout
+      - run:
+          name: "Build Bartleby and test"
+          command: |
+            export GOOGLE_APPLICATION_CREDENTIALS="${HOME}/gcloud-service-key.json"
+            echo "${BAZEL_CACHE_GCS_SA_KEY}" > "${GOOGLE_APPLICATION_CREDENTIALS}"
+            echo "build --remote_cache=${BAZEL_REMOTE_CACHE_URL}" > $HOME/.bazelrc
+            export CC=clang-15
+            export CXX=clang++-15
+            export LD=lld-15
+            export LLVM_CONFIG=/usr/lib/llvm-15/bin/llvm-config
+            bazel test \
+              --action_env=CC="${CC}" \
+              --action_env=CXX="${CXX}" \
+              --action_env=LLVM_CONFIG="${LLVM_CONFIG}" \
+              --repo_env=LLVM_CONFIG="${LLVM_CONFIG}" \
+              --config=ci \
+              ...
+      - run:
+          name: "Test Bazel integration"
+          command: |
+            git archive --format=tar.gz "${CIRCLE_BRANCH}" > /tmp/archive.tar.gz
+            TMPDIR="$(mktemp -d)"
+            SHA="$(sha256sum -z /tmp/archive.tar.gz |awk '{print $1}')"
+            rsync -qr examples/bazel/ "${TMPDIR}/"
+            sed "s/__SHA256__/${SHA}/g" tests/bazel_integration/WORKSPACE.bazel > "${TMPDIR}/WORKSPACE.bazel"
+            cd "${TMPDIR}"
+
+            export GOOGLE_APPLICATION_CREDENTIALS="${HOME}/gcloud-service-key.json"
+            echo "${BAZEL_CACHE_GCS_SA_KEY}" > "${GOOGLE_APPLICATION_CREDENTIALS}"
+            echo "build --remote_cache=${BAZEL_REMOTE_CACHE_URL}" > $HOME/.bazelrc
+            export CC=clang-15
+            export CXX=clang++-15
+            export LD=lld-15
+            export LLVM_CONFIG=/usr/lib/llvm-15/bin/llvm-config
+            bazel build \
+              --google_default_credentials \
+              --remote_upload_local_results \
+              --spawn_strategy standalone \
+              --action_env=CC="${CC}" \
+              --action_env=CXX="${CXX}" \
+              --action_env=LLVM_CONFIG="${LLVM_CONFIG}" \
+              --repo_env=LLVM_CONFIG="${LLVM_CONFIG}" \
+              --config=ci \
+              ...
+
+  compile-test-using-cmake:
+    resource_class: xlarge
+    docker:
+      - image: cimg/base:2023.04
+    steps:
+      - run:
+          name: "Install clang-15 and cmake"
+          command: |
+            sudo apt update
+            sudo apt install -y clang-15 lld-15 llvm-15 cmake ninja-build
+      - checkout
+      - run:
+          name: "Build Bartleby and test"
+          command: |
+            export CC=clang-15
+            export CXX=clang++-15
+            export LD=lld-15
+            export LLVM_CONFIG=/usr/lib/llvm-15/bin/llvm-config
+            cmake -B build \
+              -DCMAKE_C_COMPILER="${CC}" \
+              -DCMAKE_CXX_COMPILER="${CXX}" \
+              -DCMAKE_BUILD_TYPE=Release \
+              -DLLVM_DIR=/usr/lib/llvm-15/lib/cmake \
+              -GNinja
+            cmake --build build/ "-j$(nproc)"
+
+workflows:
+  build-and-test:
+    jobs:
+      - compile-test-using-bazel
+      - compile-test-using-cmake

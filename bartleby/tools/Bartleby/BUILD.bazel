@@ -1,0 +1,11 @@
+cc_binary(
+    name = "bartleby",
+    srcs = ["Bartleby.cpp"],
+    copts = [
+        "-std=c++17",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//bartleby/lib/Bartleby:bartleby",
+    ],
+)

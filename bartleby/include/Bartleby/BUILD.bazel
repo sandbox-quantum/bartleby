@@ -1,0 +1,25 @@
+cc_library(
+    name = "bartleby",
+    hdrs = ["Bartleby.h"],
+    copts = [
+        "-std=c++17",
+    ],
+    strip_include_prefix = "/bartleby/include",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":symbol",
+    ],
+)
+
+cc_library(
+    name = "symbol",
+    hdrs = ["Symbol.h"],
+    copts = [
+        "-std=c++17",
+    ],
+    strip_include_prefix = "/bartleby/include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@bartleby-llvm-project//llvm:Object",
+    ],
+)
