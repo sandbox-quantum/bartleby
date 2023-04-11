@@ -31,7 +31,7 @@ It is similar to `objcopy --prefix-symbols=__private` but with
 which symbols to prefix (for instance a reference to puts won't be
 renamed `private_puts` because it would lead to unresolved symbols).
 
-This solves the diamond dependency problem: if a user of your library
+This helps solving the diamond dependency problem: if a user of your library
 wants to link against OpenSSL, which also happens to be a library you link
 against, how do you make sure that the user remains in control of the
 version of OpenSSL they use without having name collisions with your own use of
@@ -40,13 +40,11 @@ OpenSSL? You use Bartleby.
 ## How? <a name="how"></a>
 
 Bartleby takes a set of files as input. These can be static libraries (`.a`) or
-objects (`.o`). Let’s describe how Bartleby figures out which symbols are
-considered private or not.
-It iterates over all the objects (the ones directly supplied by the user, or
-the ones contained in the archives). During these iterations, Bartleby collects
-various information about the symbols found, such as the visibility and the d
-efinedness. Using these pieces of information, a map of symbols is built as
-follows:
+objects (`.o`). Bartleby figures out which symbols are considered private or not
+by iterating over all these objects (the ones directly supplied by the user, or
+the ones contained in the archives), and collects the visibility and the
+definedness of each symbols found. Using these pieces of information, a map of
+symbols is built as follows:
 
   * If a symbol is found in several places across the input files, and at least
     one object actually defines it, then the symbol is marked as defined.
