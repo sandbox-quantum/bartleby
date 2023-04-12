@@ -1,5 +1,0 @@
-filegroup(
-    name = "testdata",
-    srcs = glob(["**/*"]),
-    visibility = ["//bartleby/tests:__subpackages__"],
-)
