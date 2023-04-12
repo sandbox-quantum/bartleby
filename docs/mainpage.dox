@@ -1,0 +1,58 @@
+/// \mainpage Bartleby
+///
+///
+/// \tableofcontents
+///
+///
+/// \section intro Introduction
+///
+///
+/// Bartleby is a library and tool designed to help developers avoid
+/// symbol name collisions across object files and static libraries.
+///
+/// Name collisions can occur at link time when several objects or static libraries
+/// define the same symbol names.
+///
+/// Based on \ref ref-llvm "LLVM", Bartleby aims to provide an efficient and
+/// easy-to-use solution to this problem by filtering and renaming symbols
+/// across a given set of libraries.
+///
+/// \code
+/// $ clang -r -o lib.o 1.o 2.o
+/// usr/bin/ld: 2.o: in function `SSL_CTX_new':
+///  2.c:(.text+0x0): multiple definition of `SSL_CTX_new'; 1.o:1.c:(.text+0x0): first defined here
+/// \endcode
+/// <em>Example of an output from clang when pre-linking two objects together
+/// that both define the \c SSL_CTX_new symbol.</em>
+///
+/// \section sec-getting-started Getting Started
+///
+/// Bartleby can be compiled using \ref page-gs-bazel "Bazel" or \ref page-gs-cmake "CMake".
+///
+/// \sa \ref page-gs-building-from-source
+///
+///
+/// \section sec-why-not-objcopy Why not using objcopy?
+///
+///
+/// \link ref-objcopy \c objcopy \endlink is a great tool for manipulating object files and libraries.
+/// Through its \c --prefix-symbols options, it already offers a way to rename
+/// all the symbols defined in a target by prefixing their name.
+///
+/// However, this solution doesn't work well: \c --prefix-symbols also applies
+/// to symbols pointing to external (i.e. undefined) functions, such as the ones
+/// from the \c libc.
+///
+/// \sa \ref page-why-not-objcopy
+///
+///
+/// \section sec-cmd Command Guide
+///
+///
+/// \sa \ref page-cmd
+///
+///
+/// \section refs References
+///
+///   * \anchor ref-llvm <a href="https://llvm.org/">LLVM Homepage</a>
+///

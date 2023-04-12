@@ -1,0 +1,68 @@
+///
+/// \page page-cmd Bartleby Command Guide
+///
+///
+/// \tableofcontents
+///
+///
+/// \section sec-cmd-synopsis Synopsis
+///
+///
+/// <b>bartleby</b> [<em>options</em>] <em>--if input</em>… <em>--of output</em>
+///
+///
+/// \section sec-cmd-description Description
+///
+///
+/// <b>bartleby</b> is a tool to manipulate symbols across a set of objects
+/// or static libraries. In basic usage, it gathers and merges a set of objects or
+/// static libraries into a single archive (<tt><em>.a</em></tt>).
+///
+/// Names of symbols can be prefixed according to their definedness across the
+/// whole set of input files. Each symbol that is defined at least within one
+/// input file from the set will get prefixed. A symbol that is marked as
+/// undefined in every input file won't get prefixed.
+///
+/// If the input file is an archive (i.e. a static library), its members are
+/// extracted and analyzed.
+///
+/// The output file is an archive (i.e. a static library). Names of members are
+/// set according to their provenance. If the member comes from an archive, its
+/// name is preserved. If the member comes from a single <tt>.o</tt> file, its
+/// name is the index of the file in the set.
+///
+/// \warning <b>bartleby</b> is still under developement. Some scenarios may lead
+/// to unexpected behavior.
+///
+///
+///
+/// \section sec-cmd-options Options
+///
+///
+/// <table>
+/// <caption>Options</caption>
+///   <tr>
+///     <th>Argument</th>
+///     <th>Description</th>
+///   </tr>
+///   <tr>
+///     <td><tt>--if</tt></td>
+///     <td>Input file. <b>At least one input file is required</b>. It can be an
+///     object file or an archive (i.e. a static library).</td>
+///   </tr>
+///   <tr>
+///     <td><tt>--of</tt></td>
+///     <td>Output file. <b>Required</b>.</td>
+///   </tr>
+///   <tr>
+///     <td><tt>--prefix</tt> <em>prefix</em></td>
+///     <td>Prefix to use for defined symbols. <em>Optional</em></td>
+///   </tr>
+/// </table>
+///
+///
+/// \section sec-cmd-exit-status Exit status
+///
+///
+/// <b>bartleby</b> exits with a non-zero exit code if there is an error. Otherwise,
+/// <tt>0</tt> is returned.

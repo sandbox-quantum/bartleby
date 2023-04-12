@@ -1,0 +1,78 @@
+///
+/// \page page-getting-started Getting Started
+///
+///
+/// \li \subpage page-gs-building-from-source
+/// \li \subpage page-why-not-objcopy
+/// \li \subpage page-cmd
+///
+///
+/// \tableofcontents
+///
+///
+/// \page page-gs-building-from-source Building from source
+///
+///
+/// Bartleby can be compiled using \ref ref-gs-bazel "Bazel" or \ref ref-gs-cmake "CMake".
+///
+/// First, the source code has to be fetched:
+///
+/// \code
+/// $ git clone 'https://github.com/sandbox-quantum/bartleby.git'
+/// $ cd bartleby/
+/// \endcode
+///
+/// \li \subpage page-gs-bazel
+/// \li \subpage page-gs-cmake
+///
+/// \sa <a href="https://bazel.build/">Bazel build system</a> and <a href="https://cmake.org/cmake/help/latest/">CMake build system</a>
+///
+///
+/// \page page-gs-bazel Using Bazel
+///
+///
+/// It is highly recommended to use \c bazelisk instead of \c bazel.
+///
+/// Bartleby has been tested with Bazel \c 6.1.1.
+///
+/// The Bartleby library is the <tt>//bartleby/lib/Bartleby:bartleby</tt> target,
+/// and the Bartleby CLI is the <tt>//bartleby/tools/Bartleby:bartleby</tt> target.
+///
+/// \code
+/// $ bazel build ...
+/// $ bazel run //bartleby/tools/Bartleby:bartleby
+/// \endcode
+///
+/// <em>Note</em>: the final CLI binary is usually available under the <tt>
+/// bazel-bin/bartleby/tools/Bartleby/</tt> directory.
+///
+/// Bartleby can also be built in release mode, using the <tt>-c opt</tt> option:
+///
+/// \code
+/// $ bazel build -c opt ...
+/// $ bazel run -c opt //bartleby/tools/Bartleby:bartleby
+/// \endcode
+///
+/// \sa <a href="https://bazel.build/">Bazel build system</a> and
+/// <a href="https://github.com/bazelbuild/bazelisk#about-bazelisk">About Bazelisk</a>
+///
+///
+/// \page page-gs-cmake Using CMake
+///
+///
+/// LLVM (15.0) is required to build Bartleby with \ref ref-gs-cmake "CMake".
+///
+/// \code
+/// $ cmake -GNinja \
+///         -DCMAKE_BUILD_TYPE=Release \
+///         -DLLVM_DIR=$(llvm-config --cmakedir) \
+///         -B build/
+/// $ cmake --build build/
+/// \endcode
+///
+/// The CLI can then be found under the \c build/bin directory, and the library
+/// under the \c build/lib directory.
+///
+/// \sa <a href="https://llvm.org/docs/GettingStarted.html">LLVM: Getting Started</a>,
+/// <a href="https://releases.llvm.org/">LLVM releases</a> and
+/// <a href="https://apt.llvm.org/">LLVM Debian/Ubuntu packages</a>

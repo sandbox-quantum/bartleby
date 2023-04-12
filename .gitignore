@@ -60,3 +60,4 @@ compile_commands.json
 dkms.conf
 install_manifest.txt
 modules.order
+doxygen-docs/

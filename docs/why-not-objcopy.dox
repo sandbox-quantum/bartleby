@@ -1,0 +1,194 @@
+///
+/// \page page-why-not-objcopy Why not objcopy?
+///
+///
+/// \tableofcontents
+///
+///
+/// \section sec-objcopy-intro Introduction
+///
+///
+/// This page is a brief overview of the \link ref-objcopy \c objcopy(1)
+/// \endlink tool.
+///
+/// \link ref-objcopy \c objcopy(1) \endlink offers several options that
+/// could be used to solve symbol collisions across libraries.
+///
+/// However, it has some limitations that makes it harder to use on large
+/// set of libraries.
+///
+///
+/// Through this overview, we demonstrate that \c objcopy is not a suitable
+/// solution to the symbol name collisions problem.
+///
+///
+/// \section subsec-objcopy-redefine-sym The --redefine-sym option
+///
+///
+/// The \c --redefine-sym option renames a given symbol:
+///
+/// > <b>--redefine-sym</b> <em>old=new</em>
+/// >
+/// >   * Change the name of a symbol old, to new. This can be useful when one is trying link two things together for which you have no source, and there are name collisions.
+///
+/// Here is a small example of \c --redefine-sym, ran on a simple object that
+/// defines the \c SSL_CTX_new symbol:
+///
+/// \code
+/// $ nm 1.o
+/// 0000000000000000 T SSL_CTX_new
+/// $ objcopy --redefine-sym SSL_CTX_new=__private_SSL_CTX_new
+/// $ nm 1.o
+/// 0000000000000000 T __private_SSL_CTX_new
+/// \endcode
+///
+/// We successfully renamed the \c SSL_CTX_new symbol to \c __private_SSL_CTX_new.
+/// However, it does not scale for large libraries, nor for large set of objects.
+/// Thus, \link ref-objcopy \c objcopy(1) \endlink provides the \c --redefine-syms
+/// option, to solve that scaling issue.
+///
+///
+/// \section subsec-objcopy-redefine-syms The --redefine-syms option
+///
+///
+/// \c --redefine-syms acts like \c --redefine-sym, but takes a file containing
+/// the symbols to rename:
+///
+/// > <b>--redefine-syms=</b><em>filename</em>
+/// >
+/// > Apply <b>--redefine-sym</b> to each symbol pair "<em>old new</em>" listed in the file <em>filename</em>.\n
+/// > <em>filename</em> is simply a flat file, with one symbol pair per line. Line comments may be introduced by the hash character. \n
+/// > This option may be given more than once.
+///
+/// Although this option may solve the scaling issue \c --redefine-sym has, it
+/// is not easy to use: one has to generate the list of symbols defined by
+/// the target library, and also has to map the new name for each of these
+/// symbols.
+///
+///
+/// \section subsec-objcopy-prefix-symbols The --prefix-symbols option
+///
+///
+/// It is often sufficient to append a prefix to all the symbol names, in order
+/// to make then unique.
+///
+/// For instance, one can prefix all the symbol names from an external library
+/// with \c __private_mylib_external_.
+///
+/// \link ref-objcopy \c objcopy(1) \endlink has the \c --prefix-symbols option
+/// for that purpose:
+///
+/// > <b>--prefix-symbols=</b><em>string</em>
+/// >
+/// > Prefix all symbols in the output file with <em>string</em>.
+///
+/// The following is an example of that option on the same simple object used
+/// in our previous example:
+///
+/// \code
+/// $ objcopy --prefix-symbols=__private__mylib_external_ 1.o
+/// $ 0000000000000000 T __private__mylib_external__SSL_CTX_new
+/// \endcode
+///
+/// But this option has a major drawback: it renames <em>all</em> symbols
+/// in the target object, even the undefined ones that may be defined by an
+/// external library, such as the \c libc.
+///
+/// \subsection subsec-objcopy-example Example
+///
+/// Giving the following C code:
+///
+/// \code{.c}
+/// #include <stdio.h>
+///
+/// // Compile with cc -fvisibility=hidden -c a.c
+/// __attribute__((visibility("default"))) void display_filename(void) {
+///     fputs(__FILE__, stdout);
+/// }
+///
+/// \endcode
+///
+/// We end up with the symbol list below:
+///
+/// \code
+/// $ clang -fvisibility=hidden -c a.c
+/// $ nm a.o
+/// 0000000000000000 T display_filename
+///                  U fputs
+/// 0000000000000000 r .L.str
+///                  U stdout
+/// \endcode
+///
+/// \li \c display_filename is defined by our object (indicated by the flag \c T).
+/// \li \c fputs is undefined (indicated by the flag \c U).
+/// \li \c stdout is also undefined.
+///
+/// These undefined symbols are well-known symbols belonging to the \c libc.
+///
+/// Now, we run \c --prefix-symbols on \c a.o:
+///
+/// \code
+/// $ objcopy --prefix-symbols=__private_ a.o
+/// $ nm a.o
+/// 0000000000000000 T __private_display_filename
+///                  U __private_fputs
+/// 0000000000000000 r __private_.L.str
+///                  U __private_stdout
+/// \endcode
+///
+/// As expected, \c display_filename has been prefixed correctly, however
+/// our undefined symbols have also been prefixed. This is not correct, because
+/// when this object is linked to produce a final binary, the link will attempt
+/// to find the symbols \c __private_fputs and \c __private_stdout, which are
+/// obviously not defined in the \c libc:
+///
+/// \code{.c}
+/// // main.c
+///
+/// extern void __private_display_filename(void);
+/// #define display_filename __private_display_filename
+///
+/// int main() {
+///   display_filename();
+///   return 0;
+/// }
+/// \endcode
+///
+/// \code
+/// $ clang -c main.c
+/// $ clang -o main main.o a.o
+/// /usr/bin/ld: a.o: in function `__private_display_filename':
+/// __private_a.c:(.text+0x7): undefined reference to `__private_stdout'
+/// /usr/bin/ld: __private_a.c:(.text+0x16): undefined reference to `__private_fputs'
+/// clang: error: linker command failed with exit code 1 (use -v to see invocation)
+/// \endcode
+///
+/// Because it would not be a great solution to also prefix the symbols from
+/// the \c libc, \c --prefix-symbols is not a solution to our problem neither.
+///
+///
+/// \section sec-objcopy-conclusion Conclusion
+///
+///
+/// Even if \link ref-objcopy \c objcopy(1) \endlink offers at least three
+/// mechanism for renaming symbols, we saw that none of them really fit our
+/// use case.
+///
+/// We can also add the techniques we described earlier imply that the
+/// developer has to somehow specify for each symbol its new name. This is a
+/// major issue when it comes with external dependencies: it means that
+/// every header file has to be patched according to the new symbol names.
+///
+/// Bartleby is based on the LLVM implementation of \c objcopy. LLVM also
+/// provides its own \link ref-llvm-objcopy \c objcopy \endlink tool,
+/// called \link ref-llvm-objcopy \c llvm-objcopy \endlink.
+///
+/// \section sec-objcopy-refs References
+///
+///
+/// \li \anchor ref-objcopy \c objcopy: <a href="https://linux.die.net/man/1/objcopy">
+///   \c objcopy(1) </a>
+/// \li \anchor ref-llvm-objcopy \c llvm-objcopy: <a href="https://llvm.org/docs/CommandGuide/llvm-objcopy.html">
+///   llvm-objcopy - object copying and editing tool</a>
+/// \li \anchor ref-llvm-objcopy-dox \c llvm::objcopy: <a href="https://llvm.org/doxygen/namespacellvm_1_1objcopy.html">
+///   llvm::objcopy Namespace Reference</a>

@@ -89,9 +89,51 @@ jobs:
               -DLLVM_DIR=/usr/lib/llvm-15/lib/cmake \
               -GNinja
             cmake --build build/ "-j$(nproc)"
+  publish-doc:
+    docker:
+      - image: cimg/base:2023.04
+    steps:
+      - run:
+          name: "Install rsync and Graphviz"
+          command: |
+            sudo apt update
+            sudo apt install -y rsync graphviz
+      - run:
+          name: "Download Doxygen 1.9.6"
+          command: |
+            curl -Lo /tmp/doxygen.tar.gz 'https://github.com/doxygen/doxygen/releases/download/Release_1_9_6/doxygen-1.9.6.linux.bin.tar.gz'
+            sha384sum -c \<<< "${DOXYGEN_LINUX_SHA384SUM}"
+            tar xf /tmp/doxygen.tar.gz doxygen-1.9.6/bin/doxygen
+            mv doxygen-1.9.6/bin/doxygen /tmp/doxygen
+            chmod +x /tmp/doxygen
+            rm -rf doxygen-1.9.6
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 14:ca:0e:17:4b:f0:0a:43:2c:26:b6:d0:8c:71:7e:c8
+      - run:
+          name: "Build and publish documentation"
+          command: |
+            /tmp/doxygen
+            export TMPDIR=$(mktemp -d)
+            cd "${TMPDIR}"
+            git clone -b gh-pages "${CIRCLE_REPOSITORY_URL}" .
+            rsync -qr ~/project/doxygen-docs/html/ "${TMPDIR}/"
+            touch .nojekyll
+            git config user.email "bartleby@sandboxquantum.com"
+            git config user.name "doc publisher"
+            git add -A
+            git commit -m 'deploying new version'
+            git push
 
 workflows:
   build-and-test:
     jobs:
       - compile-test-using-bazel
       - compile-test-using-cmake
+      - publish-doc:
+          filters:
+            branches:
+              only:
+                - main
+                - test-doc
