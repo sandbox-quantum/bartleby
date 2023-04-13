@@ -4,31 +4,17 @@ jobs:
   compile-test-using-bazel:
     resource_class: xlarge
     docker:
-      - image: cimg/base:2023.04
+      - image: us-central1-docker.pkg.dev/pqc-dev-pool-336002/bartleby/bartleby:ci
+        auth:
+          username: _json_key
+          password: $DOCKER_IMAGE_GCR_SA_KEY
     steps:
-      - run:
-          name: "Install clang-15, git and rsync"
-          command: |
-            sudo apt update
-            sudo apt install -y clang-15 lld-15 git rsync
-      - run:
-          name: "Fetch bazelisk"
-          command: |
-            curl -Lo bazelisk-linux-amd64 'https://github.com/bazelbuild/bazelisk/releases/download/v1.16.0/bazelisk-linux-amd64'
-            sha384sum -c \<<< "${BAZELISK_LINUX_AMD64_SHA384SUM}"
-            sudo mv bazelisk-linux-amd64 /usr/bin/bazel
-            sudo chmod +x /usr/bin/bazel
       - checkout
       - run:
           name: "Build Bartleby and test"
           command: |
-            export GOOGLE_APPLICATION_CREDENTIALS="${HOME}/gcloud-service-key.json"
             echo "${BAZEL_CACHE_GCS_SA_KEY}" > "${GOOGLE_APPLICATION_CREDENTIALS}"
             echo "build --remote_cache=${BAZEL_REMOTE_CACHE_URL}" > $HOME/.bazelrc
-            export CC=clang-15
-            export CXX=clang++-15
-            export LD=lld-15
-            export LLVM_CONFIG=/usr/lib/llvm-15/bin/llvm-config
             bazel test \
               --action_env=CC="${CC}" \
               --action_env=CXX="${CXX}" \
@@ -46,13 +32,8 @@ jobs:
             sed "s/__SHA256__/${SHA}/g" tests/bazel_integration/WORKSPACE.bazel > "${TMPDIR}/WORKSPACE.bazel"
             cd "${TMPDIR}"
 
-            export GOOGLE_APPLICATION_CREDENTIALS="${HOME}/gcloud-service-key.json"
             echo "${BAZEL_CACHE_GCS_SA_KEY}" > "${GOOGLE_APPLICATION_CREDENTIALS}"
             echo "build --remote_cache=${BAZEL_REMOTE_CACHE_URL}" > $HOME/.bazelrc
-            export CC=clang-15
-            export CXX=clang++-15
-            export LD=lld-15
-            export LLVM_CONFIG=/usr/lib/llvm-15/bin/llvm-config
             bazel build \
               --google_default_credentials \
               --remote_upload_local_results \
@@ -67,21 +48,15 @@ jobs:
   compile-test-using-cmake:
     resource_class: xlarge
     docker:
-      - image: cimg/base:2023.04
+      - image: us-central1-docker.pkg.dev/pqc-dev-pool-336002/bartleby/bartleby:ci
+        auth:
+          username: _json_key
+          password: $DOCKER_IMAGE_GCR_SA_KEY
     steps:
-      - run:
-          name: "Install clang-15 and cmake"
-          command: |
-            sudo apt update
-            sudo apt install -y clang-15 lld-15 llvm-15 cmake ninja-build
       - checkout
       - run:
           name: "Build Bartleby and test"
           command: |
-            export CC=clang-15
-            export CXX=clang++-15
-            export LD=lld-15
-            export LLVM_CONFIG=/usr/lib/llvm-15/bin/llvm-config
             cmake -B build \
               -DCMAKE_C_COMPILER="${CC}" \
               -DCMAKE_CXX_COMPILER="${CXX}" \
@@ -91,22 +66,11 @@ jobs:
             cmake --build build/ "-j$(nproc)"
   publish-doc:
     docker:
-      - image: cimg/base:2023.04
+      - image: us-central1-docker.pkg.dev/pqc-dev-pool-336002/bartleby/bartleby:ci
+        auth:
+          username: _json_key
+          password: $DOCKER_IMAGE_GCR_SA_KEY
     steps:
-      - run:
-          name: "Install rsync and Graphviz"
-          command: |
-            sudo apt update
-            sudo apt install -y rsync graphviz
-      - run:
-          name: "Download Doxygen 1.9.6"
-          command: |
-            curl -Lo /tmp/doxygen.tar.gz 'https://github.com/doxygen/doxygen/releases/download/Release_1_9_6/doxygen-1.9.6.linux.bin.tar.gz'
-            sha384sum -c \<<< "${DOXYGEN_LINUX_SHA384SUM}"
-            tar xf /tmp/doxygen.tar.gz doxygen-1.9.6/bin/doxygen
-            mv doxygen-1.9.6/bin/doxygen /tmp/doxygen
-            chmod +x /tmp/doxygen
-            rm -rf doxygen-1.9.6
       - checkout
       - add_ssh_keys:
           fingerprints:
@@ -114,7 +78,7 @@ jobs:
       - run:
           name: "Build and publish documentation"
           command: |
-            /tmp/doxygen
+            doxygen
             export TMPDIR=$(mktemp -d)
             cd "${TMPDIR}"
             git clone -b gh-pages "${CIRCLE_REPOSITORY_URL}" .
@@ -123,6 +87,10 @@ jobs:
             git config user.email "bartleby@sandboxquantum.com"
             git config user.name "doc publisher"
             git add -A
+            if [[ -z "$(git diff --staged --name-only)" ]]; then
+              echo "nothing new."
+              exit 0
+            fi
             git commit -m 'deploying new version'
             git push
 
@@ -131,6 +99,8 @@ workflows:
     jobs:
       - compile-test-using-bazel
       - compile-test-using-cmake
+  publish-doc:
+    jobs:
       - publish-doc:
           filters:
             branches:
