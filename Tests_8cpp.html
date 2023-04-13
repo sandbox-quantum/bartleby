@@ -131,8 +131,7 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4f70ac0be2e4ec7ce5b7c43d183c8e29"><td class="memItemLeft" align="right" valign="top"><a id="a4f70ac0be2e4ec7ce5b7c43d183c8e29" name="a4f70ac0be2e4ec7ce5b7c43d183c8e29"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>TEST</b> (BartleByObjectYamlELF, Object386)</td></tr>
+<tr class="memitem:a4f70ac0be2e4ec7ce5b7c43d183c8e29"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Tests_8cpp.html#a4f70ac0be2e4ec7ce5b7c43d183c8e29">TEST</a> (BartleByObjectYamlELF, Object386)</td></tr>
 <tr class="separator:a4f70ac0be2e4ec7ce5b7c43d183c8e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -540,6 +539,123 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a4f70ac0be2e4ec7ce5b7c43d183c8e29" name="a4f70ac0be2e4ec7ce5b7c43d183c8e29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f70ac0be2e4ec7ce5b7c43d183c8e29">&#9670;&#160;</a></span>TEST()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">BartleByObjectYamlELF&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Object386&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><span class="lineno">  243</span>                                       {</div>
+<div class="line"><span class="lineno">  244</span>  llvm::SmallVector&lt;llvm::object::OwningBinary&lt;llvm::object::Binary&gt;, 2&gt;</div>
+<div class="line"><span class="lineno">  245</span>      objects;</div>
+<div class="line"><span class="lineno">  246</span>  ASSERT_TRUE(YAML2Objects(<span class="stringliteral">&quot;symbols_visibility.yaml&quot;</span>,</div>
+<div class="line"><span class="lineno">  247</span>                           llvm::Triple::ObjectFormatType::ELF, objects));</div>
+<div class="line"><span class="lineno">  248</span> </div>
+<div class="line"><span class="lineno">  249</span>  llvm::DebugFlag = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  250</span>  <a class="code hl_class" href="classsaq_1_1bartleby_1_1Bartleby.html">Bartleby</a> b;</div>
+<div class="line"><span class="lineno">  251</span>  <span class="keyword">auto</span> err = b.<a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby.html#a77d7f8122271da32771eba4f5a57fe04">AddBinary</a>(std::move(objects[0]));</div>
+<div class="line"><span class="lineno">  252</span>  ASSERT_FALSE(err);</div>
+<div class="line"><span class="lineno">  253</span> </div>
+<div class="line"><span class="lineno">  254</span>  <a class="code hl_define" href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a>(b, <span class="stringliteral">&quot;defined_local_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  255</span>  <a class="code hl_define" href="Tests_8cpp.html#af603cc293cbe77c7e632d6524545eb37">ASSERT_SYM_LOCAL</a>(b, <span class="stringliteral">&quot;defined_local_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  256</span> </div>
+<div class="line"><span class="lineno">  257</span>  <a class="code hl_define" href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a>(b, <span class="stringliteral">&quot;defined_global_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  258</span>  <a class="code hl_define" href="Tests_8cpp.html#a58d7a5da5bb6e2c00e8c7fe8ba3c23e5">ASSERT_SYM_GLOBAL</a>(b, <span class="stringliteral">&quot;defined_global_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  259</span> </div>
+<div class="line"><span class="lineno">  260</span>  <a class="code hl_define" href="Tests_8cpp.html#a02e4d6516bb63e3f58addca54948af44">ASSERT_SYM_UNDEFINED</a>(b, <span class="stringliteral">&quot;undefined_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  261</span>  <a class="code hl_define" href="Tests_8cpp.html#a58d7a5da5bb6e2c00e8c7fe8ba3c23e5">ASSERT_SYM_GLOBAL</a>(b, <span class="stringliteral">&quot;undefined_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  262</span> </div>
+<div class="line"><span class="lineno">  263</span>  <a class="code hl_define" href="Tests_8cpp.html#a02e4d6516bb63e3f58addca54948af44">ASSERT_SYM_UNDEFINED</a>(b, <span class="stringliteral">&quot;weak_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  264</span>  <a class="code hl_define" href="Tests_8cpp.html#af603cc293cbe77c7e632d6524545eb37">ASSERT_SYM_LOCAL</a>(b, <span class="stringliteral">&quot;weak_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  265</span> </div>
+<div class="line"><span class="lineno">  266</span>  b.<a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby.html#aa6b4af127189370f053b034ffc12c3f8">PrefixGlobalAndDefinedSymbols</a>(<span class="stringliteral">&quot;prefix_&quot;</span>);</div>
+<div class="line"><span class="lineno">  267</span> </div>
+<div class="line"><span class="lineno">  268</span>  <a class="code hl_define" href="Tests_8cpp.html#a2179d1c1d90ec5f99d38754fa4fa9aea">ASSERT_SYM_WILL_NOT_BE_RENAMED</a>(b, <span class="stringliteral">&quot;defined_local_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  269</span>  <a class="code hl_define" href="Tests_8cpp.html#a374ec43880d0a3f0f5c4d6ea2a195abf">ASSERT_SYM_WILL_BE_RENAMED</a>(b, <span class="stringliteral">&quot;defined_global_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  270</span>  <a class="code hl_define" href="Tests_8cpp.html#a2179d1c1d90ec5f99d38754fa4fa9aea">ASSERT_SYM_WILL_NOT_BE_RENAMED</a>(b, <span class="stringliteral">&quot;undefined_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  271</span>  <a class="code hl_define" href="Tests_8cpp.html#a2179d1c1d90ec5f99d38754fa4fa9aea">ASSERT_SYM_WILL_NOT_BE_RENAMED</a>(b, <span class="stringliteral">&quot;weak_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  272</span> </div>
+<div class="line"><span class="lineno">  273</span>  err = b.<a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby.html#a77d7f8122271da32771eba4f5a57fe04">AddBinary</a>(std::move(objects[1]));</div>
+<div class="line"><span class="lineno">  274</span>  ASSERT_FALSE(err);</div>
+<div class="line"><span class="lineno">  275</span> </div>
+<div class="line"><span class="lineno">  276</span>  <a class="code hl_define" href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a>(b, <span class="stringliteral">&quot;defined_local_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  277</span>  <a class="code hl_define" href="Tests_8cpp.html#af603cc293cbe77c7e632d6524545eb37">ASSERT_SYM_LOCAL</a>(b, <span class="stringliteral">&quot;defined_local_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  278</span> </div>
+<div class="line"><span class="lineno">  279</span>  <a class="code hl_define" href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a>(b, <span class="stringliteral">&quot;defined_global_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  280</span>  <a class="code hl_define" href="Tests_8cpp.html#a58d7a5da5bb6e2c00e8c7fe8ba3c23e5">ASSERT_SYM_GLOBAL</a>(b, <span class="stringliteral">&quot;defined_global_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  281</span> </div>
+<div class="line"><span class="lineno">  282</span>  <span class="comment">// Object 2 defined `undefined_symbol`.</span></div>
+<div class="line"><span class="lineno">  283</span>  <a class="code hl_define" href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a>(b, <span class="stringliteral">&quot;undefined_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  284</span>  <a class="code hl_define" href="Tests_8cpp.html#a58d7a5da5bb6e2c00e8c7fe8ba3c23e5">ASSERT_SYM_GLOBAL</a>(b, <span class="stringliteral">&quot;undefined_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  285</span> </div>
+<div class="line"><span class="lineno">  286</span>  <a class="code hl_define" href="Tests_8cpp.html#a02e4d6516bb63e3f58addca54948af44">ASSERT_SYM_UNDEFINED</a>(b, <span class="stringliteral">&quot;weak_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  287</span>  <a class="code hl_define" href="Tests_8cpp.html#af603cc293cbe77c7e632d6524545eb37">ASSERT_SYM_LOCAL</a>(b, <span class="stringliteral">&quot;weak_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  288</span> </div>
+<div class="line"><span class="lineno">  289</span>  b.<a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby.html#aa6b4af127189370f053b034ffc12c3f8">PrefixGlobalAndDefinedSymbols</a>(<span class="stringliteral">&quot;prefix_&quot;</span>);</div>
+<div class="line"><span class="lineno">  290</span> </div>
+<div class="line"><span class="lineno">  291</span>  <a class="code hl_define" href="Tests_8cpp.html#a2179d1c1d90ec5f99d38754fa4fa9aea">ASSERT_SYM_WILL_NOT_BE_RENAMED</a>(b, <span class="stringliteral">&quot;defined_local_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  292</span>  <a class="code hl_define" href="Tests_8cpp.html#a374ec43880d0a3f0f5c4d6ea2a195abf">ASSERT_SYM_WILL_BE_RENAMED</a>(b, <span class="stringliteral">&quot;defined_global_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  293</span>  <a class="code hl_define" href="Tests_8cpp.html#a374ec43880d0a3f0f5c4d6ea2a195abf">ASSERT_SYM_WILL_BE_RENAMED</a>(b, <span class="stringliteral">&quot;undefined_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  294</span>  <a class="code hl_define" href="Tests_8cpp.html#a2179d1c1d90ec5f99d38754fa4fa9aea">ASSERT_SYM_WILL_NOT_BE_RENAMED</a>(b, <span class="stringliteral">&quot;weak_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  295</span> </div>
+<div class="line"><span class="lineno">  296</span>  <span class="keyword">auto</span> ar_or_err = <a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby.html#a2b57e86f54f53b0cb9396a4ae4f1bb43">Bartleby::BuildFinalArchive</a>(std::move(b));</div>
+<div class="line"><span class="lineno">  297</span>  ASSERT_TRUE(!!ar_or_err);</div>
+<div class="line"><span class="lineno">  298</span>  <span class="keyword">auto</span> ar_content = std::move(ar_or_err.get());</div>
+<div class="line"><span class="lineno">  299</span> </div>
+<div class="line"><span class="lineno">  300</span>  <span class="keyword">auto</span> ar = llvm::object::createBinary(*ar_content);</div>
+<div class="line"><span class="lineno">  301</span>  ASSERT_TRUE(!!ar);</div>
+<div class="line"><span class="lineno">  302</span> </div>
+<div class="line"><span class="lineno">  303</span>  <span class="keyword">auto</span> owning_ar = llvm::object::OwningBinary&lt;llvm::object::Binary&gt;(</div>
+<div class="line"><span class="lineno">  304</span>      std::move(ar.get()), std::move(ar_content));</div>
+<div class="line"><span class="lineno">  305</span> </div>
+<div class="line"><span class="lineno">  306</span>  b = <a class="code hl_class" href="classsaq_1_1bartleby_1_1Bartleby.html">Bartleby</a>();</div>
+<div class="line"><span class="lineno">  307</span>  ASSERT_FALSE(b.<a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby.html#a77d7f8122271da32771eba4f5a57fe04">AddBinary</a>(std::move(owning_ar)));</div>
+<div class="line"><span class="lineno">  308</span> </div>
+<div class="line"><span class="lineno">  309</span>  <a class="code hl_define" href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a>(b, <span class="stringliteral">&quot;defined_local_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  310</span>  <a class="code hl_define" href="Tests_8cpp.html#af603cc293cbe77c7e632d6524545eb37">ASSERT_SYM_LOCAL</a>(b, <span class="stringliteral">&quot;defined_local_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  311</span> </div>
+<div class="line"><span class="lineno">  312</span>  <a class="code hl_define" href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a>(b, <span class="stringliteral">&quot;prefix_defined_global_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  313</span>  <a class="code hl_define" href="Tests_8cpp.html#a58d7a5da5bb6e2c00e8c7fe8ba3c23e5">ASSERT_SYM_GLOBAL</a>(b, <span class="stringliteral">&quot;prefix_defined_global_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  314</span> </div>
+<div class="line"><span class="lineno">  315</span>  <a class="code hl_define" href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a>(b, <span class="stringliteral">&quot;prefix_undefined_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  316</span>  <a class="code hl_define" href="Tests_8cpp.html#a58d7a5da5bb6e2c00e8c7fe8ba3c23e5">ASSERT_SYM_GLOBAL</a>(b, <span class="stringliteral">&quot;prefix_undefined_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  317</span> </div>
+<div class="line"><span class="lineno">  318</span>  <a class="code hl_define" href="Tests_8cpp.html#a02e4d6516bb63e3f58addca54948af44">ASSERT_SYM_UNDEFINED</a>(b, <span class="stringliteral">&quot;weak_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  319</span>  <a class="code hl_define" href="Tests_8cpp.html#af603cc293cbe77c7e632d6524545eb37">ASSERT_SYM_LOCAL</a>(b, <span class="stringliteral">&quot;weak_symbol&quot;</span>);</div>
+<div class="line"><span class="lineno">  320</span>}</div>
+<div class="ttc" id="aTests_8cpp_html_a02e4d6516bb63e3f58addca54948af44"><div class="ttname"><a href="Tests_8cpp.html#a02e4d6516bb63e3f58addca54948af44">ASSERT_SYM_UNDEFINED</a></div><div class="ttdeci">#define ASSERT_SYM_UNDEFINED(_b_, _name_)</div><div class="ttdoc">Assert that a symbol is undefined.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:205</div></div>
+<div class="ttc" id="aTests_8cpp_html_a2179d1c1d90ec5f99d38754fa4fa9aea"><div class="ttname"><a href="Tests_8cpp.html#a2179d1c1d90ec5f99d38754fa4fa9aea">ASSERT_SYM_WILL_NOT_BE_RENAMED</a></div><div class="ttdeci">#define ASSERT_SYM_WILL_NOT_BE_RENAMED(_b_, _name_)</div><div class="ttdoc">Assert that a symbol name will NOT be overwritten.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:236</div></div>
+<div class="ttc" id="aTests_8cpp_html_a374ec43880d0a3f0f5c4d6ea2a195abf"><div class="ttname"><a href="Tests_8cpp.html#a374ec43880d0a3f0f5c4d6ea2a195abf">ASSERT_SYM_WILL_BE_RENAMED</a></div><div class="ttdeci">#define ASSERT_SYM_WILL_BE_RENAMED(_b_, _name_)</div><div class="ttdoc">Assert that a symbol name will be overwritten.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:229</div></div>
+<div class="ttc" id="aTests_8cpp_html_a58d7a5da5bb6e2c00e8c7fe8ba3c23e5"><div class="ttname"><a href="Tests_8cpp.html#a58d7a5da5bb6e2c00e8c7fe8ba3c23e5">ASSERT_SYM_GLOBAL</a></div><div class="ttdeci">#define ASSERT_SYM_GLOBAL(_b_, _name_)</div><div class="ttdoc">Assert that a symbol is local.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:188</div></div>
+<div class="ttc" id="aTests_8cpp_html_af1fe266c0abe27080fc92f65b8ad4f9c"><div class="ttname"><a href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a></div><div class="ttdeci">#define ASSERT_SYM_DEFINED(_b_, _name_)</div><div class="ttdoc">Assert that a symbol is defined.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:212</div></div>
+<div class="ttc" id="aTests_8cpp_html_af603cc293cbe77c7e632d6524545eb37"><div class="ttname"><a href="Tests_8cpp.html#af603cc293cbe77c7e632d6524545eb37">ASSERT_SYM_LOCAL</a></div><div class="ttdeci">#define ASSERT_SYM_LOCAL(_b_, _name_)</div><div class="ttdoc">Assert that a symbol is local.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:181</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html">saq::bartleby::Bartleby</a></div><div class="ttdoc">Bartleby handle.</div><div class="ttdef"><b>Definition:</b> Bartleby.h:33</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a2b57e86f54f53b0cb9396a4ae4f1bb43"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a2b57e86f54f53b0cb9396a4ae4f1bb43">saq::bartleby::Bartleby::BuildFinalArchive</a></div><div class="ttdeci">static llvm::Error BuildFinalArchive(Bartleby &amp;&amp;b, llvm::StringRef out_filepath) noexcept</div><div class="ttdoc">Build final archive.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:344</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a77d7f8122271da32771eba4f5a57fe04"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a77d7f8122271da32771eba4f5a57fe04">saq::bartleby::Bartleby::AddBinary</a></div><div class="ttdeci">llvm::Error AddBinary(llvm::object::OwningBinary&lt; llvm::object::Binary &gt; binary) noexcept</div><div class="ttdoc">Add a new binary to Bartleby.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:138</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_aa6b4af127189370f053b034ffc12c3f8"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#aa6b4af127189370f053b034ffc12c3f8">saq::bartleby::Bartleby::PrefixGlobalAndDefinedSymbols</a></div><div class="ttdeci">size_t PrefixGlobalAndDefinedSymbols(llvm::StringRef prefix) noexcept</div><div class="ttdoc">Prefix all global and defined symbols.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:183</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

@@ -110,9 +110,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4813a6417024db559e8277748e9c803c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#a4813a6417024db559e8277748e9c803c">UpdateWithNewSymbolInfo</a> (const <a class="el" href="structsaq_1_1bartleby_1_1SymbolInfo.html">SymbolInfo</a> &amp;syminfo) noexcept</td></tr>
 <tr class="memdesc:a4813a6417024db559e8277748e9c803c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update this symbol with new symbol information.  <br /></td></tr>
 <tr class="separator:a4813a6417024db559e8277748e9c803c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa37b4de2447355b47ed92ec52618726a"><td class="memItemLeft" align="right" valign="top"><a id="aa37b4de2447355b47ed92ec52618726a" name="aa37b4de2447355b47ed92ec52618726a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Symbol</b> () noexcept</td></tr>
-<tr class="memdesc:aa37b4de2447355b47ed92ec52618726a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a symbol. <br /></td></tr>
+<tr class="memitem:aa37b4de2447355b47ed92ec52618726a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#aa37b4de2447355b47ed92ec52618726a">Symbol</a> () noexcept</td></tr>
+<tr class="memdesc:aa37b4de2447355b47ed92ec52618726a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a symbol.  <br /></td></tr>
 <tr class="separator:aa37b4de2447355b47ed92ec52618726a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d79386a04700f0fa450fd6d0e31e59a"><td class="memItemLeft" align="right" valign="top"><a id="a0d79386a04700f0fa450fd6d0e31e59a" name="a0d79386a04700f0fa450fd6d0e31e59a"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Symbol</b> (const <a class="el" href="classsaq_1_1bartleby_1_1Symbol.html">Symbol</a> &amp;) noexcept=delete</td></tr>
@@ -137,7 +136,36 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An high view of a symbol. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa37b4de2447355b47ed92ec52618726a" name="aa37b4de2447355b47ed92ec52618726a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa37b4de2447355b47ed92ec52618726a">&#9670;&#160;</a></span>Symbol()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">BARTLEBY_API saq::bartleby::Symbol::Symbol </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a symbol. </p>
+<div class="fragment"><div class="line"><span class="lineno">   33</span>{}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="ab811177888bdb5a73a384b3ce8af70f0" name="ab811177888bdb5a73a384b3ce8af70f0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab811177888bdb5a73a384b3ce8af70f0">&#9670;&#160;</a></span>Defined()</h2>
 
@@ -163,7 +191,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the definedness of the symbol. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if symbol is defined, else false. </dd></dl>
-
+<div class="fragment"><div class="line"><span class="lineno">   62</span>{ <span class="keywordflow">return</span> _defined; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a30961809bcbb4a14e04a075761e3652a" name="a30961809bcbb4a14e04a075761e3652a"></a>
@@ -191,7 +220,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the visibility of the symbol. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if symbol is global, else false. </dd></dl>
-
+<div class="fragment"><div class="line"><span class="lineno">   60</span>{ <span class="keywordflow">return</span> _global; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac5867ccce178201c0f14192044d86d81" name="ac5867ccce178201c0f14192044d86d81"></a>
@@ -219,7 +249,10 @@ Public Member Functions</h2></td></tr>
 
 <p>Return true if the symbol contains references to some mach-o symbols. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the symbol contains references to some mach-o, else false. </dd></dl>
-
+<div class="fragment"><div class="line"><span class="lineno">   52</span>                                    {</div>
+<div class="line"><span class="lineno">   53</span>  <span class="keywordflow">return</span> _type == llvm::Triple::ObjectFormatType::MachO;</div>
+<div class="line"><span class="lineno">   54</span>}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4f898b7d303d68ad0ca60aefc9900efa" name="a4f898b7d303d68ad0ca60aefc9900efa"></a>
@@ -247,7 +280,10 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns the overwrite name. </p>
 <dl class="section return"><dt>Returns</dt><dd>The overwrite name. </dd></dl>
-
+<div class="fragment"><div class="line"><span class="lineno">   65</span>                                     {</div>
+<div class="line"><span class="lineno">   66</span>  <span class="keywordflow">return</span> _overwrite_name;</div>
+<div class="line"><span class="lineno">   67</span>}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a5ba2a2c59732f9904bd089d1271d9afd" name="a5ba2a2c59732f9904bd089d1271d9afd"></a>
@@ -309,7 +345,10 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
+<div class="fragment"><div class="line"><span class="lineno">   56</span>                                                         {</div>
+<div class="line"><span class="lineno">   57</span>  _overwrite_name = name;</div>
+<div class="line"><span class="lineno">   58</span>}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4813a6417024db559e8277748e9c803c" name="a4813a6417024db559e8277748e9c803c"></a>
@@ -343,7 +382,23 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
+<div class="fragment"><div class="line"><span class="lineno">   35</span>                                                                       {</div>
+<div class="line"><span class="lineno">   36</span>  assert(syminfo.err == <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   37</span> </div>
+<div class="line"><span class="lineno">   38</span>  <span class="keywordflow">if</span> ((*syminfo.flags &amp; llvm::object::BasicSymbolRef::Flags::SF_Weak) == 0) {</div>
+<div class="line"><span class="lineno">   39</span>    <span class="keywordflow">if</span> ((*syminfo.flags &amp; llvm::object::BasicSymbolRef::Flags::SF_Undefined) ==</div>
+<div class="line"><span class="lineno">   40</span>        0) {</div>
+<div class="line"><span class="lineno">   41</span>      LLVM_DEBUG(llvm::errs() &lt;&lt; <span class="stringliteral">&quot;symbol is defined. marked as defined\n&quot;</span>);</div>
+<div class="line"><span class="lineno">   42</span>      _defined = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   43</span>    }</div>
+<div class="line"><span class="lineno">   44</span>    <span class="keywordflow">if</span> (*syminfo.flags &amp; llvm::object::BasicSymbolRef::Flags::SF_Global) {</div>
+<div class="line"><span class="lineno">   45</span>      LLVM_DEBUG(llvm::errs() &lt;&lt; <span class="stringliteral">&quot;symbol is global. marked as defined\n&quot;</span>);</div>
+<div class="line"><span class="lineno">   46</span>      _global = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   47</span>    }</div>
+<div class="line"><span class="lineno">   48</span>  }</div>
+<div class="line"><span class="lineno">   49</span>  _type = syminfo.object_type;</div>
+<div class="line"><span class="lineno">   50</span>}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>

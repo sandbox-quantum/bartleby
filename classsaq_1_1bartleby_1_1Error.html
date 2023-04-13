@@ -111,23 +111,19 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>Reason</b> = std::va
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0127f576151dbe89b49ffa92bfde1090"><td class="memTemplParams" colspan="2"><a id="a0127f576151dbe89b49ffa92bfde1090" name="a0127f576151dbe89b49ffa92bfde1090"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a0127f576151dbe89b49ffa92bfde1090"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Error</b> (T reason) noexcept</td></tr>
-<tr class="memdesc:a0127f576151dbe89b49ffa92bfde1090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a reason. <br /></td></tr>
+<tr class="memitem:a0127f576151dbe89b49ffa92bfde1090"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a0127f576151dbe89b49ffa92bfde1090"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Error.html#a0127f576151dbe89b49ffa92bfde1090">Error</a> (T reason) noexcept</td></tr>
+<tr class="memdesc:a0127f576151dbe89b49ffa92bfde1090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a reason.  <br /></td></tr>
 <tr class="separator:a0127f576151dbe89b49ffa92bfde1090"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5171d99ad85202c12dc8b7a1d3aa4e73"><td class="memItemLeft" align="right" valign="top"><a id="a5171d99ad85202c12dc8b7a1d3aa4e73" name="a5171d99ad85202c12dc8b7a1d3aa4e73"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~Error</b> () noexcept override=default</td></tr>
 <tr class="memdesc:a5171d99ad85202c12dc8b7a1d3aa4e73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:a5171d99ad85202c12dc8b7a1d3aa4e73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10eb7876970a6de6baef524e0f51dd1c"><td class="memItemLeft" align="right" valign="top"><a id="a10eb7876970a6de6baef524e0f51dd1c" name="a10eb7876970a6de6baef524e0f51dd1c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>log</b> (llvm::raw_ostream &amp;os) const noexcept override</td></tr>
+<tr class="memitem:a10eb7876970a6de6baef524e0f51dd1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Error.html#a10eb7876970a6de6baef524e0f51dd1c">log</a> (llvm::raw_ostream &amp;os) const noexcept override</td></tr>
 <tr class="separator:a10eb7876970a6de6baef524e0f51dd1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31859fa115749bfcc6ca0b4ddf95c213"><td class="memItemLeft" align="right" valign="top"><a id="a31859fa115749bfcc6ca0b4ddf95c213" name="a31859fa115749bfcc6ca0b4ddf95c213"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>message</b> () const noexcept override</td></tr>
+<tr class="memitem:a31859fa115749bfcc6ca0b4ddf95c213"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Error.html#a31859fa115749bfcc6ca0b4ddf95c213">message</a> () const noexcept override</td></tr>
 <tr class="separator:a31859fa115749bfcc6ca0b4ddf95c213"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0493c18ebd7819fd6204eb2d4e5a6214"><td class="memItemLeft" align="right" valign="top"><a id="a0493c18ebd7819fd6204eb2d4e5a6214" name="a0493c18ebd7819fd6204eb2d4e5a6214"></a>
-std::error_code&#160;</td><td class="memItemRight" valign="bottom"><b>convertToErrorCode</b> () const noexcept override</td></tr>
+<tr class="memitem:a0493c18ebd7819fd6204eb2d4e5a6214"><td class="memItemLeft" align="right" valign="top">std::error_code&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Error.html#a0493c18ebd7819fd6204eb2d4e5a6214">convertToErrorCode</a> () const noexcept override</td></tr>
 <tr class="separator:a0493c18ebd7819fd6204eb2d4e5a6214"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
@@ -139,7 +135,155 @@ static char&#160;</td><td class="memItemRight" valign="bottom"><b>ID</b> = 'b'</
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Custom error info for <a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html" title="Bartleby handle.">Bartleby</a>. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a0127f576151dbe89b49ffa92bfde1090" name="a0127f576151dbe89b49ffa92bfde1090"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0127f576151dbe89b49ffa92bfde1090">&#9670;&#160;</a></span>Error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">saq::bartleby::Error::Error </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>reason</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor for a reason. </p>
+<div class="fragment"><div class="line"><span class="lineno">   47</span>: _reason(std::move(reason)) {}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0493c18ebd7819fd6204eb2d4e5a6214" name="a0493c18ebd7819fd6204eb2d4e5a6214"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0493c18ebd7819fd6204eb2d4e5a6214">&#9670;&#160;</a></span>convertToErrorCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::error_code saq::bartleby::Error::convertToErrorCode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><span class="lineno">   58</span>                                                       {</div>
+<div class="line"><span class="lineno">   59</span>  <span class="keywordflow">return</span> std::visit(</div>
+<div class="line"><span class="lineno">   60</span>      [](<span class="keyword">auto</span> &amp;&amp;err) {</div>
+<div class="line"><span class="lineno">   61</span>        <span class="keyword">using </span>ErrT = std::decay_t&lt;<span class="keyword">decltype</span>(err)&gt;;</div>
+<div class="line"><span class="lineno">   62</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;UnsupportedBinaryReason, ErrT&gt;) {</div>
+<div class="line"><span class="lineno">   63</span>          <span class="keywordflow">return</span> std::error_code(1, std::system_category());</div>
+<div class="line"><span class="lineno">   64</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   65</span>          __builtin_unreachable();</div>
+<div class="line"><span class="lineno">   66</span>        }</div>
+<div class="line"><span class="lineno">   67</span>      },</div>
+<div class="line"><span class="lineno">   68</span>      _reason);</div>
+<div class="line"><span class="lineno">   69</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a10eb7876970a6de6baef524e0f51dd1c" name="a10eb7876970a6de6baef524e0f51dd1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10eb7876970a6de6baef524e0f51dd1c">&#9670;&#160;</a></span>log()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void saq::bartleby::Error::log </td>
+          <td>(</td>
+          <td class="paramtype">llvm::raw_ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><span class="lineno">   29</span>                                                  {</div>
+<div class="line"><span class="lineno">   30</span>  os &lt;&lt; message();</div>
+<div class="line"><span class="lineno">   31</span>  std::visit(</div>
+<div class="line"><span class="lineno">   32</span>      [&amp;os](<span class="keyword">auto</span> &amp;&amp;err) {</div>
+<div class="line"><span class="lineno">   33</span>        <span class="keyword">using </span>ErrT = std::decay_t&lt;<span class="keyword">decltype</span>(err)&gt;;</div>
+<div class="line"><span class="lineno">   34</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;UnsupportedBinaryReason, ErrT&gt;) {</div>
+<div class="line"><span class="lineno">   35</span>          os &lt;&lt; err.msg;</div>
+<div class="line"><span class="lineno">   36</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   37</span>          __builtin_unreachable();</div>
+<div class="line"><span class="lineno">   38</span>        }</div>
+<div class="line"><span class="lineno">   39</span>      },</div>
+<div class="line"><span class="lineno">   40</span>      _reason);</div>
+<div class="line"><span class="lineno">   41</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a31859fa115749bfcc6ca0b4ddf95c213" name="a31859fa115749bfcc6ca0b4ddf95c213"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31859fa115749bfcc6ca0b4ddf95c213">&#9670;&#160;</a></span>message()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string saq::bartleby::Error::message </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><span class="lineno">   43</span>                                        {</div>
+<div class="line"><span class="lineno">   44</span>  std::stringstream ss;</div>
+<div class="line"><span class="lineno">   45</span>  std::visit(</div>
+<div class="line"><span class="lineno">   46</span>      [&amp;ss](<span class="keyword">auto</span> &amp;&amp;err) {</div>
+<div class="line"><span class="lineno">   47</span>        <span class="keyword">using </span>ErrT = std::decay_t&lt;<span class="keyword">decltype</span>(err)&gt;;</div>
+<div class="line"><span class="lineno">   48</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;UnsupportedBinaryReason, ErrT&gt;) {</div>
+<div class="line"><span class="lineno">   49</span>          ss &lt;&lt; <span class="stringliteral">&quot;error while reading binary: &quot;</span> &lt;&lt; err.msg.str().data();</div>
+<div class="line"><span class="lineno">   50</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   51</span>          __builtin_unreachable();</div>
+<div class="line"><span class="lineno">   52</span>        }</div>
+<div class="line"><span class="lineno">   53</span>      },</div>
+<div class="line"><span class="lineno">   54</span>      _reason);</div>
+<div class="line"><span class="lineno">   55</span>  <span class="keywordflow">return</span> ss.str();</div>
+<div class="line"><span class="lineno">   56</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>bartleby/lib/Bartleby/<a class="el" href="Error_8h_source.html">Error.h</a></li>
 <li>bartleby/lib/Bartleby/<a class="el" href="Error_8cpp.html">Error.cpp</a></li>
 </ul>

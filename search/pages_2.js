@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rules_0',['rules',['../md_docs_rules.html',1,'']]]
+  ['importing_20into_20a_20workspace_0',['Importing into a WORKSPACE',['../page-bazel-install.html',1,'page-bi']]]
 ];

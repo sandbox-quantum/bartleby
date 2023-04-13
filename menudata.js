@@ -29,7 +29,10 @@ var menudata={children:[
 {text:"Using Bazel",url:"page-gs-bazel.html"},
 {text:"Using CMake",url:"page-gs-cmake.html"}]},
 {text:"Why not objcopy?",url:"page-why-not-objcopy.html"},
-{text:"Command Guide",url:"page-cmd.html"}]},
+{text:"Command Guide",url:"page-cmd.html"},
+{text:"Bazel integration",url:"page-bi.html",children:[
+{text:"Importing",url:"page-bazel-install.html"},
+{text:"Bazel rules",url:"page-bazel-rule.html"}]}]},
 {text:"git",url:"^https://github.com/sandbox-quantum/bartleby"},
 {text:"Related Pages",url:"pages.html"},
 {text:"C++ API",url:"usergroup0.html",children:[
@@ -63,4 +66,5 @@ var menudata={children:[
 {text:"File Members",url:"globals.html",children:[
 {text:"All",url:"globals.html"},
 {text:"Functions",url:"globals_func.html"},
-{text:"Macros",url:"globals_defs.html"}]}]}]}]}
+{text:"Macros",url:"globals_defs.html"}]}]}]},
+{text:"Examples",url:"examples.html"}]}
