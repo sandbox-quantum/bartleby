@@ -5,6 +5,7 @@
 /// \li \subpage page-gs-building-from-source
 /// \li \subpage page-why-not-objcopy
 /// \li \subpage page-cmd
+/// \li \subpage page-bi
 ///
 ///
 /// \tableofcontents
@@ -13,7 +14,7 @@
 /// \page page-gs-building-from-source Building from source
 ///
 ///
-/// Bartleby can be compiled using \ref ref-gs-bazel "Bazel" or \ref ref-gs-cmake "CMake".
+/// Bartleby can be compiled using \ref page-gs-bazel "Bazel" or \ref page-gs-cmake "CMake".
 ///
 /// First, the source code has to be fetched:
 ///
@@ -60,7 +61,7 @@
 /// \page page-gs-cmake Using CMake
 ///
 ///
-/// LLVM (15.0) is required to build Bartleby with \ref ref-gs-cmake "CMake".
+/// LLVM (15.0) is required to build Bartleby with \ref page-gs-cmake "CMake".
 ///
 /// \code
 /// $ cmake -GNinja \

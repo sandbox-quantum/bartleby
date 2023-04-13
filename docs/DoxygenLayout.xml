@@ -10,10 +10,14 @@
       </tab>
       <tab type="user" visible="yes" url="@ref page-why-not-objcopy" title="Why not objcopy?"/>
       <tab type="user" visible="yes" url="@ref page-cmd" title="Command Guide"/>
+      <tab type="usergroup" visible="yes" url="@ref page-bi" title="Bazel integration">
+        <tab type="user" visible="yes" url="@ref page-bazel-install" title="Importing"/>
+        <tab type="user" visible="yes" url="@ref page-bazel-rule" title="Bazel rules"/>
+      </tab>
     </tab>
     <tab type="user" visible="yes" title="git" url="https://github.com/sandbox-quantum/bartleby"/>
     <tab type="pages" visible="yes" title="" intro=""/>
-    <tab type="usergroup" visible="yes" title="C++ API", intro="">
+    <tab type="usergroup" visible="yes" title="C++ API" intro="">
       <tab type="namespaces" visible="yes" title="">
         <tab type="namespacelist" visible="yes" title="" intro=""/>
         <tab type="namespacemembers" visible="yes" title="" intro=""/>

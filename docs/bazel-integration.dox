@@ -1,0 +1,101 @@
+///
+/// \page page-bi Bazel integration
+///
+///
+/// Bartleby can be easily integrated in a Bazel repository. It also offers
+/// a Bazel rule to run the Bartleby CLI on a set of <tt>cc_library</tt> targets.
+///
+///
+/// \li \subpage page-bazel-install
+/// \li \subpage page-bazel-rule
+///
+///
+/// \page page-bazel-install Importing into a WORKSPACE
+///
+///
+/// To integrate Bartleby in a Bazel repository, it at first is necessary
+/// to import the source code, using for instance the <tt>http_archive</tt> rule:
+///
+/// \code
+///
+/// # in WORKSPACE or WORKSPACE.bazel
+/// load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+/// http_archive(
+///     name = "com_sandboxquantum_bartleby",
+///     sha256 = "61f870bf4a9f4f53f8998f844297130ff079d0ce6d866f7a06180246ca8f3426", # replace with the latest release
+///     urls = ["https://github.com/sandbox-quantum/bartleby/releases/download/0.1.0/bartleby-v0.1.0.tar.gz"], # replace with the latest release
+/// )
+/// \endcode
+///
+/// Then, we have to load the Bartleby dependencies:
+///
+/// \code
+/// # Loads bartleby external repositories.
+/// load("@com_sandboxquantum_bartleby//bartleby:repositories.bzl", "bartleby_repositories")
+///
+/// bartleby_repositories()
+///
+/// # Loads an initializes bartleby dependencies.
+/// load("@com_sandboxquantum_bartleby//bartleby:deps.bzl", "bartleby_deps")
+///
+/// bartleby_deps()
+/// \endcode
+///
+/// \section sec-full-ex Full example
+///
+/// \include bazel/WORKSPACE.bazel
+///
+///
+/// \sa <a href="https://bazel.build/rules/lib/repo/http#http_archive"><tt>http_archive</tt> rule</a>
+/// \sa \ref page-bazel-rule
+/// \sa \ref bazel/WORKSPACE.bazel example
+///
+///
+/// \page page-bazel-rule Bazel rule
+///
+///
+/// \tableofcontents
+///
+///
+/// Bartleby implements a Bazel rule that can be used to execute the Bartleby
+/// tool on a set of Bazel targets.
+///
+///
+/// \section sec-bi-rule Rule definition
+///
+///
+/// \subsection bartleby
+///
+///
+/// <pre>
+/// bartleby(\ref rule-bartleby-name "name", \ref rule-bartleby-prefix "prefix", \ref rule-bartleby-srcs "srcs")
+/// </pre>
+///
+/// Run Bartleby on a set of libraries.
+///
+/// This outputs a target that provides a <a href="https://bazel.build/rules/lib/CcInfo"><tt>CcInfo</tt></a> provider.
+///
+/// <b>ATTRIBUTES</b>
+///
+///
+/// | Name  | Description | Type | Mandatory | Default |
+/// | :------------- | :------------- | :------------- | :------------- | :------------- |
+/// | \anchor rule-bartleby-name name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
+/// | \anchor rule-bartleby-prefix prefix |  Prefix to apply to library's symbols   | String | optional | <code>""</code> |
+/// | \anchor rule-bartleby-srcs srcs |  Libraries to give to bartleby. These targets have to provide a [<code>CcInfo</code>](https://bazel.build/rules/lib/CcInfo) provider.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | required |  |
+///
+///
+/// \section sec-rule-example Example
+///
+///
+/// \include bazel/BUILD.bazel
+///
+///
+/// \sa \ref bazel/BUILD.bazel example
+///
+///
+/// \example bazel/WORKSPACE.bazel
+/// This is an example of how to \link page-bazel-install import Bartleby \endlink in a Bazel repository.
+///
+/// \example bazel/BUILD.bazel
+/// This is an example of how to use the \link page-bazel-rule Bazel rule \endlink.

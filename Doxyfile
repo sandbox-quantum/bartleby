@@ -72,12 +72,19 @@ FILE_PATTERNS          = *.c \
                          *.cpp \
                          *.h \
                          *.hpp \
-                         *.md \
                          *.dox
+EXTENSION_MAPPING      = bzl=python \
+                         bazel=python
 RECURSIVE              = YES
-EXCLUDE                = ./README.md
-EXCLUDE_SYMLINKS       = NO
-EXCLUDE_PATTERNS       = bazel-*
+EXCLUDE                = README.md \
+                         docs/rules.md \
+                         bazel-bartleby \
+                         bazel-bin \
+                         bazel-out \
+                         bazel-testlogs \
+                         build
+EXCLUDE_SYMLINKS       = YES
+EXCLUDE_PATTERNS       =
 
 EXAMPLE_PATH           = examples/
 EXAMPLE_RECURSIVE      = YES
@@ -99,3 +106,6 @@ GENERATE_AUTOGEN_DEF   = NO
 GENERATE_PERLMOD       = NO
 
 ENABLE_PREPROCESSING   = YES
+
+PYTHON_DOCSTRING       = NO
+INLINE_SOURCES         = YES

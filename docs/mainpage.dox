@@ -30,6 +30,7 @@
 /// Bartleby can be compiled using \ref page-gs-bazel "Bazel" or \ref page-gs-cmake "CMake".
 ///
 /// \sa \ref page-gs-building-from-source
+/// \sa \ref page-bi
 ///
 ///
 /// \section sec-why-not-objcopy Why not using objcopy?
