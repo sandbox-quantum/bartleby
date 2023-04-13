@@ -175,7 +175,7 @@ Example</h2>
 <div class="line"><span class="stringliteral">__private_a.c:(.text+0x7): undefined reference to `__private_stdout&#39;</span></div>
 <div class="line">/usr/bin/ld: __private_a.c:(.text+0x16): undefined reference to `__private_fputs<span class="stringliteral">&#39;</span></div>
 <div class="line"><span class="stringliteral">clang: error: linker command failed with exit code 1 (use -v to see invocation)</span></div>
-</div><!-- fragment --><p>Because it would not be a great solution to also prefix the symbols from the \libc, <code>--prefix-symbols</code> is not a solution to our problem neither.</p>
+</div><!-- fragment --><p>Because it would not be a great solution to also prefix the symbols from the <code>libc</code>, <code>--prefix-symbols</code> is not a solution to our problem neither.</p>
 <h1><a class="anchor" id="sec-objcopy-conclusion"></a>
 Conclusion</h1>
 <p>Even if <a class="el" href="page-why-not-objcopy.html#ref-objcopy"><code>objcopy(1)</code> </a> offers at least three mechanism for renaming symbols, we saw that none of them really fit our use case.</p>
