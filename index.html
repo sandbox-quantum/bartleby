@@ -78,6 +78,7 @@ $(function() {
 <ul><li class="level1"><a href="#intro">Introduction</a></li>
 <li class="level1"><a href="#sec-getting-started">Getting Started</a></li>
 <li class="level1"><a href="#sec-why-not-objcopy">Why not using objcopy?</a></li>
+<li class="level1"><a href="#sec-cmd">Command Guide</a></li>
 <li class="level1"><a href="#refs">References</a></li>
 </ul>
 </div>
@@ -92,13 +93,16 @@ Introduction</h1>
 </div><!-- fragment --><p> <em>Example of an output from clang when pre-linking two objects together that both define the <code>SSL_CTX_new</code> symbol.</em></p>
 <h1><a class="anchor" id="sec-getting-started"></a>
 Getting Started</h1>
-<p>Bartleby can be compiled using Bazel or CMake.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="page-getting-started.html">Getting Started</a></dd></dl>
+<p>Bartleby can be compiled using <a class="el" href="page-gs-bazel.html">Bazel</a> or <a class="el" href="page-gs-cmake.html">CMake</a>.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="page-gs-building-from-source.html">Building from source</a></dd></dl>
 <h1><a class="anchor" id="sec-why-not-objcopy"></a>
 Why not using objcopy?</h1>
 <p><a class="el" href="page-why-not-objcopy.html#ref-objcopy"><code>objcopy</code> </a> is a great tool for manipulating object files and libraries. Through its <code>--prefix-symbols</code> options, it already offers a way to rename all the symbols defined in a target by prefixing their name.</p>
 <p>However, this solution doesn't work well: <code>--prefix-symbols</code> also applies to symbols pointing to external (i.e. undefined) functions, such as the ones from the <code>libc</code>.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="page-why-not-objcopy.html">Why not objcopy?</a></dd></dl>
+<h1><a class="anchor" id="sec-cmd"></a>
+Command Guide</h1>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="page-cmd.html">Bartleby Command Guide</a></dd></dl>
 <h1><a class="anchor" id="refs"></a>
 References</h1>
 <ul>

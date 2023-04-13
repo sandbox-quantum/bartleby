@@ -24,10 +24,16 @@
 */
 var menudata={children:[
 {text:"Home",url:"index.html"},
-{text:"Installation",url:"page-getting-started.html"},
+{text:"Getting Started",url:"page-getting-started.html",children:[
+{text:"Building from source",url:"page-gs-building-from-source.html",children:[
+{text:"Using Bazel",url:"page-gs-bazel.html"},
+{text:"Using CMake",url:"page-gs-cmake.html"}]},
+{text:"Why not objcopy?",url:"page-why-not-objcopy.html"},
+{text:"Command Guide",url:"page-cmd.html"}]},
 {text:"git",url:"^https://github.com/sandbox-quantum/bartleby"},
 {text:"Related Pages",url:"pages.html"},
-{text:"Classes",url:"annotated.html",children:[
+{text:"C++ API",url:"usergroup0.html",children:[
+{text:"Class List",url:"annotated.html",children:[
 {text:"Class List",url:"annotated.html"},
 {text:"Class Index",url:"classes.html"},
 {text:"Class Hierarchy",url:"hierarchy.html"},
@@ -52,9 +58,9 @@ var menudata={children:[
 {text:"Functions",url:"functions_func.html"},
 {text:"Variables",url:"functions_vars.html"},
 {text:"Typedefs",url:"functions_type.html"}]}]},
-{text:"Files",url:"files.html",children:[
+{text:"File List",url:"files.html",children:[
 {text:"File List",url:"files.html"},
 {text:"File Members",url:"globals.html",children:[
 {text:"All",url:"globals.html"},
 {text:"Functions",url:"globals_func.html"},
-{text:"Macros",url:"globals_defs.html"}]}]}]}
+{text:"Macros",url:"globals_defs.html"}]}]}]}]}

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bartleby: Related Pages</title>
+<title>Bartleby: Bartleby Command Guide</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -48,7 +48,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -70,23 +69,49 @@ $(function() {
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Related Pages</div></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="page-getting-started.html">Getting Started</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div><div class="header">
+  <div class="headertitle"><div class="title">Bartleby Command Guide </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all related documentation pages:</div><div class="directory">
-<div class="levels">[detail level <span onclick="javascript:toggleLevel(1);">1</span><span onclick="javascript:toggleLevel(2);">2</span><span onclick="javascript:toggleLevel(3);">3</span>]</div><table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="toggleFolder('0_')">&#9660;</span><a class="el" href="page-getting-started.html" target="_self">Getting Started</a></td><td class="desc"></td></tr>
-<tr id="row_0_0_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_0_" class="arrow" onclick="toggleFolder('0_0_')">&#9660;</span><a class="el" href="page-gs-building-from-source.html" target="_self">Building from source</a></td><td class="desc"></td></tr>
-<tr id="row_0_0_0_" class="even"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a class="el" href="page-gs-bazel.html" target="_self">Using Bazel</a></td><td class="desc"></td></tr>
-<tr id="row_0_0_1_" class="odd"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a class="el" href="page-gs-cmake.html" target="_self">Using CMake</a></td><td class="desc"></td></tr>
-<tr id="row_0_1_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_1_" class="arrow" onclick="toggleFolder('0_1_')">&#9660;</span><a class="el" href="page-why-not-objcopy.html" target="_self">Why not objcopy?</a></td><td class="desc"></td></tr>
-<tr id="row_0_2_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_2_" class="arrow" onclick="toggleFolder('0_2_')">&#9660;</span><a class="el" href="page-cmd.html" target="_self">Bartleby Command Guide</a></td><td class="desc"></td></tr>
-<tr id="row_1_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_1_" class="arrow" onclick="toggleFolder('1_')">&#9660;</span><a class="el" href="md_docs_rules.html" target="_self">rules</a></td><td class="desc"></td></tr>
-<tr id="row_2_" class="odd"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_2_" class="arrow" onclick="toggleFolder('2_')">&#9660;</span><a class="el" href="md_examples_bazel_README.html" target="_self">Setup</a></td><td class="desc"></td></tr>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#sec-cmd-synopsis">Synopsis</a></li>
+<li class="level1"><a href="#sec-cmd-description">Description</a></li>
+<li class="level1"><a href="#sec-cmd-options">Options</a></li>
+<li class="level1"><a href="#sec-cmd-exit-status">Exit status</a></li>
+</ul>
+</div>
+<div class="textblock"><h1><a class="anchor" id="sec-cmd-synopsis"></a>
+Synopsis</h1>
+<p><b>bartleby</b> [<em>options</em>] <em>&ndash;if input</em>… <em>&ndash;of output</em></p>
+<h1><a class="anchor" id="sec-cmd-description"></a>
+Description</h1>
+<p><b>bartleby</b> is a tool to manipulate symbols across a set of objects or static libraries. In basic usage, it gathers and merges a set of objects or static libraries into a single archive (<code><em>.a</em></code>).</p>
+<p>Names of symbols can be prefixed according to their definedness across the whole set of input files. Each symbol that is defined at least within one input file from the set will get prefixed. A symbol that is marked as undefined in every input file won't get prefixed.</p>
+<p>If the input file is an archive (i.e. a static library), its members are extracted and analyzed.</p>
+<p>The output file is an archive (i.e. a static library). Names of members are set according to their provenance. If the member comes from an archive, its name is preserved. If the member comes from a single <code>.o</code> file, its name is the index of the file in the set.</p>
+<dl class="section warning"><dt>Warning</dt><dd><b>bartleby</b> is still under developement. Some scenarios may lead to unexpected behavior.</dd></dl>
+<h1><a class="anchor" id="sec-cmd-options"></a>
+Options</h1>
+<table class="doxtable">
 </table>
-</div><!-- directory -->
-</div><!-- contents -->
+<p>Argument </p>
+<p>Description  &lt;/thead&gt; &lt;tbody&gt; </p>
+<p><code>&ndash;if</code> </p>
+<p>Input file. <b>At least one input file is required</b>. It can be an object file or an archive (i.e. a static library).  </p>
+<p><code>&ndash;of</code> </p>
+<p>Output file. <b>Required</b>.  </p>
+<p><code>&ndash;prefix</code> <em>prefix</em> </p>
+<p>Prefix to use for defined symbols. <em>Optional</em>  &lt;/tbody&gt; </p>
+<h1><a class="anchor" id="sec-cmd-exit-status"></a>
+Exit status</h1>
+<p><b>bartleby</b> exits with a non-zero exit code if there is an error. Otherwise, <code>0</code> is returned. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
