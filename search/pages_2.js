@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['setup_120',['Setup',['../md_examples_bazel_README.html',1,'']]]
+  ['rules_0',['rules',['../md_docs_rules.html',1,'']]]
 ];
