@@ -318,3 +318,20 @@ TEST(BartleByObjectYamlELF, Object386) {
   ASSERT_SYM_UNDEFINED(b, "weak_symbol");
   ASSERT_SYM_LOCAL(b, "weak_symbol");
 }
+
+/// \brief Test that passing two objects with different format types is
+/// an error.
+TEST(BartleByObjectYamlError, ObjectTypeMisMatch) {
+  llvm::SmallVector<llvm::object::OwningBinary<llvm::object::Binary>, 2>
+      objects;
+  ASSERT_TRUE(YAML2Objects("arm64.yaml", llvm::Triple::ObjectFormatType::MachO,
+                           objects));
+
+  ASSERT_TRUE(YAML2Objects("simple_x86_64.yaml",
+                           llvm::Triple::ObjectFormatType::ELF, objects));
+
+  Bartleby b;
+  ASSERT_FALSE(b.AddBinary(std::move(objects[0])));
+  auto err = b.AddBinary(std::move(objects[1]));
+  ASSERT_TRUE(!!err);
+}

@@ -24,6 +24,7 @@
 #include <variant>
 
 #include "llvm/ADT/SmallString.h"
+#include "llvm/ADT/Triple.h"
 #include "llvm/Support/Error.h"
 
 namespace saq::bartleby {
@@ -40,8 +41,21 @@ public:
     llvm::SmallString<32> msg;
   };
 
+  /// \brief Mismatch between object format type.
+  ///
+  /// This error is raised when an object has a different format type than
+  /// the objects previously added to a Bartleby handle.
+  struct ObjectFormatTypeMismatchReason {
+    /// \brief Object type from the Bartleby handle.
+    llvm::Triple::ObjectFormatType constraint;
+
+    /// \brief The type of the object responsible of this error.
+    llvm::Triple::ObjectFormatType type;
+  };
+
   /// \brief Reason for error.
-  using Reason = std::variant<UnsupportedBinaryReason>;
+  using Reason =
+      std::variant<UnsupportedBinaryReason, ObjectFormatTypeMismatchReason>;
 
   /// \brief Constructor for a reason.
   template <typename T> Error(T reason) noexcept : _reason(std::move(reason)) {}

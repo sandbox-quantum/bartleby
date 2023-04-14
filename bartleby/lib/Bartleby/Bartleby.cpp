@@ -140,7 +140,15 @@ BARTLEBY_API llvm::Error Bartleby::AddBinary(
   auto *binary = owning_binary.getBinary();
   llvm::Error e = llvm::Error::success();
 
+  const auto type = binary->getTripleObjectFormat();
   if (auto *obj = llvm::dyn_cast<llvm::object::ObjectFile>(binary)) {
+    if (type_ == llvm::Triple::ObjectFormatType::UnknownObjectFormat) {
+      type_ = type;
+    }
+    if (type_ != type) {
+      return llvm::make_error<Error>(Error::ObjectFormatTypeMismatchReason{
+          .constraint = type_, .type = type});
+    }
     ProcessObjectFile(obj, _symbols);
     auto &entry = _objects.emplace_back(ObjectFile{.handle = obj});
     (llvm::Twine(llvm::utostr(_objects.size())) + ".o")

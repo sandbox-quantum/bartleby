@@ -33,6 +33,9 @@ void Error::log(llvm::raw_ostream &os) const noexcept {
         using ErrT = std::decay_t<decltype(err)>;
         if constexpr (std::is_same_v<UnsupportedBinaryReason, ErrT>) {
           os << err.msg;
+        } else if constexpr (std::is_same_v<ObjectFormatTypeMismatchReason,
+                                            ErrT>) {
+          os << "expected " << err.constraint << ", got " << err.type;
         } else {
           __builtin_unreachable();
         }
@@ -47,6 +50,10 @@ std::string Error::message() const noexcept {
         using ErrT = std::decay_t<decltype(err)>;
         if constexpr (std::is_same_v<UnsupportedBinaryReason, ErrT>) {
           ss << "error while reading binary: " << err.msg.str().data();
+        } else if constexpr (std::is_same_v<ObjectFormatTypeMismatchReason,
+                                            ErrT>) {
+          ss << "invalid object format type: expected " << err.constraint
+             << ", got " << err.type;
         } else {
           __builtin_unreachable();
         }
@@ -61,6 +68,9 @@ std::error_code Error::convertToErrorCode() const noexcept {
         using ErrT = std::decay_t<decltype(err)>;
         if constexpr (std::is_same_v<UnsupportedBinaryReason, ErrT>) {
           return std::error_code(1, std::system_category());
+        } else if constexpr (std::is_same_v<ObjectFormatTypeMismatchReason,
+                                            ErrT>) {
+          return std::error_code(2, std::system_category());
         } else {
           __builtin_unreachable();
         }
