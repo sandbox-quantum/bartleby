@@ -120,6 +120,13 @@ private:
   llvm::SmallVector<llvm::object::OwningBinary<llvm::object::Binary>, 128>
       _owned_binaries;
 
+  /// \brief The triple object format type for objects.
+  ///
+  /// It is not allowed to have different object format types within the same
+  /// Bartleby handle.
+  llvm::Triple::ObjectFormatType _type =
+      llvm::Triple::ObjectFormatType::UnknownObjectFormat;
+
   // Forward declaration.
   class ArchiveBuilder;
 };
