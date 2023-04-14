@@ -154,18 +154,18 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  217</span>                                        : _b{std::move(b)} {</div>
-<div class="line"><span class="lineno">  218</span>    <span class="keyword">const</span> <span class="keyword">auto</span> end = _b._symbols.end();</div>
-<div class="line"><span class="lineno">  219</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> entry = _b._symbols.begin(); entry != end; ++entry) {</div>
-<div class="line"><span class="lineno">  220</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;name = entry-&gt;first();</div>
-<div class="line"><span class="lineno">  221</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;sym = entry-&gt;getValue();</div>
-<div class="line"><span class="lineno">  222</span>      <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> oname = sym.OverwriteName(); oname) {</div>
-<div class="line"><span class="lineno">  223</span>        LLVM_DEBUG(llvm::dbgs() &lt;&lt; <span class="stringliteral">&quot;bartleby is going to rename &#39;&quot;</span> &lt;&lt; name</div>
-<div class="line"><span class="lineno">  224</span>                                &lt;&lt; <span class="stringliteral">&quot;&#39; into &#39;&quot;</span> &lt;&lt; *oname &lt;&lt; <span class="stringliteral">&quot;&#39;\n&quot;</span>);</div>
-<div class="line"><span class="lineno">  225</span>        _common_config.SymbolsToRename[name] = *oname;</div>
-<div class="line"><span class="lineno">  226</span>      }</div>
-<div class="line"><span class="lineno">  227</span>    }</div>
-<div class="line"><span class="lineno">  228</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  222</span>                                        : _b{std::move(b)} {</div>
+<div class="line"><span class="lineno">  223</span>    <span class="keyword">const</span> <span class="keyword">auto</span> end = _b._symbols.end();</div>
+<div class="line"><span class="lineno">  224</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> entry = _b._symbols.begin(); entry != end; ++entry) {</div>
+<div class="line"><span class="lineno">  225</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;name = entry-&gt;first();</div>
+<div class="line"><span class="lineno">  226</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;sym = entry-&gt;getValue();</div>
+<div class="line"><span class="lineno">  227</span>      <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> oname = sym.OverwriteName(); oname) {</div>
+<div class="line"><span class="lineno">  228</span>        LLVM_DEBUG(llvm::dbgs() &lt;&lt; <span class="stringliteral">&quot;bartleby is going to rename &#39;&quot;</span> &lt;&lt; name</div>
+<div class="line"><span class="lineno">  229</span>                                &lt;&lt; <span class="stringliteral">&quot;&#39; into &#39;&quot;</span> &lt;&lt; *oname &lt;&lt; <span class="stringliteral">&quot;&#39;\n&quot;</span>);</div>
+<div class="line"><span class="lineno">  230</span>        _common_config.SymbolsToRename[name] = *oname;</div>
+<div class="line"><span class="lineno">  231</span>      }</div>
+<div class="line"><span class="lineno">  232</span>    }</div>
+<div class="line"><span class="lineno">  233</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -195,17 +195,17 @@ Public Member Functions</h2></td></tr>
 
 <p>Build the final archive. </p>
 <dl class="section return"><dt>Returns</dt><dd>A memory buffer or an error. </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  251</span>                   {</div>
-<div class="line"><span class="lineno">  252</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = ExecuteObjCopyOnObjects(); err) {</div>
-<div class="line"><span class="lineno">  253</span>      <span class="keywordflow">return</span> err;</div>
-<div class="line"><span class="lineno">  254</span>    }</div>
-<div class="line"><span class="lineno">  255</span> </div>
-<div class="line"><span class="lineno">  256</span>    <span class="keywordflow">return</span> llvm::writeArchiveToBuffer(_ar_members,</div>
-<div class="line"><span class="lineno">  257</span>                                      <span class="comment">/* WriteSymtab= */</span> <span class="keyword">true</span>,</div>
-<div class="line"><span class="lineno">  258</span>                                      _ar_members[0].detectKindFromObject(),</div>
-<div class="line"><span class="lineno">  259</span>                                      <span class="comment">/* Deterministic= */</span> <span class="keyword">true</span>,</div>
-<div class="line"><span class="lineno">  260</span>                                      <span class="comment">/* Thin= */</span> <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  261</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  256</span>                   {</div>
+<div class="line"><span class="lineno">  257</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = ExecuteObjCopyOnObjects(); err) {</div>
+<div class="line"><span class="lineno">  258</span>      <span class="keywordflow">return</span> err;</div>
+<div class="line"><span class="lineno">  259</span>    }</div>
+<div class="line"><span class="lineno">  260</span> </div>
+<div class="line"><span class="lineno">  261</span>    <span class="keywordflow">return</span> llvm::writeArchiveToBuffer(_ar_members,</div>
+<div class="line"><span class="lineno">  262</span>                                      <span class="comment">/* WriteSymtab= */</span> <span class="keyword">true</span>,</div>
+<div class="line"><span class="lineno">  263</span>                                      _ar_members[0].detectKindFromObject(),</div>
+<div class="line"><span class="lineno">  264</span>                                      <span class="comment">/* Deterministic= */</span> <span class="keyword">true</span>,</div>
+<div class="line"><span class="lineno">  265</span>                                      <span class="comment">/* Thin= */</span> <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  266</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -241,17 +241,17 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An error. </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  235</span>                                                                     {</div>
-<div class="line"><span class="lineno">  236</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = ExecuteObjCopyOnObjects(); err) {</div>
-<div class="line"><span class="lineno">  237</span>      <span class="keywordflow">return</span> err;</div>
-<div class="line"><span class="lineno">  238</span>    }</div>
-<div class="line"><span class="lineno">  239</span> </div>
-<div class="line"><span class="lineno">  240</span>    <span class="keywordflow">return</span> llvm::writeArchive(out_filepath, _ar_members,</div>
-<div class="line"><span class="lineno">  241</span>                              <span class="comment">/* WriteSymtab= */</span> <span class="keyword">true</span>,</div>
-<div class="line"><span class="lineno">  242</span>                              _ar_members[0].detectKindFromObject(),</div>
-<div class="line"><span class="lineno">  243</span>                              <span class="comment">/* Deterministic= */</span> <span class="keyword">true</span>,</div>
-<div class="line"><span class="lineno">  244</span>                              <span class="comment">/* Thin= */</span> <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  245</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  240</span>                                                                     {</div>
+<div class="line"><span class="lineno">  241</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = ExecuteObjCopyOnObjects(); err) {</div>
+<div class="line"><span class="lineno">  242</span>      <span class="keywordflow">return</span> err;</div>
+<div class="line"><span class="lineno">  243</span>    }</div>
+<div class="line"><span class="lineno">  244</span> </div>
+<div class="line"><span class="lineno">  245</span>    <span class="keywordflow">return</span> llvm::writeArchive(out_filepath, _ar_members,</div>
+<div class="line"><span class="lineno">  246</span>                              <span class="comment">/* WriteSymtab= */</span> <span class="keyword">true</span>,</div>
+<div class="line"><span class="lineno">  247</span>                              _ar_members[0].detectKindFromObject(),</div>
+<div class="line"><span class="lineno">  248</span>                              <span class="comment">/* Deterministic= */</span> <span class="keyword">true</span>,</div>
+<div class="line"><span class="lineno">  249</span>                              <span class="comment">/* Thin= */</span> <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  250</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -277,9 +277,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  276</span>                                          {</div>
-<div class="line"><span class="lineno">  277</span>    <span class="keywordflow">return</span> _coff_config;</div>
-<div class="line"><span class="lineno">  278</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  281</span>                                          {</div>
+<div class="line"><span class="lineno">  282</span>    <span class="keywordflow">return</span> _coff_config;</div>
+<div class="line"><span class="lineno">  283</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -305,9 +305,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  266</span>                                                                           {</div>
-<div class="line"><span class="lineno">  267</span>    <span class="keywordflow">return</span> _common_config;</div>
-<div class="line"><span class="lineno">  268</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  271</span>                                                                           {</div>
+<div class="line"><span class="lineno">  272</span>    <span class="keywordflow">return</span> _common_config;</div>
+<div class="line"><span class="lineno">  273</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -333,9 +333,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  271</span>                                         {</div>
-<div class="line"><span class="lineno">  272</span>    <span class="keywordflow">return</span> _elf_config;</div>
-<div class="line"><span class="lineno">  273</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  276</span>                                         {</div>
+<div class="line"><span class="lineno">  277</span>    <span class="keywordflow">return</span> _elf_config;</div>
+<div class="line"><span class="lineno">  278</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -361,9 +361,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  281</span>                                           {</div>
-<div class="line"><span class="lineno">  282</span>    <span class="keywordflow">return</span> _macho_config;</div>
-<div class="line"><span class="lineno">  283</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  286</span>                                           {</div>
+<div class="line"><span class="lineno">  287</span>    <span class="keywordflow">return</span> _macho_config;</div>
+<div class="line"><span class="lineno">  288</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -389,9 +389,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  286</span>                                          {</div>
-<div class="line"><span class="lineno">  287</span>    <span class="keywordflow">return</span> _wasm_config;</div>
-<div class="line"><span class="lineno">  288</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  291</span>                                          {</div>
+<div class="line"><span class="lineno">  292</span>    <span class="keywordflow">return</span> _wasm_config;</div>
+<div class="line"><span class="lineno">  293</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -417,9 +417,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  291</span>                                           {</div>
-<div class="line"><span class="lineno">  292</span>    <span class="keywordflow">return</span> _xcoff_config;</div>
-<div class="line"><span class="lineno">  293</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  296</span>                                           {</div>
+<div class="line"><span class="lineno">  297</span>    <span class="keywordflow">return</span> _xcoff_config;</div>
+<div class="line"><span class="lineno">  298</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>

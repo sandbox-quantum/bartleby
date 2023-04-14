@@ -214,17 +214,22 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  167</span>        }</div>
 <div class="line"><span class="lineno">  168</span>      } <span class="keywordflow">else</span> {</div>
 <div class="line"><span class="lineno">  169</span>        Error::UnsupportedBinaryReason reason;</div>
-<div class="line"><span class="lineno">  170</span>        (llvm::Twine{<span class="stringliteral">&quot;unsupported binary &#39;&quot;</span>} + llvm::utostr(binary-&gt;getType()) +</div>
-<div class="line"><span class="lineno">  171</span>         <span class="stringliteral">&quot;&#39;&quot;</span>)</div>
-<div class="line"><span class="lineno">  172</span>            .toNullTerminatedStringRef(reason.msg);</div>
+<div class="line"><span class="lineno">  170</span>        llvm::raw_svector_ostream os(reason.msg);</div>
+<div class="line"><span class="lineno">  171</span>        os &lt;&lt; <span class="stringliteral">&quot;unsupported binary &#39;&quot;</span> &lt;&lt; binary-&gt;getType()</div>
+<div class="line"><span class="lineno">  172</span>           &lt;&lt; <span class="stringliteral">&quot;&#39; (triple: &quot;</span> &lt;&lt; binary-&gt;getTripleObjectFormat() &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
 <div class="line"><span class="lineno">  173</span>        <span class="keywordflow">return</span> llvm::make_error&lt;Error&gt;(std::move(reason));</div>
 <div class="line"><span class="lineno">  174</span>      }</div>
 <div class="line"><span class="lineno">  175</span>    }</div>
 <div class="line"><span class="lineno">  176</span>  } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  177</span>  }</div>
-<div class="line"><span class="lineno">  178</span>  _owned_binaries.push_back(std::move(owning_binary));</div>
-<div class="line"><span class="lineno">  179</span>  <span class="keywordflow">return</span> llvm::Error::success();</div>
-<div class="line"><span class="lineno">  180</span>}</div>
+<div class="line"><span class="lineno">  177</span>    Error::UnsupportedBinaryReason reason;</div>
+<div class="line"><span class="lineno">  178</span>    llvm::raw_svector_ostream os(reason.msg);</div>
+<div class="line"><span class="lineno">  179</span>    os &lt;&lt; <span class="stringliteral">&quot;unsupported binary &#39;&quot;</span> &lt;&lt; binary-&gt;getType()</div>
+<div class="line"><span class="lineno">  180</span>       &lt;&lt; <span class="stringliteral">&quot;&#39; (triple: &quot;</span> &lt;&lt; binary-&gt;getTripleObjectFormat() &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
+<div class="line"><span class="lineno">  181</span>    <span class="keywordflow">return</span> llvm::make_error&lt;Error&gt;(std::move(reason));</div>
+<div class="line"><span class="lineno">  182</span>  }</div>
+<div class="line"><span class="lineno">  183</span>  _owned_binaries.push_back(std::move(owning_binary));</div>
+<div class="line"><span class="lineno">  184</span>  <span class="keywordflow">return</span> llvm::Error::success();</div>
+<div class="line"><span class="lineno">  185</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -260,10 +265,10 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Memory buffer containing the archive, or an error. </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  351</span>                                                 {</div>
-<div class="line"><span class="lineno">  352</span>  ArchiveBuilder builder(std::move(b));</div>
-<div class="line"><span class="lineno">  353</span>  <span class="keywordflow">return</span> builder.Build();</div>
-<div class="line"><span class="lineno">  354</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  356</span>                                                 {</div>
+<div class="line"><span class="lineno">  357</span>  ArchiveBuilder builder(std::move(b));</div>
+<div class="line"><span class="lineno">  358</span>  <span class="keywordflow">return</span> builder.Build();</div>
+<div class="line"><span class="lineno">  359</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -310,10 +315,10 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An error, or success. </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  345</span>                                                                 {</div>
-<div class="line"><span class="lineno">  346</span>  ArchiveBuilder builder(std::move(b));</div>
-<div class="line"><span class="lineno">  347</span>  <span class="keywordflow">return</span> builder.Build(out_filepath);</div>
-<div class="line"><span class="lineno">  348</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  350</span>                                                                 {</div>
+<div class="line"><span class="lineno">  351</span>  ArchiveBuilder builder(std::move(b));</div>
+<div class="line"><span class="lineno">  352</span>  <span class="keywordflow">return</span> builder.Build(out_filepath);</div>
+<div class="line"><span class="lineno">  353</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -349,31 +354,31 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of symbols that have been prefixed. </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  183</span>                                                                     {</div>
-<div class="line"><span class="lineno">  184</span>  <span class="keywordtype">size_t</span> n = 0;</div>
-<div class="line"><span class="lineno">  185</span>  <span class="keyword">const</span> <span class="keyword">auto</span> end = _symbols.end();</div>
-<div class="line"><span class="lineno">  186</span>  <span class="keywordflow">for</span> (<span class="keyword">auto</span> entry = _symbols.begin(); entry != end; ++entry) {</div>
-<div class="line"><span class="lineno">  187</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;name = entry-&gt;first();</div>
-<div class="line"><span class="lineno">  188</span>    <span class="keyword">auto</span> &amp;sym = entry-&gt;getValue();</div>
-<div class="line"><span class="lineno">  189</span>    <span class="keywordflow">if</span> (sym.Global() &amp;&amp; sym.Defined()) {</div>
-<div class="line"><span class="lineno">  190</span>      std::string new_name;</div>
-<div class="line"><span class="lineno">  191</span>      <span class="keywordflow">if</span> (sym.IsMachO()) {</div>
-<div class="line"><span class="lineno">  192</span>        new_name += <span class="charliteral">&#39;_&#39;</span>;</div>
-<div class="line"><span class="lineno">  193</span>      }</div>
-<div class="line"><span class="lineno">  194</span>      new_name += prefix;</div>
-<div class="line"><span class="lineno">  195</span> </div>
+<div class="fragment"><div class="line"><span class="lineno">  188</span>                                                                     {</div>
+<div class="line"><span class="lineno">  189</span>  <span class="keywordtype">size_t</span> n = 0;</div>
+<div class="line"><span class="lineno">  190</span>  <span class="keyword">const</span> <span class="keyword">auto</span> end = _symbols.end();</div>
+<div class="line"><span class="lineno">  191</span>  <span class="keywordflow">for</span> (<span class="keyword">auto</span> entry = _symbols.begin(); entry != end; ++entry) {</div>
+<div class="line"><span class="lineno">  192</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;name = entry-&gt;first();</div>
+<div class="line"><span class="lineno">  193</span>    <span class="keyword">auto</span> &amp;sym = entry-&gt;getValue();</div>
+<div class="line"><span class="lineno">  194</span>    <span class="keywordflow">if</span> (sym.Global() &amp;&amp; sym.Defined()) {</div>
+<div class="line"><span class="lineno">  195</span>      std::string new_name;</div>
 <div class="line"><span class="lineno">  196</span>      <span class="keywordflow">if</span> (sym.IsMachO()) {</div>
-<div class="line"><span class="lineno">  197</span>        new_name += name.substr(1);</div>
-<div class="line"><span class="lineno">  198</span>      } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  199</span>        new_name += name;</div>
-<div class="line"><span class="lineno">  200</span>      }</div>
-<div class="line"><span class="lineno">  201</span>      sym.SetName(std::move(new_name));</div>
-<div class="line"><span class="lineno">  202</span>      ++n;</div>
-<div class="line"><span class="lineno">  203</span>    }</div>
-<div class="line"><span class="lineno">  204</span>  }</div>
-<div class="line"><span class="lineno">  205</span> </div>
-<div class="line"><span class="lineno">  206</span>  <span class="keywordflow">return</span> n;</div>
-<div class="line"><span class="lineno">  207</span>}</div>
+<div class="line"><span class="lineno">  197</span>        new_name += <span class="charliteral">&#39;_&#39;</span>;</div>
+<div class="line"><span class="lineno">  198</span>      }</div>
+<div class="line"><span class="lineno">  199</span>      new_name += prefix;</div>
+<div class="line"><span class="lineno">  200</span> </div>
+<div class="line"><span class="lineno">  201</span>      <span class="keywordflow">if</span> (sym.IsMachO()) {</div>
+<div class="line"><span class="lineno">  202</span>        new_name += name.substr(1);</div>
+<div class="line"><span class="lineno">  203</span>      } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  204</span>        new_name += name;</div>
+<div class="line"><span class="lineno">  205</span>      }</div>
+<div class="line"><span class="lineno">  206</span>      sym.SetName(std::move(new_name));</div>
+<div class="line"><span class="lineno">  207</span>      ++n;</div>
+<div class="line"><span class="lineno">  208</span>    }</div>
+<div class="line"><span class="lineno">  209</span>  }</div>
+<div class="line"><span class="lineno">  210</span> </div>
+<div class="line"><span class="lineno">  211</span>  <span class="keywordflow">return</span> n;</div>
+<div class="line"><span class="lineno">  212</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
