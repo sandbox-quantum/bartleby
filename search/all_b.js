@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['reason_0',['Reason',['../classsaq_1_1bartleby_1_1Error.html#a390b6438211393144e6a5581ad98d9f8',1,'saq::bartleby::Error']]],
-  ['references_1',['References',['../classsaq_1_1bartleby_1_1Symbol.html#a5ba2a2c59732f9904bd089d1271d9afd',1,'saq::bartleby::Symbol']]]
+  ['prefix_0',['Prefix',['../tools_2Bartleby_2Bartleby_8cpp.html#a43292e59da46a9f6a90a53ddd02cf991',1,'Bartleby.cpp']]],
+  ['prefixglobalanddefinedsymbols_1',['PrefixGlobalAndDefinedSymbols',['../classsaq_1_1bartleby_1_1Bartleby.html#aa6b4af127189370f053b034ffc12c3f8',1,'saq::bartleby::Bartleby']]]
 ];

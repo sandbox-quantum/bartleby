@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['unsupportedbinaryreason_0',['UnsupportedBinaryReason',['../structsaq_1_1bartleby_1_1Error_1_1UnsupportedBinaryReason.html',1,'saq::bartleby::Error']]],
-  ['updatewithnewsymbolinfo_1',['UpdateWithNewSymbolInfo',['../classsaq_1_1bartleby_1_1Symbol.html#a4813a6417024db559e8277748e9c803c',1,'saq::bartleby::Symbol']]],
-  ['using_20bazel_2',['Using Bazel',['../page-gs-bazel.html',1,'page-gs-building-from-source']]],
-  ['using_20cmake_3',['Using CMake',['../page-gs-cmake.html',1,'page-gs-building-from-source']]]
+  ['test_0',['TEST',['../Tests_8cpp.html#ada913b90c973087f22177bcaf16d52b5',1,'Tests.cpp']]],
+  ['tests_2ecpp_1',['Tests.cpp',['../Tests_8cpp.html',1,'']]],
+  ['type_2',['type',['../structsaq_1_1bartleby_1_1SymbolInfo.html#a7adf9926a7ac57a8baeae6df34a2df84',1,'saq::bartleby::SymbolInfo::type()'],['../structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason.html#a3a5ca5ecf56f7abf5cfbe3fedc3aca3a',1,'saq::bartleby::Error::ObjectFormatTypeMismatchReason::type()']]]
 ];

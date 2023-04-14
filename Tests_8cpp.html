@@ -133,6 +133,9 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a4f70ac0be2e4ec7ce5b7c43d183c8e29"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Tests_8cpp.html#a4f70ac0be2e4ec7ce5b7c43d183c8e29">TEST</a> (BartleByObjectYamlELF, Object386)</td></tr>
 <tr class="separator:a4f70ac0be2e4ec7ce5b7c43d183c8e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada913b90c973087f22177bcaf16d52b5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Tests_8cpp.html#ada913b90c973087f22177bcaf16d52b5">TEST</a> (BartleByObjectYamlError, ObjectTypeMisMatch)</td></tr>
+<tr class="memdesc:ada913b90c973087f22177bcaf16d52b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that passing two objects with different format types is an error.  <br /></td></tr>
+<tr class="separator:ada913b90c973087f22177bcaf16d52b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Unit tests for Bartleby. </p>
@@ -543,7 +546,7 @@ Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a4f70ac0be2e4ec7ce5b7c43d183c8e29" name="a4f70ac0be2e4ec7ce5b7c43d183c8e29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f70ac0be2e4ec7ce5b7c43d183c8e29">&#9670;&#160;</a></span>TEST()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f70ac0be2e4ec7ce5b7c43d183c8e29">&#9670;&#160;</a></span>TEST() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -652,9 +655,53 @@ Functions</h2></td></tr>
 <div class="ttc" id="aTests_8cpp_html_af1fe266c0abe27080fc92f65b8ad4f9c"><div class="ttname"><a href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a></div><div class="ttdeci">#define ASSERT_SYM_DEFINED(_b_, _name_)</div><div class="ttdoc">Assert that a symbol is defined.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:212</div></div>
 <div class="ttc" id="aTests_8cpp_html_af603cc293cbe77c7e632d6524545eb37"><div class="ttname"><a href="Tests_8cpp.html#af603cc293cbe77c7e632d6524545eb37">ASSERT_SYM_LOCAL</a></div><div class="ttdeci">#define ASSERT_SYM_LOCAL(_b_, _name_)</div><div class="ttdoc">Assert that a symbol is local.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:181</div></div>
 <div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html">saq::bartleby::Bartleby</a></div><div class="ttdoc">Bartleby handle.</div><div class="ttdef"><b>Definition:</b> Bartleby.h:33</div></div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a2b57e86f54f53b0cb9396a4ae4f1bb43"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a2b57e86f54f53b0cb9396a4ae4f1bb43">saq::bartleby::Bartleby::BuildFinalArchive</a></div><div class="ttdeci">static llvm::Error BuildFinalArchive(Bartleby &amp;&amp;b, llvm::StringRef out_filepath) noexcept</div><div class="ttdoc">Build final archive.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:349</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a2b57e86f54f53b0cb9396a4ae4f1bb43"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a2b57e86f54f53b0cb9396a4ae4f1bb43">saq::bartleby::Bartleby::BuildFinalArchive</a></div><div class="ttdeci">static llvm::Error BuildFinalArchive(Bartleby &amp;&amp;b, llvm::StringRef out_filepath) noexcept</div><div class="ttdoc">Build final archive.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:357</div></div>
 <div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a77d7f8122271da32771eba4f5a57fe04"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a77d7f8122271da32771eba4f5a57fe04">saq::bartleby::Bartleby::AddBinary</a></div><div class="ttdeci">llvm::Error AddBinary(llvm::object::OwningBinary&lt; llvm::object::Binary &gt; binary) noexcept</div><div class="ttdoc">Add a new binary to Bartleby.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:138</div></div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_aa6b4af127189370f053b034ffc12c3f8"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#aa6b4af127189370f053b034ffc12c3f8">saq::bartleby::Bartleby::PrefixGlobalAndDefinedSymbols</a></div><div class="ttdeci">size_t PrefixGlobalAndDefinedSymbols(llvm::StringRef prefix) noexcept</div><div class="ttdoc">Prefix all global and defined symbols.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:188</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_aa6b4af127189370f053b034ffc12c3f8"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#aa6b4af127189370f053b034ffc12c3f8">saq::bartleby::Bartleby::PrefixGlobalAndDefinedSymbols</a></div><div class="ttdeci">size_t PrefixGlobalAndDefinedSymbols(llvm::StringRef prefix) noexcept</div><div class="ttdoc">Prefix all global and defined symbols.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:196</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ada913b90c973087f22177bcaf16d52b5" name="ada913b90c973087f22177bcaf16d52b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada913b90c973087f22177bcaf16d52b5">&#9670;&#160;</a></span>TEST() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">BartleByObjectYamlError&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ObjectTypeMisMatch&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test that passing two objects with different format types is an error. </p>
+<div class="fragment"><div class="line"><span class="lineno">  324</span>                                                  {</div>
+<div class="line"><span class="lineno">  325</span>  llvm::SmallVector&lt;llvm::object::OwningBinary&lt;llvm::object::Binary&gt;, 2&gt;</div>
+<div class="line"><span class="lineno">  326</span>      objects;</div>
+<div class="line"><span class="lineno">  327</span>  ASSERT_TRUE(YAML2Objects(<span class="stringliteral">&quot;arm64.yaml&quot;</span>, llvm::Triple::ObjectFormatType::MachO,</div>
+<div class="line"><span class="lineno">  328</span>                           objects));</div>
+<div class="line"><span class="lineno">  329</span> </div>
+<div class="line"><span class="lineno">  330</span>  ASSERT_TRUE(YAML2Objects(<span class="stringliteral">&quot;simple_x86_64.yaml&quot;</span>,</div>
+<div class="line"><span class="lineno">  331</span>                           llvm::Triple::ObjectFormatType::ELF, objects));</div>
+<div class="line"><span class="lineno">  332</span> </div>
+<div class="line"><span class="lineno">  333</span>  <a class="code hl_class" href="classsaq_1_1bartleby_1_1Bartleby.html">Bartleby</a> b;</div>
+<div class="line"><span class="lineno">  334</span>  ASSERT_FALSE(b.<a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby.html#a77d7f8122271da32771eba4f5a57fe04">AddBinary</a>(std::move(objects[0])));</div>
+<div class="line"><span class="lineno">  335</span>  <span class="keyword">auto</span> err = b.<a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby.html#a77d7f8122271da32771eba4f5a57fe04">AddBinary</a>(std::move(objects[1]));</div>
+<div class="line"><span class="lineno">  336</span>  ASSERT_TRUE(!!err);</div>
+<div class="line"><span class="lineno">  337</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>

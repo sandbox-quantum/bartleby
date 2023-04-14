@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bartleby: bartleby/lib/Bartleby/Error.h File Reference</title>
+<title>Bartleby: saq::bartleby::Error::ObjectFormatTypeMismatchReason Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -71,42 +71,40 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_6b4e5e04e074950b7ae25d124bee5399.html">bartleby</a></li><li class="navelem"><a class="el" href="dir_e5a8a0704cab9a24ec13fcb7bfcfa4df.html">lib</a></li><li class="navelem"><a class="el" href="dir_d6ba8622ef211ee1e34113afcaf25d7f.html">Bartleby</a></li>  </ul>
+<li class="navelem"><b>saq</b></li><li class="navelem"><b>bartleby</b></li><li class="navelem"><a class="el" href="classsaq_1_1bartleby_1_1Error.html">Error</a></li><li class="navelem"><a class="el" href="structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason.html">ObjectFormatTypeMismatchReason</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
-  <div class="headertitle"><div class="title">Error.h File Reference</div></div>
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">saq::bartleby::Error::ObjectFormatTypeMismatchReason Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Error specification.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string&gt;</code><br />
-<code>#include &lt;variant&gt;</code><br />
-<code>#include &quot;llvm/ADT/SmallString.h&quot;</code><br />
-<code>#include &quot;llvm/ADT/Triple.h&quot;</code><br />
-<code>#include &quot;llvm/Support/Error.h&quot;</code><br />
-</div>
-<p><a href="Error_8h_source.html">Go to the source code of this file.</a></p>
+<p>Mismatch between object format type.  
+ <a href="structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Error_8h_source.html">Error.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Custom error info for <a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html" title="Bartleby handle.">Bartleby</a>.  <a href="classsaq_1_1bartleby_1_1Error.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsaq_1_1bartleby_1_1Error_1_1UnsupportedBinaryReason.html">saq::bartleby::Error::UnsupportedBinaryReason</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classsaq_1_1bartleby_1_1Error.html" title="Custom error info for Bartleby.">Error</a> from std::error_code.  <a href="structsaq_1_1bartleby_1_1Error_1_1UnsupportedBinaryReason.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason.html">saq::bartleby::Error::ObjectFormatTypeMismatchReason</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mismatch between object format type.  <a href="structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a457c7b4d3acf45b76f0b35bd96d8ece2"><td class="memItemLeft" align="right" valign="top"><a id="a457c7b4d3acf45b76f0b35bd96d8ece2" name="a457c7b4d3acf45b76f0b35bd96d8ece2"></a>
+llvm::Triple::ObjectFormatType&#160;</td><td class="memItemRight" valign="bottom"><b>constraint</b></td></tr>
+<tr class="memdesc:a457c7b4d3acf45b76f0b35bd96d8ece2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object type from the <a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html" title="Bartleby handle.">Bartleby</a> handle. <br /></td></tr>
+<tr class="separator:a457c7b4d3acf45b76f0b35bd96d8ece2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a5ca5ecf56f7abf5cfbe3fedc3aca3a"><td class="memItemLeft" align="right" valign="top"><a id="a3a5ca5ecf56f7abf5cfbe3fedc3aca3a" name="a3a5ca5ecf56f7abf5cfbe3fedc3aca3a"></a>
+llvm::Triple::ObjectFormatType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
+<tr class="memdesc:a3a5ca5ecf56f7abf5cfbe3fedc3aca3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the object responsible of this error. <br /></td></tr>
+<tr class="separator:a3a5ca5ecf56f7abf5cfbe3fedc3aca3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Error specification. </p>
-<dl class="section author"><dt>Author</dt><dd>thb-sb </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><p>Mismatch between object format type. </p>
+<p>This error is raised when an object has a different format type than the objects previously added to a <a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html" title="Bartleby handle.">Bartleby</a> handle. </p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<li>bartleby/lib/Bartleby/<a class="el" href="Error_8h_source.html">Error.h</a></li>
+</ul>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['id_0',['ID',['../classsaq_1_1bartleby_1_1Error.html#a96f8aeb6423fd0043407fcfc5f590d4c',1,'saq::bartleby::Error']]]
+  ['flags_0',['flags',['../structsaq_1_1bartleby_1_1SymbolInfo.html#a1d327f7de6f8bd8017fa5d64377e6d87',1,'saq::bartleby::SymbolInfo']]]
 ];

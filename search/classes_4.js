@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['unsupportedbinaryreason_0',['UnsupportedBinaryReason',['../structsaq_1_1bartleby_1_1Error_1_1UnsupportedBinaryReason.html',1,'saq::bartleby::Error']]]
+  ['symbol_0',['Symbol',['../classsaq_1_1bartleby_1_1Symbol.html',1,'saq::bartleby']]],
+  ['symbolinfo_1',['SymbolInfo',['../structsaq_1_1bartleby_1_1SymbolInfo.html',1,'saq::bartleby']]]
 ];

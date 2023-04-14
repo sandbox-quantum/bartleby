@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['name_0',['name',['../structsaq_1_1bartleby_1_1SymbolInfo.html#aa108854942cfb658dcf63e3c311c3c99',1,'saq::bartleby::SymbolInfo']]]
+  ['msg_0',['msg',['../structsaq_1_1bartleby_1_1Error_1_1UnsupportedBinaryReason.html#ae29c8db4dae157917922a950efc899a3',1,'saq::bartleby::Error::UnsupportedBinaryReason']]]
 ];
