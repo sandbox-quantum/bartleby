@@ -46,7 +46,7 @@ std::string Error::message() const noexcept {
       [&ss](auto &&err) {
         using ErrT = std::decay_t<decltype(err)>;
         if constexpr (std::is_same_v<UnsupportedBinaryReason, ErrT>) {
-          ss << "error while reading binary: " << err.msg.str().data();
+          ss << "error while reading binary: ";
         } else {
           __builtin_unreachable();
         }

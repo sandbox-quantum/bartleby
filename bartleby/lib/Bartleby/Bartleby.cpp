@@ -167,13 +167,18 @@ BARTLEBY_API llvm::Error Bartleby::AddBinary(
         }
       } else {
         Error::UnsupportedBinaryReason reason;
-        (llvm::Twine{"unsupported binary '"} + llvm::utostr(binary->getType()) +
-         "'")
-            .toNullTerminatedStringRef(reason.msg);
+        llvm::raw_svector_ostream os(reason.msg);
+        os << "unsupported binary '" << binary->getType()
+           << "' (triple: " << binary->getTripleObjectFormat() << ')';
         return llvm::make_error<Error>(std::move(reason));
       }
     }
   } else {
+    Error::UnsupportedBinaryReason reason;
+    llvm::raw_svector_ostream os(reason.msg);
+    os << "unsupported binary '" << binary->getType()
+       << "' (triple: " << binary->getTripleObjectFormat() << ')';
+    return llvm::make_error<Error>(std::move(reason));
   }
   _owned_binaries.push_back(std::move(owning_binary));
   return llvm::Error::success();
