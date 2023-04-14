@@ -124,7 +124,7 @@ private:
   ///
   /// It is not allowed to have different object format types within the same
   /// Bartleby handle.
-  llvm::Triple::ObjectFormatType _type =
+  llvm::Triple::ObjectFormatType type_ =
       llvm::Triple::ObjectFormatType::UnknownObjectFormat;
 
   // Forward declaration.
