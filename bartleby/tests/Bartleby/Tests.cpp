@@ -36,8 +36,7 @@
 namespace {
 
 /// \brief Base directory for test data based on yaml files.
-constexpr llvm::StringRef kTestDataBaseDir =
-    "bartleby/tests/Bartleby/testdata/yaml";
+#define TEST_DATA_BASE_DIR "bartleby/tests/Bartleby/testdata/yaml"
 
 /// \brief Size for objects. Used by llvm::SmallVector.
 constexpr size_t kObjectSize = 2048;
@@ -48,32 +47,32 @@ constexpr size_t kObjectSize = 2048;
 /// \param format Object format.
 ///
 /// \return Path to the directory containing yaml files for the format.
-[[nodiscard]] llvm::Twine
+[[nodiscard]] llvm::StringRef
 ObjectFormatToPath(const llvm::Triple::ObjectFormatType format) {
   switch (format) {
   case llvm::Triple::ObjectFormatType::COFF: {
-    return kTestDataBaseDir + "/COFF";
+    return TEST_DATA_BASE_DIR "/COFF";
   }
   case llvm::Triple::ObjectFormatType::DXContainer: {
-    return kTestDataBaseDir + "/DXContainer";
+    return TEST_DATA_BASE_DIR "/DXContainer";
   }
   case llvm::Triple::ObjectFormatType::ELF: {
-    return kTestDataBaseDir + "/ELF";
+    return TEST_DATA_BASE_DIR "/ELF";
   }
   case llvm::Triple::ObjectFormatType::GOFF: {
-    return kTestDataBaseDir + "/GOFF";
+    return TEST_DATA_BASE_DIR "/GOFF";
   }
   case llvm::Triple::ObjectFormatType::MachO: {
-    return kTestDataBaseDir + "/MachO";
+    return TEST_DATA_BASE_DIR "/MachO";
   }
   case llvm::Triple::ObjectFormatType::SPIRV: {
-    return kTestDataBaseDir + "/SPIRV";
+    return TEST_DATA_BASE_DIR "/SPIRV";
   }
   case llvm::Triple::ObjectFormatType::Wasm: {
-    return kTestDataBaseDir + "/Wasm";
+    return TEST_DATA_BASE_DIR "/Wasm";
   }
   case llvm::Triple::ObjectFormatType::XCOFF: {
-    return kTestDataBaseDir + "/XCOFF";
+    return TEST_DATA_BASE_DIR "/XCOFF";
   }
   default: {
     __builtin_unreachable();
@@ -92,13 +91,13 @@ ObjectFormatToPath(const llvm::Triple::ObjectFormatType format) {
 ReadYamlFile(llvm::StringRef filepath,
              const llvm::Triple::ObjectFormatType object_format,
              std::unique_ptr<llvm::MemoryBuffer> &content) {
-  auto path = ObjectFormatToPath(object_format) + "/" + filepath;
-  if (auto file_or_err = llvm::MemoryBuffer::getFile(path, true)) {
+  if (auto file_or_err = llvm::MemoryBuffer::getFile(
+          ObjectFormatToPath(object_format) + "/" + filepath, true)) {
     content = std::move(file_or_err.get());
     return testing::AssertionSuccess();
   } else {
-    return testing::AssertionFailure()
-           << "failed to read " << path.str() << ": " << file_or_err.getError();
+    return testing::AssertionFailure() << "failed to read " << filepath.data()
+                                       << ": " << file_or_err.getError();
   }
 }
 
