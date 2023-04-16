@@ -27,6 +27,8 @@
 #include "llvm/ADT/Triple.h"
 #include "llvm/Support/Error.h"
 
+#include "Bartleby/Bartleby.h"
+
 namespace saq::bartleby {
 
 /// \brief Custom error info for Bartleby.
@@ -47,10 +49,10 @@ public:
   /// the objects previously added to a Bartleby handle.
   struct ObjectFormatTypeMismatchReason {
     /// \brief Object type from the Bartleby handle.
-    llvm::Triple::ObjectFormatType constraint;
+    ObjectFormat constraint;
 
     /// \brief The type of the object responsible of this error.
-    llvm::Triple::ObjectFormatType type;
+    ObjectFormat found;
   };
 
   /// \brief Reason for error.

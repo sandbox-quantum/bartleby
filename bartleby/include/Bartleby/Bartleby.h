@@ -20,6 +20,10 @@
 
 #pragma once
 
+#include <optional>
+#include <unordered_set>
+#include <variant>
+
 #include "llvm/ADT/SmallVector.h"
 #include "llvm/ADT/StringMap.h"
 #include "llvm/Object/ArchiveWriter.h"
@@ -28,6 +32,55 @@
 #include "Bartleby/Symbol.h"
 
 namespace saq::bartleby {
+
+/// \brief Object format.
+///
+/// This structure defines an object format using the minimum amount of
+/// information. It uses the architecture type (`llvm::Triple::ArchType`)
+/// , the sub-architecture type (`llvm::Triple::SubArchType`) and the
+/// object file format (`llvm::Triple::ObjectFormatType`).
+struct ObjectFormat {
+  /// \brief The architecture.
+  llvm::Triple::ArchType arch;
+
+  /// \brief The sub-architecture.
+  llvm::Triple::SubArchType subarch;
+
+  /// \brief The object format file.
+  llvm::Triple::ObjectFormatType format_type;
+
+  /// \brief Construct an ObjectFormat out of a `llvm::Triple`.
+  ///
+  /// \param triple The triple to use.
+  ObjectFormat(const llvm::Triple &triple) noexcept;
+
+  /// \brief Pack the architecture, sub-architecture and object format file
+  /// enums into a 8-bytes integer.
+  [[nodiscard]] uint64_t pack() const noexcept;
+
+  /// \brief Comparison operator between two ObjectFormat.
+  bool operator==(const ObjectFormat &other) const noexcept;
+
+  /// \brief Verify that a `llvm::Triple` matches the value from an
+  /// ObjectFormat.
+  ///
+  /// \param triple The triple to compare against the ObjectFormat.
+  ///
+  /// \return True if the given triple has the same architecture,
+  /// sub-architecture and object format than the ones stored in ObjectFormat.
+  bool matches(const llvm::Triple &triple) const noexcept;
+
+  /// \brief Stream operator with a llvm::raw_ostream.
+  friend llvm::raw_ostream &operator<<(llvm::raw_ostream &os,
+                                       const ObjectFormat &format) noexcept;
+
+  /// \brief std::hash implementation for ObjectFormat.
+  struct Hash {
+    inline size_t operator()(const ObjectFormat &objformat) const noexcept {
+      return static_cast<size_t>(objformat.pack());
+    }
+  };
+};
 
 /// \brief Bartleby handle.
 class Bartleby {
@@ -124,8 +177,7 @@ private:
   ///
   /// It is not allowed to have different object format types within the same
   /// Bartleby handle.
-  llvm::Triple::ObjectFormatType type_ =
-      llvm::Triple::ObjectFormatType::UnknownObjectFormat;
+  std::optional<ObjectFormat> _object_format;
 
   // Forward declaration.
   class ArchiveBuilder;

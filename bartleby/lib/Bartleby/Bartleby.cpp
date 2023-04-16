@@ -135,6 +135,31 @@ void ProcessObjectFile(const llvm::object::ObjectFile *object,
 
 } // end anonymous namespace
 
+ObjectFormat::ObjectFormat(const llvm::Triple &triple) noexcept
+    : arch(triple.getArch()), subarch(triple.getSubArch()),
+      format_type(triple.getObjectFormat()) {}
+
+uint64_t ObjectFormat::pack() const noexcept {
+  return (static_cast<uint64_t>(arch)) |
+         (static_cast<uint64_t>(subarch) << 16) |
+         (static_cast<uint64_t>(format_type) << 32);
+}
+
+bool ObjectFormat::operator==(const ObjectFormat &other) const noexcept {
+  return pack() == other.pack();
+}
+
+bool ObjectFormat::matches(const llvm::Triple &triple) const noexcept {
+  return ObjectFormat{triple}.pack() == pack();
+}
+
+llvm::raw_ostream &operator<<(llvm::raw_ostream &os,
+                              const ObjectFormat &object_format) noexcept {
+  return os << "ObjectFormat(arch=" << object_format.arch
+            << ", subarch=" << object_format.subarch
+            << ", file format=" << object_format.format_type << ')';
+}
+
 BARTLEBY_API llvm::Error Bartleby::AddBinary(
     llvm::object::OwningBinary<llvm::object::Binary> owning_binary) noexcept {
   auto *binary = owning_binary.getBinary();
@@ -142,12 +167,13 @@ BARTLEBY_API llvm::Error Bartleby::AddBinary(
 
   const auto type = binary->getTripleObjectFormat();
   if (auto *obj = llvm::dyn_cast<llvm::object::ObjectFile>(binary)) {
-    if (type_ == llvm::Triple::ObjectFormatType::UnknownObjectFormat) {
-      type_ = type;
+    const auto triple = obj->makeTriple();
+    if (!_object_format) {
+      _object_format = triple;
     }
-    if (type_ != type) {
+    if (!_object_format->matches(triple)) {
       return llvm::make_error<Error>(Error::ObjectFormatTypeMismatchReason{
-          .constraint = type_, .type = type});
+          .constraint = *_object_format, .found = ObjectFormat{triple}});
     }
     ProcessObjectFile(obj, _symbols);
     auto &entry = _objects.emplace_back(ObjectFile{.handle = obj});
