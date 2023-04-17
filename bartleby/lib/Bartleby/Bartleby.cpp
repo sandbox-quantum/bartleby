@@ -156,16 +156,14 @@ BARTLEBY_API llvm::Error Bartleby::AddBinary(
   auto *binary = owning_binary.getBinary();
   llvm::Error e = llvm::Error::success();
 
-  const auto type = binary->getTripleObjectFormat();
   if (auto *obj = llvm::dyn_cast<llvm::object::ObjectFile>(binary)) {
     const auto triple = obj->makeTriple();
-    if (!_object_format) {
-      _object_format = triple;
-    }
-    if (!_object_format->matches(triple)) {
+    if (!objectFormatMatches(triple)) {
       return llvm::make_error<Error>(Error::ObjectFormatTypeMismatchReason{
-          .constraint = *_object_format, .found = ObjectFormat{triple}});
+          .constraint = std::get<ObjectFormat>(_object_format),
+          .found = {triple}});
     }
+    _object_format = triple;
     ProcessObjectFile(obj, _symbols);
     auto &entry = _objects.emplace_back(ObjectFile{.handle = obj});
     (llvm::Twine(llvm::utostr(_objects.size())) + ".o")
@@ -179,6 +177,14 @@ BARTLEBY_API llvm::Error Bartleby::AddBinary(
       }
       if (auto *obj = llvm::dyn_cast<llvm::object::ObjectFile>(
               bin_or_err.get().get())) {
+        const auto triple = obj->makeTriple();
+        if (!objectFormatMatches(triple)) {
+          return llvm::make_error<Error>(Error::ObjectFormatTypeMismatchReason{
+              .constraint = std::get<ObjectFormat>(_object_format),
+              .found = {triple}});
+        }
+        _object_format = triple;
+
         ProcessObjectFile(obj, _symbols);
         auto &entry = _objects.emplace_back(ObjectFile{
             .owner = std::move(bin_or_err.get()),
@@ -234,6 +240,18 @@ Bartleby::PrefixGlobalAndDefinedSymbols(llvm::StringRef prefix) noexcept {
   }
 
   return n;
+}
+
+bool Bartleby::objectFormatMatches(
+    const ObjectFormat &object_format) const noexcept {
+  if (const auto *f = std::get_if<ObjectFormat>(&_object_format)) {
+    return *f == object_format;
+  }
+  return std::holds_alternative<std::monostate>(_object_format);
+}
+
+bool Bartleby::isMachOUniversalBinary() const noexcept {
+  return std::holds_alternative<ObjectFormatSet>(_object_format);
 }
 
 } // end namespace saq::bartleby
