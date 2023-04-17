@@ -64,6 +64,30 @@ jobs:
               -DLLVM_DIR=/usr/lib/llvm-15/lib/cmake \
               -GNinja
             cmake --build build/ "-j$(nproc)"
+
+  compile-test-asan:
+    resource_class: xlarge
+    docker:
+      - image: us-central1-docker.pkg.dev/pqc-dev-pool-336002/bartleby/bartleby:ci
+        auth:
+          username: _json_key
+          password: $DOCKER_IMAGE_GCR_SA_KEY
+    steps:
+      - checkout
+      - run:
+          name: "Build Bartleby and test"
+          command: |
+            echo "${BAZEL_CACHE_GCS_SA_KEY}" > "${GOOGLE_APPLICATION_CREDENTIALS}"
+            echo "build --remote_cache=${BAZEL_REMOTE_CACHE_URL}" > $HOME/.bazelrc
+            bazel test \
+              --config asan \
+              --action_env=CC="${CC}" \
+              --action_env=CXX="${CXX}" \
+              --action_env=LLVM_CONFIG="${LLVM_CONFIG}" \
+              --repo_env=LLVM_CONFIG="${LLVM_CONFIG}" \
+              --config=ci \
+              ...
+
   publish-doc:
     docker:
       - image: us-central1-docker.pkg.dev/pqc-dev-pool-336002/bartleby/bartleby:ci
@@ -99,6 +123,7 @@ workflows:
     jobs:
       - compile-test-using-bazel
       - compile-test-using-cmake
+      - compile-test-asan
   publish-doc:
     jobs:
       - publish-doc:
