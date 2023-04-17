@@ -180,7 +180,7 @@ private:
   std::optional<ObjectFormat> _object_format;
 
   // Forward declaration.
-  class ArchiveBuilder;
+  class ArchiveWriter;
 };
 
 } // end namespace saq::bartleby

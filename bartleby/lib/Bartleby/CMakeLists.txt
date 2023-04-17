@@ -2,6 +2,7 @@ include(AddLLVM)
 
 add_llvm_library(
   Bartleby
+  ArchiveWriter.cpp
   Bartleby.cpp
   Error.cpp
   Symbol.cpp
