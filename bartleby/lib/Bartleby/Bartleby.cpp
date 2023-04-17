@@ -24,6 +24,7 @@
 #include "llvm/ADT/Twine.h"
 #include "llvm/Object/Archive.h"
 #include "llvm/Object/ArchiveWriter.h"
+#include "llvm/Object/MachOUniversal.h"
 #include "llvm/Support/MemoryBuffer.h"
 
 #include "Bartleby/Error.h"
@@ -204,6 +205,8 @@ BARTLEBY_API llvm::Error Bartleby::AddBinary(
         return llvm::make_error<Error>(std::move(reason));
       }
     }
+  } else if (binary->isMachOUniversalBinary()) {
+    return AddMachOUniversalBinary(std::move(owning_binary));
   } else {
     Error::UnsupportedBinaryReason reason;
     llvm::raw_svector_ostream os(reason.msg);
@@ -252,6 +255,62 @@ bool Bartleby::objectFormatMatches(
 
 bool Bartleby::isMachOUniversalBinary() const noexcept {
   return std::holds_alternative<ObjectFormatSet>(_object_format);
+}
+
+llvm::Error Bartleby::AddMachOUniversalBinary(
+    llvm::object::OwningBinary<llvm::object::Binary> owning_binary) noexcept {
+  auto *fat = llvm::dyn_cast<llvm::object::MachOUniversalBinary>(
+      owning_binary.getBinary());
+  assert(fat != nullptr);
+
+  if (const auto *type = std::get_if<ObjectFormat>(&_object_format)) {
+    Error::MachOUniversalBinaryReason reason;
+    llvm::raw_svector_ostream os(reason.msg);
+    os << "expected an object of type " << *type << ", got a fat Mach-O";
+    return llvm::make_error<Error>(std::move(reason));
+  }
+
+  auto *formats = std::get_if<ObjectFormatSet>(&_object_format);
+  if ((formats != nullptr) && (formats->size() != fat->getNumberOfObjects())) {
+    Error::MachOUniversalBinaryReason reason;
+    llvm::raw_svector_ostream os(reason.msg);
+    os << "expected a fat Mach-O with " << formats->size() << " arch(s), got "
+       << fat->getNumberOfObjects() << " arch(s).";
+    return llvm::make_error<Error>(std::move(reason));
+  }
+
+  if (formats == nullptr) {
+    _object_format = ObjectFormatSet();
+    formats = std::get_if<ObjectFormatSet>(&_object_format);
+    for (const auto &ofa : fat->objects()) {
+      formats->insert(ofa.getTriple());
+    }
+  }
+
+  for (auto &ofa : fat->objects()) {
+    const auto triple = ofa.getTriple();
+    if (formats->count(triple) == 0) {
+      Error::MachOUniversalBinaryReason reason;
+      llvm::raw_svector_ostream os(reason.msg);
+      os << "unexpected triple " << ofa.getTriple().str() << " in fat Mach-O";
+      return llvm::make_error<Error>(std::move(reason));
+    }
+
+    if (auto obj_or_err = ofa.getAsObjectFile()) {
+      auto obj = std::move(obj_or_err.get());
+      ProcessObjectFile(&*obj, _symbols);
+      auto &entry = _objects.emplace_back(ObjectFile{
+          .handle = &*obj,
+          .owner = std::move(obj),
+          .alignment = ofa.getAlign(),
+      });
+      (llvm::Twine(llvm::utostr(_objects.size())) + ".o")
+          .toNullTerminatedStringRef(entry.name);
+    }
+  }
+  _owned_binaries.push_back(std::move(owning_binary));
+
+  return llvm::Error::success();
 }
 
 } // end namespace saq::bartleby

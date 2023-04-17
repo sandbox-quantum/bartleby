@@ -55,9 +55,16 @@ public:
     ObjectFormat found;
   };
 
+  /// \brief Fat Mach-O related error.
+  struct MachOUniversalBinaryReason {
+    /// \brief Error message.
+    llvm::SmallString<32> msg;
+  };
+
   /// \brief Reason for error.
   using Reason =
-      std::variant<UnsupportedBinaryReason, ObjectFormatTypeMismatchReason>;
+      std::variant<UnsupportedBinaryReason, ObjectFormatTypeMismatchReason,
+                   MachOUniversalBinaryReason>;
 
   /// \brief Constructor for a reason.
   template <typename T> Error(T reason) noexcept : _reason(std::move(reason)) {}
