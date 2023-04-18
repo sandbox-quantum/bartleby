@@ -30,6 +30,7 @@
 #include "llvm/Support/SmallVectorMemoryBuffer.h"
 #include "llvm/Support/SourceMgr.h"
 #include "llvm/Support/YAMLParser.h"
+#include "llvm/Support/YAMLTraits.h"
 
 #include "Bartleby/Bartleby.h"
 
@@ -37,9 +38,6 @@ namespace {
 
 /// \brief Base directory for test data based on yaml files.
 #define TEST_DATA_BASE_DIR "bartleby/tests/Bartleby/testdata/yaml"
-
-/// \brief Size for objects. Used by llvm::SmallVector.
-constexpr size_t kObjectSize = 2048;
 
 /// \brief Convert a llvm::Triple::ObjectFormatType into a path to a
 /// sub-directory in kTestDataBaseDir.
@@ -80,6 +78,13 @@ ObjectFormatToPath(const llvm::Triple::ObjectFormatType format) {
   }
 }
 
+/// \brief Error Handler implementation.
+///
+/// \param msg Message
+void ErrorHandler(const llvm::Twine &msg) {
+  llvm::errs() << "an error occured: " << msg << '\n';
+}
+
 /// \brief Read a file under the directory of a specific format object.
 ///
 /// \param filepath Filepath
@@ -106,50 +111,42 @@ ReadYamlFile(llvm::StringRef filepath,
 /// \param path Filepath to the yaml file.
 /// \param object_format Object format.
 /// \param[out] objects Vector of objects to fill.
+/// \param n Number of objects to retrieve.
 ///
 /// \return An assertion.
 [[nodiscard]] testing::AssertionResult YAML2Objects(
     llvm::StringRef filepath, llvm::Triple::ObjectFormatType object_format,
     llvm::SmallVectorImpl<llvm::object::OwningBinary<llvm::object::Binary>>
-        &objects) {
+        &objects,
+    const size_t n = 1) {
   std::unique_ptr<llvm::MemoryBuffer> content;
   if (auto err = ReadYamlFile(filepath, object_format, content); !err) {
     return testing::AssertionFailure()
            << "failed to read file: " << err.message();
   }
 
-  llvm::SourceMgr mgr;
-  std::error_code ec;
-  llvm::yaml::Stream s(content->getBuffer(), mgr, true, &ec);
-  if (ec) {
-    return testing::AssertionFailure()
-           << "failed to parse yaml stream: " << ec.message();
-  }
+  for (size_t doc_num = 0; doc_num < n; ++doc_num) {
+    llvm::SmallVector<char, 2048> object_content;
+    llvm::raw_svector_ostream os(object_content);
 
-  for (auto &doc : s) {
-    const llvm::yaml::Node *root;
-    if (root = doc.getRoot(); !root) {
-      return testing::AssertionFailure()
-             << "failed to parse node: " << ec.message();
+    llvm::yaml::Input yaml_in(*content);
+    if (!llvm::yaml::convertYAML(yaml_in, os, ErrorHandler, doc_num + 1)) {
+      return testing::AssertionFailure() << "failed to convert YAML";
     }
 
-    std::unique_ptr<llvm::object::ObjectFile> obj;
-    llvm::SmallVector<char, kObjectSize> content;
-    if (auto obj_or_err = llvm::yaml::yaml2ObjectFile(
-            content, root->getRawTag().data(), nullptr)) {
-      obj = std::move(obj_or_err);
-    } else {
-      return testing::AssertionFailure() << "failed to convert yaml to Object";
-    }
-    if (obj->getTripleObjectFormat() != object_format) {
+    auto out_buffer = std::make_unique<llvm::SmallVectorMemoryBuffer>(
+        std::move(object_content), false);
+
+    auto obj_or_err = llvm::object::ObjectFile::createObjectFile(*out_buffer);
+    if (!obj_or_err) {
       return testing::AssertionFailure()
-             << "yaml object type " << obj->getTripleObjectFormat()
-             << " doesn't match " << object_format;
+             << "failed to parse object: "
+             << llvm::toString(obj_or_err.takeError());
     }
-    objects.emplace_back(std::move(obj),
-                         std::make_unique<llvm::SmallVectorMemoryBuffer>(
-                             std::move(content), false));
+
+    objects.emplace_back(std::move(obj_or_err.get()), std::move(out_buffer));
   }
+
   return testing::AssertionSuccess();
 }
 
@@ -243,7 +240,7 @@ TEST(BartleByObjectYamlELF, Object386) {
   llvm::SmallVector<llvm::object::OwningBinary<llvm::object::Binary>, 2>
       objects;
   ASSERT_TRUE(YAML2Objects("symbols_visibility.yaml",
-                           llvm::Triple::ObjectFormatType::ELF, objects));
+                           llvm::Triple::ObjectFormatType::ELF, objects, 2));
 
   llvm::DebugFlag = true;
   Bartleby b;
