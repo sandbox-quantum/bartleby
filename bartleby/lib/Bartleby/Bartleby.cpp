@@ -39,11 +39,11 @@ BARTLEBY_API Bartleby::Bartleby() noexcept = default;
 
 namespace {
 
-/// \brief Fetch various information from a symbol.
+/// \brief Fetches various information from a symbol.
 ///
 /// \param sym Symbol.
 ///
-/// \return Informations.
+/// \returns Pieces of information about the given symbol.
 [[nodiscard]] SymbolInfo
 getSymbolInfo(const llvm::object::SymbolRef &sym) noexcept {
   SymbolInfo info{.sym = sym};
@@ -63,10 +63,10 @@ getSymbolInfo(const llvm::object::SymbolRef &sym) noexcept {
   return info;
 }
 
-/// \brief Collect all symbol infos from an object.
+/// \brief Collects all the information of all symbols from an object.
 ///
 /// \param obj Object.
-/// \param syminfos Container where to store the symbol infos.
+/// \param[out] syminfos Container where to store the symbol infos.
 void collectSymbolInfos(const llvm::object::ObjectFile *obj,
                         llvm::SmallVectorImpl<SymbolInfo> &syminfos) noexcept {
   for (const auto &sym : obj->symbols()) {
@@ -75,11 +75,11 @@ void collectSymbolInfos(const llvm::object::ObjectFile *obj,
   }
 }
 
-/// \brief Determine if we should skip a symbol based on its info.
+/// \brief Determines if we should skip a symbol based on its information.
 ///
 /// \param syminfo Symbol information.
 ///
-/// \return true if we should skip it, else false.
+/// \returns True if we should skip it, else false.
 [[nodiscard]] bool shouldSkipSymbol(const SymbolInfo &syminfo) noexcept {
   if (syminfo.err) {
     LLVM_DEBUG(llvm::dbgs()
@@ -102,10 +102,10 @@ void collectSymbolInfos(const llvm::object::ObjectFile *obj,
   return false;
 }
 
-/// \brief Process an object file.
+/// \brief Processes an object file.
 ///
 /// \param object The object file.
-/// \param symbols Symbol map to update.
+/// \param[out] symbols Symbol map to update.
 void ProcessObjectFile(const llvm::object::ObjectFile *object,
                        Bartleby::SymbolMap &symbols) {
   llvm::SmallVector<SymbolInfo, 128> syminfos;
