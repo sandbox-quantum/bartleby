@@ -29,23 +29,23 @@ namespace saq::bartleby {
 /// Various information about a symbol.
 struct SymbolInfo {
   /// \brief The symbol.
-  llvm::object::SymbolRef sym;
+  llvm::object::SymbolRef Sym;
 
   /// \brief Its type.
-  std::optional<llvm::object::SymbolRef::Type> type;
+  std::optional<llvm::object::SymbolRef::Type> Type;
 
   /// \brief Its flags.
-  std::optional<uint32_t> flags;
+  std::optional<uint32_t> Flags;
 
   /// \brief Its name.
-  std::optional<llvm::StringRef> name;
+  std::optional<llvm::StringRef> Name;
 
   /// \brief Type of the object it belongs to.
-  llvm::Triple::ObjectFormatType object_type =
+  llvm::Triple::ObjectFormatType ObjectType =
       llvm::Triple::ObjectFormatType::UnknownObjectFormat;
 
   /// \brief An error occurred.
-  bool err = false;
+  bool Err = false;
 };
 
 /// \brief An high view of a symbol.
@@ -54,39 +54,40 @@ public:
   /// \brief Returns the visibility of the symbol.
   ///
   /// \returns True if symbol is global, else false.
-  [[nodiscard]] bool Global() const noexcept;
+  [[nodiscard]] bool isGlobal() const noexcept;
 
   /// \brief Returns the definedness of the symbol.
   ///
   /// \returns True if symbol is defined, else false.
-  [[nodiscard]] bool Defined() const noexcept;
+  [[nodiscard]] bool isDefined() const noexcept;
 
   /// \brief Counts how many times this symbol is referenced.
   ///
   /// \returns Number of references.
-  [[nodiscard]] size_t References() const noexcept;
+  [[nodiscard]] size_t getReferences() const noexcept;
 
   /// \brief Returns the overwrite name.
   ///
   /// \returns The overwrite name.
-  [[nodiscard]] std::optional<llvm::StringRef> OverwriteName() const noexcept;
+  [[nodiscard]] std::optional<llvm::StringRef>
+  getOverwriteName() const noexcept;
 
   /// \brief Returns true if the symbol contains references to some mach-o
   /// symbols.
   ///
   /// \returns True if the symbol contains references to some mach-o, else
   /// false.
-  [[nodiscard]] bool IsMachO() const noexcept;
+  [[nodiscard]] bool isMachO() const noexcept;
 
   /// \brief Sets the name of the symbol.
   ///
   /// \param name Name to set.
-  void SetName(std::string name) noexcept;
+  void setName(std::string Name) noexcept;
 
   /// \brief Updates the symbol with new symbol information.
   ///
   /// \param syminfo Symbol information.
-  void UpdateWithNewSymbolInfo(const SymbolInfo &syminfo) noexcept;
+  void updateWithNewSymbolInfo(const SymbolInfo &Syminfo) noexcept;
 
   /// \brief Constructs a new symbol.
   Symbol() noexcept;
@@ -99,17 +100,17 @@ public:
 
 private:
   /// \brief New name to set, if any.
-  std::optional<std::string> _overwrite_name;
+  std::optional<std::string> OverwriteName;
 
   /// \brief Type of the object it belongs to.
-  llvm::Triple::ObjectFormatType _type =
+  llvm::Triple::ObjectFormatType Type =
       llvm::Triple::ObjectFormatType::UnknownObjectFormat;
 
   /// \brief Is global.
-  bool _global = false;
+  bool Global = false;
 
   /// \brief Is defined.
-  bool _defined = false;
+  bool Defined = false;
 };
 
 } // end namespace saq::bartleby

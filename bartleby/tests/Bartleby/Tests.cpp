@@ -42,12 +42,12 @@ namespace {
 /// \brief Converts a \p llvm::Triple::ObjectFormatType into a path to a
 /// sub-directory of \p TEST_DATA_BASE_DIR.
 ///
-/// \param format Object format.
+/// \param Format Object format.
 ///
 /// \returns The path to the directory containing yaml files for the format.
 [[nodiscard]] llvm::StringRef
-ObjectFormatToPath(const llvm::Triple::ObjectFormatType format) {
-  switch (format) {
+objectFormatToPath(const llvm::Triple::ObjectFormatType Format) {
+  switch (Format) {
   case llvm::Triple::ObjectFormatType::COFF: {
     return TEST_DATA_BASE_DIR "/COFF";
   }
@@ -80,71 +80,71 @@ ObjectFormatToPath(const llvm::Triple::ObjectFormatType format) {
 
 /// \brief Handles some errors that may occur when parsing a YAML document.
 ///
-/// \param msg The message that describes the error.
-void YAMLErrorHandler(const llvm::Twine &msg) {
-  llvm::errs() << "an error occured: " << msg << '\n';
+/// \param Msg The message that describes the error.
+void YAMLErrorHandler(const llvm::Twine &Msg) {
+  llvm::errs() << "an error occured: " << Msg << '\n';
 }
 
 /// \brief Reads a file under the directory of a specific format object.
 ///
-/// \param filepath Filepath
-/// \param object_format Object format.
-/// \param[out] content Content of the file.
+/// \param Filepath Filepath.
+/// \param ObjFormat Object format.
+/// \param[out] Content Content of the file.
 ///
 /// \returns An assertion result.
 [[nodiscard]] testing::AssertionResult
-ReadYamlFile(llvm::StringRef filepath,
-             const llvm::Triple::ObjectFormatType object_format,
-             std::unique_ptr<llvm::MemoryBuffer> &content) {
-  if (auto file_or_err = llvm::MemoryBuffer::getFile(
-          ObjectFormatToPath(object_format) + "/" + filepath, true)) {
-    content = std::move(file_or_err.get());
+readYAMLFile(llvm::StringRef Filepath,
+             const llvm::Triple::ObjectFormatType ObjFormat,
+             std::unique_ptr<llvm::MemoryBuffer> &Content) {
+  if (auto ContentOrErr = llvm::MemoryBuffer::getFile(
+          objectFormatToPath(ObjFormat) + "/" + Filepath, true)) {
+    Content = std::move(*ContentOrErr);
     return testing::AssertionSuccess();
   } else {
-    return testing::AssertionFailure() << "failed to read " << filepath.data()
-                                       << ": " << file_or_err.getError();
+    return testing::AssertionFailure() << "failed to read " << Filepath.data()
+                                       << ": " << ContentOrErr.getError();
   }
 }
 
 /// \brief Parses a YAML file and fills a vector with some \p llvm::ObjectFile.
 ///
-/// \param path Filepath to the yaml file.
-/// \param object_format Object format.
-/// \param[out] objects Vector of objects to fill.
-/// \param n Number of objects to retrieve.
+/// \param Filepath Filepath to the yaml file.
+/// \param ObjFormat Object format.
+/// \param[out] Objects Vector of objects to fill.
+/// \param N Number of objects to retrieve.
 ///
 /// \returns An assertion.
 [[nodiscard]] testing::AssertionResult YAML2Objects(
-    llvm::StringRef filepath, llvm::Triple::ObjectFormatType object_format,
+    llvm::StringRef Filepath, llvm::Triple::ObjectFormatType ObjFormat,
     llvm::SmallVectorImpl<llvm::object::OwningBinary<llvm::object::Binary>>
-        &objects,
-    const size_t n = 1) {
-  std::unique_ptr<llvm::MemoryBuffer> content;
-  if (auto err = ReadYamlFile(filepath, object_format, content); !err) {
+        &Objects,
+    const size_t N = 1) {
+  std::unique_ptr<llvm::MemoryBuffer> Content;
+  if (auto Err = readYAMLFile(Filepath, ObjFormat, Content); !Err) {
     return testing::AssertionFailure()
-           << "failed to read file: " << err.message();
+           << "failed to read file: " << Err.message();
   }
 
-  for (size_t doc_num = 0; doc_num < n; ++doc_num) {
-    llvm::SmallVector<char, 2048> object_content;
-    llvm::raw_svector_ostream os(object_content);
+  for (size_t DocNum = 0; DocNum < N; ++DocNum) {
+    llvm::SmallVector<char, 2048> ObjContent;
+    llvm::raw_svector_ostream OS(ObjContent);
 
-    llvm::yaml::Input yaml_in(*content);
-    if (!llvm::yaml::convertYAML(yaml_in, os, YAMLErrorHandler, doc_num + 1)) {
+    llvm::yaml::Input YAMLIn(*Content);
+    if (!llvm::yaml::convertYAML(YAMLIn, OS, YAMLErrorHandler, DocNum + 1)) {
       return testing::AssertionFailure() << "failed to convert YAML";
     }
 
-    auto out_buffer = std::make_unique<llvm::SmallVectorMemoryBuffer>(
-        std::move(object_content), false);
+    auto OutBuffer = std::make_unique<llvm::SmallVectorMemoryBuffer>(
+        std::move(ObjContent), false);
 
-    auto obj_or_err = llvm::object::ObjectFile::createObjectFile(*out_buffer);
-    if (!obj_or_err) {
+    auto ObjOrErr = llvm::object::ObjectFile::createObjectFile(*OutBuffer);
+    if (!ObjOrErr) {
       return testing::AssertionFailure()
              << "failed to parse object: "
-             << llvm::toString(obj_or_err.takeError());
+             << llvm::toString(ObjOrErr.takeError());
     }
 
-    objects.emplace_back(std::move(obj_or_err.get()), std::move(out_buffer));
+    Objects.emplace_back(std::move(*ObjOrErr), std::move(OutBuffer));
   }
 
   return testing::AssertionSuccess();
@@ -157,8 +157,9 @@ ReadYamlFile(llvm::StringRef filepath,
 ///
 /// \returns The symbol entry.
 #define ASSERT_SYM_RESOLVE(_b_, _name_)                                        \
-  const auto &_s_ = (_b_).Symbols().find((_name_));                            \
-  ASSERT_NE(_s_, (_b_).Symbols().end()) << "Symbol " << (_name_) << " not found"
+  const auto &_s_ = (_b_).getSymbols().find((_name_));                         \
+  ASSERT_NE(_s_, (_b_).getSymbols().end())                                     \
+      << "Symbol " << (_name_) << " not found"
 
 /// \brief Asserts the globalness of a symbol.
 ///
@@ -167,7 +168,7 @@ ReadYamlFile(llvm::StringRef filepath,
 #define ASSERT_SYM_GLOBALNESS(_b_, _name_, _exp_)                              \
   do {                                                                         \
     ASSERT_SYM_RESOLVE((_b_), (_name_));                                       \
-    ASSERT_EQ(_s_->getValue().Global(), (_exp_));                              \
+    ASSERT_EQ(_s_->getValue().isGlobal(), (_exp_));                            \
   } while (0)
 
 /// \brief Asserts that a symbol is local.
@@ -191,7 +192,7 @@ ReadYamlFile(llvm::StringRef filepath,
 #define ASSERT_SYM_DEFINEDNESS(_b_, _name_, _exp_)                             \
   do {                                                                         \
     ASSERT_SYM_RESOLVE((_b_), (_name_));                                       \
-    ASSERT_EQ(_s_->getValue().Defined(), (_exp_));                             \
+    ASSERT_EQ(_s_->getValue().isDefined(), (_exp_));                           \
   } while (0)
 
 /// \brief Asserts that a symbol is undefined.
@@ -215,7 +216,7 @@ ReadYamlFile(llvm::StringRef filepath,
 #define ASSERT_SYM_OVERWRITTEN(_b_, _name_, _exp_)                             \
   do {                                                                         \
     ASSERT_SYM_RESOLVE((_b_), (_name_));                                       \
-    ASSERT_TRUE(_s_->getValue().OverwriteName().has_value() == _exp_);         \
+    ASSERT_TRUE(_s_->getValue().getOverwriteName().has_value() == _exp_);      \
   } while (0)
 
 /// \brief Asserts that a symbol name will be overwritten.
@@ -238,96 +239,96 @@ using namespace saq::bartleby;
 
 TEST(BartleByObjectYamlELF, Object386) {
   llvm::SmallVector<llvm::object::OwningBinary<llvm::object::Binary>, 2>
-      objects;
+      Objects;
   ASSERT_TRUE(YAML2Objects("symbols_visibility.yaml",
-                           llvm::Triple::ObjectFormatType::ELF, objects, 2));
+                           llvm::Triple::ObjectFormatType::ELF, Objects, 2));
 
   llvm::DebugFlag = true;
-  Bartleby b;
-  auto err = b.AddBinary(std::move(objects[0]));
-  ASSERT_FALSE(err);
+  Bartleby B;
+  auto Err = B.addBinary(std::move(Objects[0]));
+  ASSERT_FALSE(Err);
 
-  ASSERT_SYM_DEFINED(b, "defined_local_symbol");
-  ASSERT_SYM_LOCAL(b, "defined_local_symbol");
+  ASSERT_SYM_DEFINED(B, "defined_local_symbol");
+  ASSERT_SYM_LOCAL(B, "defined_local_symbol");
 
-  ASSERT_SYM_DEFINED(b, "defined_global_symbol");
-  ASSERT_SYM_GLOBAL(b, "defined_global_symbol");
+  ASSERT_SYM_DEFINED(B, "defined_global_symbol");
+  ASSERT_SYM_GLOBAL(B, "defined_global_symbol");
 
-  ASSERT_SYM_UNDEFINED(b, "undefined_symbol");
-  ASSERT_SYM_GLOBAL(b, "undefined_symbol");
+  ASSERT_SYM_UNDEFINED(B, "undefined_symbol");
+  ASSERT_SYM_GLOBAL(B, "undefined_symbol");
 
-  ASSERT_SYM_UNDEFINED(b, "weak_symbol");
-  ASSERT_SYM_LOCAL(b, "weak_symbol");
+  ASSERT_SYM_UNDEFINED(B, "weak_symbol");
+  ASSERT_SYM_LOCAL(B, "weak_symbol");
 
-  b.PrefixGlobalAndDefinedSymbols("prefix_");
+  B.prefixGlobalAndDefinedSymbols("prefix_");
 
-  ASSERT_SYM_WILL_NOT_BE_RENAMED(b, "defined_local_symbol");
-  ASSERT_SYM_WILL_BE_RENAMED(b, "defined_global_symbol");
-  ASSERT_SYM_WILL_NOT_BE_RENAMED(b, "undefined_symbol");
-  ASSERT_SYM_WILL_NOT_BE_RENAMED(b, "weak_symbol");
+  ASSERT_SYM_WILL_NOT_BE_RENAMED(B, "defined_local_symbol");
+  ASSERT_SYM_WILL_BE_RENAMED(B, "defined_global_symbol");
+  ASSERT_SYM_WILL_NOT_BE_RENAMED(B, "undefined_symbol");
+  ASSERT_SYM_WILL_NOT_BE_RENAMED(B, "weak_symbol");
 
-  err = b.AddBinary(std::move(objects[1]));
-  ASSERT_FALSE(err);
+  Err = B.addBinary(std::move(Objects[1]));
+  ASSERT_FALSE(Err);
 
-  ASSERT_SYM_DEFINED(b, "defined_local_symbol");
-  ASSERT_SYM_LOCAL(b, "defined_local_symbol");
+  ASSERT_SYM_DEFINED(B, "defined_local_symbol");
+  ASSERT_SYM_LOCAL(B, "defined_local_symbol");
 
-  ASSERT_SYM_DEFINED(b, "defined_global_symbol");
-  ASSERT_SYM_GLOBAL(b, "defined_global_symbol");
+  ASSERT_SYM_DEFINED(B, "defined_global_symbol");
+  ASSERT_SYM_GLOBAL(B, "defined_global_symbol");
 
   // Object 2 defined `undefined_symbol`.
-  ASSERT_SYM_DEFINED(b, "undefined_symbol");
-  ASSERT_SYM_GLOBAL(b, "undefined_symbol");
+  ASSERT_SYM_DEFINED(B, "undefined_symbol");
+  ASSERT_SYM_GLOBAL(B, "undefined_symbol");
 
-  ASSERT_SYM_UNDEFINED(b, "weak_symbol");
-  ASSERT_SYM_LOCAL(b, "weak_symbol");
+  ASSERT_SYM_UNDEFINED(B, "weak_symbol");
+  ASSERT_SYM_LOCAL(B, "weak_symbol");
 
-  b.PrefixGlobalAndDefinedSymbols("prefix_");
+  B.prefixGlobalAndDefinedSymbols("prefix_");
 
-  ASSERT_SYM_WILL_NOT_BE_RENAMED(b, "defined_local_symbol");
-  ASSERT_SYM_WILL_BE_RENAMED(b, "defined_global_symbol");
-  ASSERT_SYM_WILL_BE_RENAMED(b, "undefined_symbol");
-  ASSERT_SYM_WILL_NOT_BE_RENAMED(b, "weak_symbol");
+  ASSERT_SYM_WILL_NOT_BE_RENAMED(B, "defined_local_symbol");
+  ASSERT_SYM_WILL_BE_RENAMED(B, "defined_global_symbol");
+  ASSERT_SYM_WILL_BE_RENAMED(B, "undefined_symbol");
+  ASSERT_SYM_WILL_NOT_BE_RENAMED(B, "weak_symbol");
 
-  auto ar_or_err = Bartleby::BuildFinalArchive(std::move(b));
-  ASSERT_TRUE(!!ar_or_err);
-  auto ar_content = std::move(ar_or_err.get());
+  auto ArOrErr = Bartleby::buildFinalArchive(std::move(B));
+  ASSERT_TRUE(!!ArOrErr);
+  auto ArContent = std::move(*ArOrErr);
 
-  auto ar = llvm::object::createBinary(*ar_content);
-  ASSERT_TRUE(!!ar);
+  auto Ar = llvm::object::createBinary(*ArContent);
+  ASSERT_TRUE(!!Ar);
 
-  auto owning_ar = llvm::object::OwningBinary<llvm::object::Binary>(
-      std::move(ar.get()), std::move(ar_content));
+  auto OwningAr = llvm::object::OwningBinary<llvm::object::Binary>(
+      std::move(*Ar), std::move(ArContent));
 
-  b = Bartleby();
-  ASSERT_FALSE(b.AddBinary(std::move(owning_ar)));
+  B = Bartleby();
+  ASSERT_FALSE(B.addBinary(std::move(OwningAr)));
 
-  ASSERT_SYM_DEFINED(b, "defined_local_symbol");
-  ASSERT_SYM_LOCAL(b, "defined_local_symbol");
+  ASSERT_SYM_DEFINED(B, "defined_local_symbol");
+  ASSERT_SYM_LOCAL(B, "defined_local_symbol");
 
-  ASSERT_SYM_DEFINED(b, "prefix_defined_global_symbol");
-  ASSERT_SYM_GLOBAL(b, "prefix_defined_global_symbol");
+  ASSERT_SYM_DEFINED(B, "prefix_defined_global_symbol");
+  ASSERT_SYM_GLOBAL(B, "prefix_defined_global_symbol");
 
-  ASSERT_SYM_DEFINED(b, "prefix_undefined_symbol");
-  ASSERT_SYM_GLOBAL(b, "prefix_undefined_symbol");
+  ASSERT_SYM_DEFINED(B, "prefix_undefined_symbol");
+  ASSERT_SYM_GLOBAL(B, "prefix_undefined_symbol");
 
-  ASSERT_SYM_UNDEFINED(b, "weak_symbol");
-  ASSERT_SYM_LOCAL(b, "weak_symbol");
+  ASSERT_SYM_UNDEFINED(B, "weak_symbol");
+  ASSERT_SYM_LOCAL(B, "weak_symbol");
 }
 
 /// \brief Test that passing two objects with different format types is
 /// an error.
 TEST(BartleByObjectYamlError, ObjectTypeMisMatch) {
   llvm::SmallVector<llvm::object::OwningBinary<llvm::object::Binary>, 2>
-      objects;
+      Objects;
   ASSERT_TRUE(YAML2Objects("arm64.yaml", llvm::Triple::ObjectFormatType::MachO,
-                           objects));
+                           Objects));
 
   ASSERT_TRUE(YAML2Objects("simple_x86_64.yaml",
-                           llvm::Triple::ObjectFormatType::ELF, objects));
+                           llvm::Triple::ObjectFormatType::ELF, Objects));
 
-  Bartleby b;
-  ASSERT_FALSE(b.AddBinary(std::move(objects[0])));
-  auto err = b.AddBinary(std::move(objects[1]));
-  ASSERT_TRUE(!!err);
+  Bartleby B;
+  ASSERT_FALSE(B.addBinary(std::move(Objects[0])));
+  auto Err = B.addBinary(std::move(Objects[1]));
+  ASSERT_TRUE(!!Err);
 }

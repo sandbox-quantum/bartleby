@@ -57,37 +57,37 @@ constexpr llvm::StringRef ToolName = "bartleby";
 
 /// \brief Reports an error by displaying a message.
 ///
-/// \param message Message to display as an error string.
-[[noreturn]] void reportError(llvm::Twine message) noexcept {
-  llvm::WithColor::error(llvm::errs(), ToolName) << message << '\n';
+/// \param Message Message to display as an error string.
+[[noreturn]] void reportError(llvm::Twine Message) noexcept {
+  llvm::WithColor::error(llvm::errs(), ToolName) << Message << '\n';
   llvm::errs().flush();
   std::exit(EXIT_FAILURE);
 }
 
 /// \brief Reports an error by extracting the message from a \p llvm::Error.
 ///
-/// \param e The error to report.
-[[noreturn]] void reportError(llvm::Error e) noexcept {
-  assert(e);
-  std::string buf;
-  llvm::raw_string_ostream os(buf);
-  llvm::logAllUnhandledErrors(std::move(e), os);
-  os.flush();
-  reportError(buf);
+/// \param E The error to report.
+[[noreturn]] void reportError(llvm::Error E) noexcept {
+  assert(E);
+  std::string Buf;
+  llvm::raw_string_ostream OS(Buf);
+  llvm::logAllUnhandledErrors(std::move(E), OS);
+  OS.flush();
+  reportError(Buf);
 }
 
 /// \brief Reports an error related to a certain file manipulation.
 ///
-/// \param filepath The file involved in the error.
-/// \param e The error to report.
-[[noreturn]] void reportError(llvm::StringRef filepath, llvm::Error e) {
-  assert(e);
-  std::string buf;
-  llvm::raw_string_ostream os(buf);
-  llvm::logAllUnhandledErrors(std::move(e), os);
-  os.flush();
+/// \param Filepath The file involved in the error.
+/// \param E The error to report.
+[[noreturn]] void reportError(llvm::StringRef Filepath, llvm::Error E) {
+  assert(E);
+  std::string Buf;
+  llvm::raw_string_ostream OS(Buf);
+  llvm::logAllUnhandledErrors(std::move(E), OS);
+  OS.flush();
   llvm::WithColor::error(llvm::errs(), ToolName)
-      << "'" << filepath << "': " << buf;
+      << "'" << Filepath << "': " << Buf;
   std::exit(EXIT_FAILURE);
 }
 
@@ -95,35 +95,35 @@ constexpr llvm::StringRef ToolName = "bartleby";
 ///
 /// \returns The bartleby handle, or nullopt if an error occurred.
 [[nodiscard]] bartleby::Bartleby CollectObjects() noexcept {
-  bartleby::Bartleby b;
+  bartleby::Bartleby B;
 
-  for (const auto &input_file : InputFileNames) {
-    if (auto owned_binary = llvm::object::createBinary(input_file);
-        !owned_binary) {
-      reportError(input_file, owned_binary.takeError());
-    } else if (auto err = b.AddBinary(std::move(owned_binary.get()))) {
-      reportError(input_file, std::move(err));
+  for (const auto &InputFile : InputFileNames) {
+    if (auto OwnedBinary = llvm::object::createBinary(InputFile);
+        !OwnedBinary) {
+      reportError(InputFile, OwnedBinary.takeError());
+    } else if (auto Err = B.addBinary(std::move(*OwnedBinary))) {
+      reportError(InputFile, std::move(Err));
     }
   }
 
-  return b;
+  return B;
 }
 
 /// \brief Displays the symbols previously collected.
 ///
-/// \param b Bartleby handle.
-void DisplaySymbols(const bartleby::Bartleby &b) noexcept {
-  const auto end = b.Symbols().end();
-  for (auto entry = b.Symbols().begin(); entry != end; ++entry) {
-    const auto &name = entry->first();
-    const auto &sym = entry->getValue();
-    const auto defined = sym.Defined();
-    const auto global = sym.Global();
-    llvm::outs() << "Symbol " << name << " is "
-                 << (defined ? "defined" : "undefined") << " and "
-                 << (global ? "global" : "local");
+/// \param B Bartleby handle.
+void displaySymbols(const bartleby::Bartleby &B) noexcept {
+  const auto End = B.getSymbols().end();
+  for (auto Entry = B.getSymbols().begin(); Entry != End; ++Entry) {
+    const auto &Name = Entry->first();
+    const auto &Sym = Entry->getValue();
+    const auto Defined = Sym.isDefined();
+    const auto Global = Sym.isGlobal();
+    llvm::outs() << "Symbol " << Name << " is "
+                 << (Defined ? "defined" : "undefined") << " and "
+                 << (Global ? "global" : "local");
 
-    if (defined && global && !Prefix.empty()) {
+    if (Defined && Global && !Prefix.empty()) {
       llvm::outs() << " (to be prefixed by " << Prefix << ')';
     } else {
       llvm::outs() << " (left unchanged)";
@@ -137,21 +137,20 @@ void DisplaySymbols(const bartleby::Bartleby &b) noexcept {
 int main(int argc, char **argv) {
   llvm::cl::ParseCommandLineOptions(argc, argv);
 
-  auto b = CollectObjects();
+  auto B = CollectObjects();
 
   if (!Prefix.empty()) {
-    const auto n = b.PrefixGlobalAndDefinedSymbols(Prefix);
-    llvm::outs() << n << " symbol(s) prefixed\n";
+    const auto N = B.prefixGlobalAndDefinedSymbols(Prefix);
+    llvm::outs() << N << " symbol(s) prefixed\n";
   }
 
   if (DisplaySymbolList) {
-    DisplaySymbols(b);
+    displaySymbols(B);
   }
 
-  if (auto err =
-          bartleby::Bartleby::BuildFinalArchive(std::move(b), OutputFileName);
-      err) {
-    reportError(std::move(err));
+  if (auto Err =
+          bartleby::Bartleby::buildFinalArchive(std::move(B), OutputFileName)) {
+    reportError(std::move(Err));
   }
   llvm::outs() << OutputFileName << " produced.\n";
 

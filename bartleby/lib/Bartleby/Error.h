@@ -39,7 +39,7 @@ public:
   /// \brief Error from std::error_code.
   struct UnsupportedBinaryReason {
     /// \brief Error message.
-    llvm::SmallString<32> msg;
+    llvm::SmallString<32> Msg;
   };
 
   /// \brief Mismatch between object format type.
@@ -48,37 +48,37 @@ public:
   /// the objects previously added to a Bartleby handle.
   struct ObjectFormatTypeMismatchReason {
     /// \brief Object type from the Bartleby handle.
-    ObjectFormat constraint;
+    ObjectFormat Constraint;
 
     /// \brief The type of the object responsible of this error.
-    ObjectFormat found;
+    ObjectFormat Found;
   };
 
   /// \brief Fat Mach-O related error.
   struct MachOUniversalBinaryReason {
     /// \brief Error message.
-    llvm::SmallString<32> msg;
+    llvm::SmallString<32> Msg;
   };
 
   /// \brief Reason for error.
-  using Reason =
+  using ReasonT =
       std::variant<UnsupportedBinaryReason, ObjectFormatTypeMismatchReason,
                    MachOUniversalBinaryReason>;
 
   /// \brief Constructs an error using a reason.
   ///
-  /// \param reason The reason of the error.
-  template <typename T> Error(T reason) noexcept : _reason(std::move(reason)) {}
+  /// \param Reason The reason of the error.
+  template <typename T> Error(T Reason) noexcept : Reason(std::move(Reason)) {}
 
   ~Error() noexcept override = default;
 
-  void log(llvm::raw_ostream &os) const noexcept override;
+  void log(llvm::raw_ostream &OS) const noexcept override;
   std::string message() const noexcept override;
   std::error_code convertToErrorCode() const noexcept override;
 
 private:
   /// \brief Reason.
-  Reason _reason;
+  ReasonT Reason;
 };
 
 } // end namespace saq::bartleby

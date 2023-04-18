@@ -30,22 +30,22 @@ namespace {
 /// \brief An archive to build.
 struct Archive {
   /// \brief Archive members.
-  llvm::SmallVector<llvm::NewArchiveMember, 128> members;
+  llvm::SmallVector<llvm::NewArchiveMember, 128> Members;
 
   /// \brief The buffer which will contain the archive.
-  std::unique_ptr<llvm::MemoryBuffer> out_buffer;
+  std::unique_ptr<llvm::MemoryBuffer> OutBuffer;
 
   /// \brief The final archive properties.
-  std::unique_ptr<llvm::object::Archive> out_ar;
+  std::unique_ptr<llvm::object::Archive> OutArchive;
 
   /// \brief Archive triple.
-  llvm::Triple triple;
+  llvm::Triple Triple;
 
   /// \brief Name.
-  std::unique_ptr<std::string> name;
+  std::unique_ptr<std::string> Name;
 
   /// \brief Alignment.
-  uint32_t alignment;
+  uint32_t Alignment;
 };
 
 /// \brief A map that links an ObjectFormat with an Archive.
@@ -61,89 +61,87 @@ class Bartleby::ArchiveWriter : public llvm::objcopy::MultiFormatConfig {
 public:
   /// \brief Constructs an \p ArchiveWriter using a Bartleby handle.
   ///
-  /// \param[in] b Bartleby handle.
-  ArchiveWriter(Bartleby &&b) noexcept : _b{std::move(b)} {
-    const auto end = _b._symbols.end();
-    for (auto entry = _b._symbols.begin(); entry != end; ++entry) {
-      const auto &name = entry->first();
-      const auto &sym = entry->getValue();
-      if (const auto oname = sym.OverwriteName(); oname) {
-        LLVM_DEBUG(llvm::dbgs() << "bartleby is going to rename '" << name
-                                << "' into '" << *oname << "'\n");
-        _common_config.SymbolsToRename[name] = *oname;
+  /// \param[in] B Bartleby handle.
+  ArchiveWriter(Bartleby &&B) noexcept : Handle(std::move(B)) {
+    const auto End = Handle.Symbols.end();
+    for (auto Entry = Handle.Symbols.begin(); Entry != End; ++Entry) {
+      const auto &Name = Entry->first();
+      const auto &Sym = Entry->getValue();
+      if (const auto OName = Sym.getOverwriteName(); OName) {
+        LLVM_DEBUG(llvm::dbgs() << "bartleby is going to rename '" << Name
+                                << "' into '" << *OName << "'\n");
+        CommonConfig.SymbolsToRename[Name] = *OName;
       }
     }
   }
 
   /// \brief Constructs the slices needed for a fat Mach-O.
   ///
-  /// \param[out] slices Vector where to store slices.
-  /// \param[out] archives Vector where to write archives.
+  /// \param[out] Slices Vector where to store slices.
+  /// \param[out] Archives Vector where to write archives.
   ///
   /// \returns An error.
-  [[nodiscard]] llvm::Error BuildMachOUniversalBinarySlices(
-      llvm::SmallVectorImpl<llvm::object::Slice> &slices,
-      ArchiveMap &archives) noexcept {
-    assert(_b.isMachOUniversalBinary());
+  [[nodiscard]] llvm::Error buildMachOUniversalBinarySlices(
+      llvm::SmallVectorImpl<llvm::object::Slice> &Slices,
+      ArchiveMap &Archives) noexcept {
+    assert(Handle.isMachOUniversalBinary());
 
-    const auto &object_format_set =
-        std::get<ObjectFormatSet>(_b._object_format);
+    const auto &ObjFmtSet = std::get<ObjectFormatSet>(Handle.ObjFormat);
 
-    LLVM_DEBUG(for (const auto &object_format
-                    : object_format_set) {
-      llvm::dbgs() << "object format in fat Mach-O: " << object_format << '\n';
+    LLVM_DEBUG(for (const auto &Fmt
+                    : ObjFmtSet) {
+      llvm::dbgs() << "object format in fat Mach-O: " << Fmt << '\n';
     });
 
-    archives.reserve(object_format_set.size());
-    slices.reserve(object_format_set.size());
+    Archives.reserve(ObjFmtSet.size());
+    Slices.reserve(ObjFmtSet.size());
 
-    for (const auto &obj : _b._objects) {
-      const auto triple = obj.handle->makeTriple();
+    for (const auto &Obj : Handle.Objects) {
+      const auto Triple = Obj.Handle->makeTriple();
       LLVM_DEBUG(llvm::dbgs()
-                 << "got object, triple is " << triple.str()
-                 << ", object format is " << ObjectFormat{triple} << '\n');
-      assert(object_format_set.count(triple) == 1);
-      auto final_obj_or_err = ExecuteObjCopyOnObject(obj);
-      if (!final_obj_or_err) {
-        return final_obj_or_err.takeError();
+                 << "got object, triple is " << Triple.str()
+                 << ", object format is " << ObjectFormat{Triple} << '\n');
+      assert(ObjFmtSet.count(Triple) == 1);
+      auto FinalObjOrErr = executeObjCopyOnObject(Obj);
+      if (!FinalObjOrErr) {
+        return FinalObjOrErr.takeError();
       }
-      auto &ar = archives[ObjectFormat{triple}];
-      ar.triple = triple;
-      ar.alignment = obj.alignment;
-      auto &ar_member = ar.members.emplace_back();
-      ar_member.Buf = std::move(final_obj_or_err.get());
-      ar.name = std::make_unique<std::string>(triple.str());
-      ar_member.MemberName = *ar.name;
+      auto &Ar = Archives[ObjectFormat{Triple}];
+      Ar.Triple = Triple;
+      Ar.Alignment = Obj.Alignment;
+      auto &ArMember = Ar.Members.emplace_back();
+      ArMember.Buf = std::move(*FinalObjOrErr);
+      Ar.Name = std::make_unique<std::string>(Triple.str());
+      ArMember.MemberName = *Ar.Name;
     }
 
-    for (auto &[object_format, ar] : archives) {
-      if (auto buffer_or_err = llvm::writeArchiveToBuffer(
-              ar.members,
-              /* WriteSymtab= */ true, ar.members[0].detectKindFromObject(),
+    for (auto &[Fmt, Ar] : Archives) {
+      if (auto BufferOrErr = llvm::writeArchiveToBuffer(
+              Ar.Members,
+              /* WriteSymtab= */ true, Ar.Members[0].detectKindFromObject(),
               /* Deterministic=*/true, /*Thin=*/false)) {
-        ar.out_buffer = std::move(buffer_or_err.get());
+        Ar.OutBuffer = std::move(*BufferOrErr);
       } else {
-        return buffer_or_err.takeError();
+        return BufferOrErr.takeError();
       }
 
-      auto new_ar_or_err = llvm::object::Archive::create(*ar.out_buffer);
-      if (!new_ar_or_err) {
-        return new_ar_or_err.takeError();
+      auto NewArOrErr = llvm::object::Archive::create(*Ar.OutBuffer);
+      if (!NewArOrErr) {
+        return NewArOrErr.takeError();
       }
 
-      auto cpu_type_or_err = llvm::MachO::getCPUType(ar.triple);
-      if (!cpu_type_or_err) {
-        return cpu_type_or_err.takeError();
+      auto CPUTypeOrErr = llvm::MachO::getCPUType(Ar.Triple);
+      if (!CPUTypeOrErr) {
+        return CPUTypeOrErr.takeError();
       }
 
-      auto cpu_sub_type_or_err = llvm::MachO::getCPUSubType(ar.triple);
-      if (!cpu_sub_type_or_err) {
-        return cpu_sub_type_or_err.takeError();
+      auto CPUSubTypeOrErr = llvm::MachO::getCPUSubType(Ar.Triple);
+      if (!CPUSubTypeOrErr) {
+        return CPUSubTypeOrErr.takeError();
       }
-      ar.out_ar = std::move(new_ar_or_err.get());
-      slices.emplace_back(*ar.out_ar, cpu_type_or_err.get(),
-                          cpu_sub_type_or_err.get(), ar.triple.str(),
-                          ar.alignment);
+      Ar.OutArchive = std::move(*NewArOrErr);
+      Slices.emplace_back(*Ar.OutArchive, *CPUTypeOrErr, *CPUSubTypeOrErr,
+                          Ar.Triple.str(), Ar.Alignment);
     }
 
     return llvm::Error::success();
@@ -151,61 +149,61 @@ public:
 
   /// \brief Builds a fat Mach-O file and writes the output to a file.
   ///
-  /// \param out_filepath Path to out file.
+  /// \param OutFilepath Path to out file.
   ///
   /// \returns An error.
   [[nodiscard]] llvm::Error
-  BuildMachOUniversalBinary(llvm::StringRef out_filepath) noexcept {
-    llvm::SmallVector<llvm::object::Slice, 3> slices;
-    ArchiveMap archives;
+  buildMachOUniversalBinary(llvm::StringRef OutFilepath) noexcept {
+    llvm::SmallVector<llvm::object::Slice, 3> Slices;
+    ArchiveMap Archives;
 
-    if (auto err = BuildMachOUniversalBinarySlices(slices, archives)) {
-      return err;
+    if (auto Err = buildMachOUniversalBinarySlices(Slices, Archives)) {
+      return Err;
     }
 
-    return llvm::object::writeUniversalBinary(slices, out_filepath);
+    return llvm::object::writeUniversalBinary(Slices, OutFilepath);
   }
 
   /// \brief Builds a fat Mach-O file and returns its content.
   ///
   /// \returns A memory buffer, or an error.
   [[nodiscard]] llvm::Expected<std::unique_ptr<llvm::MemoryBuffer>>
-  BuildMachOUniversalBinary() noexcept {
-    llvm::SmallVector<llvm::object::Slice, 3> slices;
-    ArchiveMap archives;
+  buildMachOUniversalBinary() noexcept {
+    llvm::SmallVector<llvm::object::Slice, 3> Slices;
+    ArchiveMap Archives;
 
-    if (auto err = BuildMachOUniversalBinarySlices(slices, archives)) {
-      return err;
+    if (auto Err = buildMachOUniversalBinarySlices(Slices, Archives)) {
+      return Err;
     }
 
-    llvm::SmallVector<char, 8192> content;
-    llvm::raw_svector_ostream os(content);
+    llvm::SmallVector<char, 8192> Content;
+    llvm::raw_svector_ostream OS(Content);
 
-    if (auto err = llvm::object::writeUniversalBinaryToStream(slices, os)) {
-      return err;
+    if (auto Err = llvm::object::writeUniversalBinaryToStream(Slices, OS)) {
+      return Err;
     }
 
-    return std::make_unique<llvm::SmallVectorMemoryBuffer>(std::move(content),
+    return std::make_unique<llvm::SmallVectorMemoryBuffer>(std::move(Content),
                                                            false);
   }
 
   /// \brief Builds the final archive and writes the content to a file.
   ///
-  /// \param out_filepath Path to out file.
+  /// \param OutFilepath Path to out file.
   ///
   /// \returns An error.
-  [[nodiscard]] llvm::Error Build(llvm::StringRef out_filepath) noexcept {
-    if (_b.isMachOUniversalBinary()) {
-      return BuildMachOUniversalBinary(out_filepath);
+  [[nodiscard]] llvm::Error build(llvm::StringRef OutFilepath) noexcept {
+    if (Handle.isMachOUniversalBinary()) {
+      return buildMachOUniversalBinary(OutFilepath);
     }
 
-    if (auto err = ExecuteObjCopyOnObjects(); err) {
-      return err;
+    if (auto Err = executeObjCopyOnObjects()) {
+      return Err;
     }
 
-    return llvm::writeArchive(out_filepath, _ar_members,
+    return llvm::writeArchive(OutFilepath, ArMembers,
                               /* WriteSymtab= */ true,
-                              _ar_members[0].detectKindFromObject(),
+                              ArMembers[0].detectKindFromObject(),
                               /* Deterministic= */ true,
                               /* Thin= */ false);
   }
@@ -214,18 +212,18 @@ public:
   ///
   /// \returns A memory buffer or an error.
   [[nodiscard]] llvm::Expected<std::unique_ptr<llvm::MemoryBuffer>>
-  Build() noexcept {
-    if (_b.isMachOUniversalBinary()) {
-      return BuildMachOUniversalBinary();
+  build() noexcept {
+    if (Handle.isMachOUniversalBinary()) {
+      return buildMachOUniversalBinary();
     }
 
-    if (auto err = ExecuteObjCopyOnObjects(); err) {
-      return err;
+    if (auto Err = executeObjCopyOnObjects()) {
+      return Err;
     }
 
-    return llvm::writeArchiveToBuffer(_ar_members,
+    return llvm::writeArchiveToBuffer(ArMembers,
                                       /* WriteSymtab= */ true,
-                                      _ar_members[0].detectKindFromObject(),
+                                      ArMembers[0].detectKindFromObject(),
                                       /* Deterministic= */ true,
                                       /* Thin= */ false);
   }
@@ -233,65 +231,65 @@ public:
   ~ArchiveWriter() noexcept override = default;
 
   const llvm::objcopy::CommonConfig &getCommonConfig() const noexcept override {
-    return _common_config;
+    return CommonConfig;
   }
 
   llvm::Expected<const llvm::objcopy::ELFConfig &>
   getELFConfig() const noexcept override {
-    return _elf_config;
+    return ELFConfig;
   }
 
   llvm::Expected<const llvm::objcopy::COFFConfig &>
   getCOFFConfig() const noexcept override {
-    return _coff_config;
+    return COFFConfig;
   }
 
   llvm::Expected<const llvm::objcopy::MachOConfig &>
   getMachOConfig() const noexcept override {
-    return _macho_config;
+    return MachOConfig;
   }
 
   llvm::Expected<const llvm::objcopy::WasmConfig &>
   getWasmConfig() const noexcept override {
-    return _wasm_config;
+    return WasmConfig;
   }
 
   llvm::Expected<const llvm::objcopy::XCOFFConfig &>
   getXCOFFConfig() const noexcept override {
-    return _xcoff_config;
+    return XCOFFConfig;
   }
 
 private:
   /// \brief Executes \p objcopy on an object.
   ///
-  /// \param obj The object.
+  /// \param Obj The object.
   ///
   /// \returns The content of the final object, or an error.
   [[nodiscard]] llvm::Expected<std::unique_ptr<llvm::SmallVectorMemoryBuffer>>
-  ExecuteObjCopyOnObject(const ObjectFile &obj) noexcept {
-    llvm::SmallVector<char, 8192> content;
-    llvm::raw_svector_ostream os(content);
-    if (auto err =
-            llvm::objcopy::executeObjcopyOnBinary(*this, *obj.handle, os)) {
-      return err;
+  executeObjCopyOnObject(const ObjectFile &Obj) noexcept {
+    llvm::SmallVector<char, 8192> Content;
+    llvm::raw_svector_ostream OS(Content);
+    if (auto Err =
+            llvm::objcopy::executeObjcopyOnBinary(*this, *Obj.Handle, OS)) {
+      return Err;
     }
-    return std::make_unique<llvm::SmallVectorMemoryBuffer>(std::move(content),
+    return std::make_unique<llvm::SmallVectorMemoryBuffer>(std::move(Content),
                                                            false);
   }
 
   /// \brief Executes \p objcopy on objects belonging to the Bartleby handle.
   ///
   /// \returns An error.
-  [[nodiscard]] llvm::Error ExecuteObjCopyOnObjects() noexcept {
+  [[nodiscard]] llvm::Error executeObjCopyOnObjects() noexcept {
     LLVM_DEBUG(llvm::dbgs()
-               << "processing " << _b._objects.size() << " object(s)\n");
-    for (auto &obj : _b._objects) {
-      if (auto final_obj_or_err = ExecuteObjCopyOnObject(obj)) {
-        auto &ar_member = _ar_members.emplace_back();
-        ar_member.Buf = std::move(final_obj_or_err.get());
-        ar_member.MemberName = obj.name;
+               << "processing " << Handle.Objects.size() << " object(s)\n");
+    for (auto &Obj : Handle.Objects) {
+      if (auto FinalObjOrErr = executeObjCopyOnObject(Obj)) {
+        auto &ArMember = ArMembers.emplace_back();
+        ArMember.Buf = std::move(*FinalObjOrErr);
+        ArMember.MemberName = Obj.Name;
       } else {
-        return final_obj_or_err.takeError();
+        return FinalObjOrErr.takeError();
       }
     }
 
@@ -299,39 +297,39 @@ private:
   }
 
   /// \brief Common config.
-  llvm::objcopy::CommonConfig _common_config;
+  llvm::objcopy::CommonConfig CommonConfig;
 
   /// \brief ELF config (empty).
-  llvm::objcopy::ELFConfig _elf_config;
+  llvm::objcopy::ELFConfig ELFConfig;
 
   /// \brief COFF config (empty).
-  llvm::objcopy::COFFConfig _coff_config;
+  llvm::objcopy::COFFConfig COFFConfig;
 
   /// \brief MachO config (empty).
-  llvm::objcopy::MachOConfig _macho_config;
+  llvm::objcopy::MachOConfig MachOConfig;
 
   /// \brief Wasm config (empty).
-  llvm::objcopy::WasmConfig _wasm_config;
+  llvm::objcopy::WasmConfig WasmConfig;
 
   /// \brief XCOFF config (empty).
-  llvm::objcopy::XCOFFConfig _xcoff_config;
+  llvm::objcopy::XCOFFConfig XCOFFConfig;
 
   /// \brief Archive members.
-  llvm::SmallVector<llvm::NewArchiveMember, 128> _ar_members;
+  llvm::SmallVector<llvm::NewArchiveMember, 128> ArMembers;
 
   /// \brief Bartleby handle.
-  Bartleby _b;
+  Bartleby Handle;
 };
 
 BARTLEBY_API llvm::Error
-Bartleby::BuildFinalArchive(Bartleby &&b,
-                            llvm::StringRef out_filepath) noexcept {
-  ArchiveWriter builder(std::move(b));
-  return builder.Build(out_filepath);
+Bartleby::buildFinalArchive(Bartleby &&B,
+                            llvm::StringRef OutFilepath) noexcept {
+  ArchiveWriter Builder(std::move(B));
+  return Builder.build(OutFilepath);
 }
 
 BARTLEBY_API llvm::Expected<std::unique_ptr<llvm::MemoryBuffer>>
-Bartleby::BuildFinalArchive(Bartleby &&b) noexcept {
-  ArchiveWriter builder(std::move(b));
-  return builder.Build();
+Bartleby::buildFinalArchive(Bartleby &&B) noexcept {
+  ArchiveWriter Builder(std::move(B));
+  return Builder.build();
 }

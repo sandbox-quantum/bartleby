@@ -32,36 +32,36 @@ using namespace saq::bartleby;
 
 BARTLEBY_API Symbol::Symbol() noexcept {}
 
-void Symbol::UpdateWithNewSymbolInfo(const SymbolInfo &syminfo) noexcept {
-  assert(syminfo.err == false);
+void Symbol::updateWithNewSymbolInfo(const SymbolInfo &SymInfo) noexcept {
+  assert(SymInfo.Err == false);
 
-  if ((*syminfo.flags & llvm::object::BasicSymbolRef::Flags::SF_Weak) == 0) {
-    if ((*syminfo.flags & llvm::object::BasicSymbolRef::Flags::SF_Undefined) ==
+  if ((*SymInfo.Flags & llvm::object::BasicSymbolRef::Flags::SF_Weak) == 0) {
+    if ((*SymInfo.Flags & llvm::object::BasicSymbolRef::Flags::SF_Undefined) ==
         0) {
       LLVM_DEBUG(llvm::errs() << "symbol is defined. marked as defined\n");
-      _defined = true;
+      Defined = true;
     }
-    if (*syminfo.flags & llvm::object::BasicSymbolRef::Flags::SF_Global) {
+    if (*SymInfo.Flags & llvm::object::BasicSymbolRef::Flags::SF_Global) {
       LLVM_DEBUG(llvm::errs() << "symbol is global. marked as defined\n");
-      _global = true;
+      Global = true;
     }
   }
-  _type = syminfo.object_type;
+  Type = SymInfo.ObjectType;
 }
 
-bool Symbol::IsMachO() const noexcept {
-  return _type == llvm::Triple::ObjectFormatType::MachO;
+bool Symbol::isMachO() const noexcept {
+  return Type == llvm::Triple::ObjectFormatType::MachO;
 }
 
-BARTLEBY_API void Symbol::SetName(std::string name) noexcept {
-  _overwrite_name = name;
+BARTLEBY_API void Symbol::setName(std::string Name) noexcept {
+  OverwriteName = Name;
 }
 
-BARTLEBY_API bool Symbol::Global() const noexcept { return _global; }
+BARTLEBY_API bool Symbol::isGlobal() const noexcept { return Global; }
 
-BARTLEBY_API bool Symbol::Defined() const noexcept { return _defined; }
+BARTLEBY_API bool Symbol::isDefined() const noexcept { return Defined; }
 
 BARTLEBY_API std::optional<llvm::StringRef>
-Symbol::OverwriteName() const noexcept {
-  return _overwrite_name;
+Symbol::getOverwriteName() const noexcept {
+  return OverwriteName;
 }
