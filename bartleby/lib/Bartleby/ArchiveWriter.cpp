@@ -4,6 +4,10 @@
 ///
 /// \author thb-sb
 
+#include "Bartleby/Bartleby.h"
+#include "Bartleby/Error.h"
+#include "Bartleby/Export.h"
+
 #include "llvm/Object/ArchiveWriter.h"
 #include "llvm/ObjCopy/COFF/COFFConfig.h"
 #include "llvm/ObjCopy/CommonConfig.h"
@@ -16,11 +20,6 @@
 #include "llvm/Object/Archive.h"
 #include "llvm/Object/MachOUniversalWriter.h"
 #include "llvm/Support/SmallVectorMemoryBuffer.h"
-
-#include "Bartleby/Bartleby.h"
-
-#include "Bartleby/Error.h"
-#include "Bartleby/Export.h"
 
 #define DEBUG_TYPE "Bartleby"
 

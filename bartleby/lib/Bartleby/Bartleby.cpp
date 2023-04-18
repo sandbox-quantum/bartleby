@@ -20,16 +20,13 @@
 
 #include "Bartleby/Bartleby.h"
 
-#include "llvm/ADT/StringExtras.h"
-#include "llvm/ADT/Twine.h"
-#include "llvm/Object/Archive.h"
-#include "llvm/Object/ArchiveWriter.h"
-#include "llvm/Object/MachOUniversal.h"
-#include "llvm/Support/MemoryBuffer.h"
-
 #include "Bartleby/Error.h"
 #include "Bartleby/Export.h"
 #include "Bartleby/Symbol.h"
+
+#include "llvm/Object/Archive.h"
+#include "llvm/Object/MachOUniversal.h"
+#include "llvm/Support/MemoryBuffer.h"
 
 #define DEBUG_TYPE "bartleby"
 

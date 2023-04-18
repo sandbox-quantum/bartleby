@@ -20,11 +20,11 @@
 
 #include "Bartleby/Symbol.h"
 
-#include <cassert>
+#include "Bartleby/Export.h"
 
 #include "llvm/Object/SymbolicFile.h"
 
-#include "Bartleby/Export.h"
+#include <cassert>
 
 #define DEBUG_TYPE "SYM"
 

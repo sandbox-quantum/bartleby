@@ -18,9 +18,7 @@
 ///
 /// \author thb-sb
 
-#include <cassert>
-#include <cstdlib>
-#include <iostream>
+#include "Bartleby/Bartleby.h"
 
 #include "llvm/ADT/SmallVector.h"
 #include "llvm/ADT/Twine.h"
@@ -28,8 +26,6 @@
 #include "llvm/Support/Error.h"
 #include "llvm/Support/MemoryBuffer.h"
 #include "llvm/Support/WithColor.h"
-
-#include "Bartleby/Bartleby.h"
 
 /// \brief Input file.
 llvm::cl::list<std::string> InputFileNames(llvm::cl::Required, "if",

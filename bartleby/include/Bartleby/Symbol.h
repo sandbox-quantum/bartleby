@@ -20,9 +20,9 @@
 
 #pragma once
 
-#include <optional>
-
 #include "llvm/Object/ObjectFile.h"
+
+#include <optional>
 
 namespace saq::bartleby {
 

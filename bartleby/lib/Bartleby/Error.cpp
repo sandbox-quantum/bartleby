@@ -18,8 +18,6 @@
 ///
 /// \author thb-sb
 
-#include <sstream>
-
 #include "Bartleby/Error.h"
 
 namespace saq::bartleby {
