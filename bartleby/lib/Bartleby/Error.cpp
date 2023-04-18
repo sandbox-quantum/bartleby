@@ -20,7 +20,7 @@
 
 #include "Bartleby/Error.h"
 
-namespace saq::bartleby {
+using namespace saq::bartleby;
 
 char Error::ID = 'b';
 
@@ -82,5 +82,3 @@ std::error_code Error::convertToErrorCode() const noexcept {
       },
       _reason);
 }
-
-} // end namespace saq::bartleby

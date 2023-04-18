@@ -23,7 +23,7 @@
 
 #define DEBUG_TYPE "Bartleby"
 
-namespace saq::bartleby {
+using namespace saq::bartleby;
 
 namespace {
 
@@ -335,5 +335,3 @@ Bartleby::BuildFinalArchive(Bartleby &&b) noexcept {
   ArchiveWriter builder(std::move(b));
   return builder.Build();
 }
-
-} // end namespace saq::bartleby

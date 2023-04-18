@@ -28,7 +28,7 @@
 
 #define DEBUG_TYPE "SYM"
 
-namespace saq::bartleby {
+using namespace saq::bartleby;
 
 BARTLEBY_API Symbol::Symbol() noexcept {}
 
@@ -65,5 +65,3 @@ BARTLEBY_API std::optional<llvm::StringRef>
 Symbol::OverwriteName() const noexcept {
   return _overwrite_name;
 }
-
-} // end namespace saq::bartleby

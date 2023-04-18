@@ -30,7 +30,7 @@
 
 #define DEBUG_TYPE "bartleby"
 
-namespace saq::bartleby {
+using namespace saq::bartleby;
 
 BARTLEBY_API Bartleby::Bartleby() noexcept = default;
 
@@ -142,8 +142,9 @@ bool ObjectFormat::matches(const llvm::Triple &triple) const noexcept {
   return ObjectFormat{triple}.pack() == pack();
 }
 
-llvm::raw_ostream &operator<<(llvm::raw_ostream &os,
-                              const ObjectFormat &object_format) noexcept {
+llvm::raw_ostream &
+saq::bartleby::operator<<(llvm::raw_ostream &os,
+                          const ObjectFormat &object_format) noexcept {
   return os << "ObjectFormat(arch=" << object_format.arch
             << ", subarch=" << object_format.subarch
             << ", file format=" << object_format.format_type << ')';
@@ -309,5 +310,3 @@ llvm::Error Bartleby::AddMachOUniversalBinary(
 
   return llvm::Error::success();
 }
-
-} // end namespace saq::bartleby
