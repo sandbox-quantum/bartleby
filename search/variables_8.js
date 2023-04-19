@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['type_0',['type',['../structsaq_1_1bartleby_1_1SymbolInfo.html#a7adf9926a7ac57a8baeae6df34a2df84',1,'saq::bartleby::SymbolInfo::type()'],['../structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason.html#a3a5ca5ecf56f7abf5cfbe3fedc3aca3a',1,'saq::bartleby::Error::ObjectFormatTypeMismatchReason::type()']]]
+  ['subarch_0',['subarch',['../structsaq_1_1bartleby_1_1ObjectFormat.html#a5189b8676776e726d855f4d78e5bc862',1,'saq::bartleby::ObjectFormat']]],
+  ['sym_1',['sym',['../structsaq_1_1bartleby_1_1SymbolInfo.html#a7619b7d679ce24f8689f11c62eff260c',1,'saq::bartleby::SymbolInfo']]]
 ];

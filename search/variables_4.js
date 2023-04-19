@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['msg_0',['msg',['../structsaq_1_1bartleby_1_1Error_1_1UnsupportedBinaryReason.html#ae29c8db4dae157917922a950efc899a3',1,'saq::bartleby::Error::UnsupportedBinaryReason']]]
+  ['id_0',['ID',['../classsaq_1_1bartleby_1_1Error.html#a96f8aeb6423fd0043407fcfc5f590d4c',1,'saq::bartleby::Error']]]
 ];
