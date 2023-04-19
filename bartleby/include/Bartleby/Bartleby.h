@@ -163,6 +163,33 @@ private:
     llvm::SmallString<32> name;
   };
 
+  /// \brief A set of object formats.
+  using ObjectFormatSet = std::unordered_set<ObjectFormat, ObjectFormat::Hash>;
+
+  /// \brief Type for the current object format.
+  ///
+  /// This is either an ObjectFormat, or a set of ObjectFormat.
+  ///
+  /// The set variant is used when the handle is dealing with fat Mach-O.
+  using ObjectFormatVariant =
+      std::variant<std::monostate, ObjectFormat, ObjectFormatSet>;
+
+  /// \brief Return true if the input objects have to be fat Mach-O.
+  ///
+  /// \return true if at least one input object is a fat Mach-O.
+  [[nodiscard]] bool isMachOUniversalBinary() const noexcept;
+
+  /// \brief Verify that an given object format matches the one the handle
+  /// actually handles.
+  ///
+  /// \param object_format Object format to compare against.
+  ///
+  /// If no object format is specified (i.e. std::monostate), true is returned.
+  ///
+  /// \return true if this is a match, or if no object format was saved before.
+  [[nodiscard]] bool
+  objectFormatMatches(const ObjectFormat &object_format) const noexcept;
+
   /// \brief Map of symbols.
   SymbolMap _symbols;
 
@@ -177,7 +204,7 @@ private:
   ///
   /// It is not allowed to have different object format types within the same
   /// Bartleby handle.
-  std::optional<ObjectFormat> _object_format;
+  ObjectFormatVariant _object_format;
 
   // Forward declaration.
   class ArchiveWriter;
