@@ -32,7 +32,22 @@ RUN mv doxygen-1.9.6/bin/doxygen /usr/bin/doxygen
 RUN chmod +x /usr/bin/doxygen
 RUN rm -rf doxygen-1.9.6 doxygen.tar.gz
 
+
+RUN curl -Lo /tmp/go.tar.gz 'https://go.dev/dl/go1.20.3.linux-amd64.tar.gz'
+RUN sha384sum -c <<< "66fccde4a792c96fed6a85c789d0bf0eb954183b9cc70eb10b1c4c485bccfc5cfbebb82966d53d475150ae6fb8670c80  /tmp/go.tar.gz"
+WORKDIR /tmp/
+RUN tar -C /usr/local -xf /tmp/go.tar.gz
+ENV PATH=$PATH:/usr/local/go/bin
+RUN go version
+ENV GOPATH=/usr/local/go
+
+RUN go install github.com/bazelbuild/buildtools/buildifier@latest
+RUN buildifier --version
+
 RUN useradd -ms /bin/bash pawn
 USER pawn
 WORKDIR /home/pawn
 ENV GOOGLE_APPLICATION_CREDENTIALS=/home/pawn/gcloud-service-key.json
+
+RUN go version
+RUN buildifier --version

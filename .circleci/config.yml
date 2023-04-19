@@ -131,6 +131,10 @@ jobs:
           command: |
             find bartleby -name '*.cpp' -exec "${CLANG_FORMAT}" --dry-run --Werror {} \;
             find bartleby -name '*.h' -exec "${CLANG_FORMAT}" --dry-run --Werror {} \;
+      - run:
+          name: "Run buildifier check"
+          command: |
+            buildifier -r -mode check .
 
 
 workflows:
