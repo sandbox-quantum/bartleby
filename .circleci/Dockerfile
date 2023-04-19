@@ -12,6 +12,7 @@ RUN apt install -y cmake
 RUN apt install -y ninja-build
 RUN apt install -y curl
 RUN apt install -y clang-format-15
+RUN apt install -y python3-pip
 
 ENV CC=clang-15
 ENV CXX=clang++-15
@@ -44,6 +45,8 @@ ENV GOPATH=/usr/local/go
 RUN go install github.com/bazelbuild/buildtools/buildifier@latest
 RUN buildifier --version
 
+RUN pip3 install cmake-format
+
 RUN useradd -ms /bin/bash pawn
 USER pawn
 WORKDIR /home/pawn
@@ -51,3 +54,4 @@ ENV GOOGLE_APPLICATION_CREDENTIALS=/home/pawn/gcloud-service-key.json
 
 RUN go version
 RUN buildifier --version
+RUN cmake-format --version
