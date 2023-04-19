@@ -118,7 +118,25 @@ jobs:
             git commit -m 'deploying new version'
             git push
 
+  check-format:
+    docker:
+      - image: us-central1-docker.pkg.dev/pqc-dev-pool-336002/bartleby/bartleby:ci
+        auth:
+          username: _json_key
+          password: $DOCKER_IMAGE_GCR_SA_KEY
+    steps:
+      - checkout
+      - run:
+          name: "Check code format using clang-format"
+          command: |
+            find bartleby -name '*.cpp' -exec "${CLANG_FORMAT}" --dry-run --Werror {} \;
+            find bartleby -name '*.h' -exec "${CLANG_FORMAT}" --dry-run --Werror {} \;
+
+
 workflows:
+  check-format:
+    jobs:
+      - check-format
   build-and-test:
     jobs:
       - compile-test-using-bazel
