@@ -5,6 +5,21 @@ cc_library(
 )
 
 cc_library(
+    name = "archive_writer",
+    srcs = ["ArchiveWriter.cpp"],
+    copts = [
+        "-std=c++17",
+    ],
+    deps = [
+        ":export",
+        ":error",
+        "@bartleby-llvm-project//llvm:ObjCopy",
+        "@bartleby-llvm-project//llvm:Object",
+        "//bartleby/include/Bartleby:bartleby",
+    ],
+)
+
+cc_library(
     name = "bartleby",
     srcs = ["Bartleby.cpp"],
     copts = [
@@ -12,6 +27,7 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        ":archive_writer",
         ":error",
         ":export",
         ":symbol",
