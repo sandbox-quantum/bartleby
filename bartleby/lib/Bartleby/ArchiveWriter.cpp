@@ -24,7 +24,7 @@
 
 namespace saq::bartleby {
 
-/// \brief Archive builder that implements out multi format config.
+/// \brief Archive builder that implements our multi format config.
 ///
 /// See https://llvm.org/doxygen/classllvm_1_1objcopy_1_1MultiFormatConfig.html.
 class Bartleby::ArchiveWriter : public llvm::objcopy::MultiFormatConfig {
