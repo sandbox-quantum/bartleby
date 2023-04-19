@@ -302,6 +302,39 @@ llvm::Error Bartleby::addMachOUniversalBinary(
       });
       (llvm::Twine(llvm::utostr(Objects.size())) + ".o")
           .toNullTerminatedStringRef(Entry.Name);
+      continue;
+    }
+
+    if (auto ArOrErr = Ofa.getAsArchive()) {
+      auto Ar = std::move(*ArOrErr);
+      llvm::Error E = llvm::Error::success();
+      for (const auto &Ch : Ar->children(E)) {
+        auto BinOrErr = Ch.getAsBinary();
+        if (!BinOrErr) {
+          return BinOrErr.takeError();
+        }
+        auto Bin = std::move(*BinOrErr);
+
+        if (auto *Obj = llvm::dyn_cast<llvm::object::MachOObjectFile>(&*Bin)) {
+          ProcessObjectFile(Obj, Symbols);
+          auto &Entry = Objects.emplace_back(ObjectFile{
+              .Handle = &*Obj,
+              .Owner = std::move(Bin),
+              .Alignment = 0,
+          });
+          if (auto NameOrErr = Ch.getName()) {
+            Entry.Name = *NameOrErr;
+          } else {
+            (llvm::Twine(llvm::utostr(Objects.size())) + ".o")
+                .toNullTerminatedStringRef(Entry.Name);
+          }
+          continue;
+        }
+        Error::MachOUniversalBinaryReason Reason;
+        llvm::raw_svector_ostream OS(Reason.Msg);
+        OS << "expected an object in the archive, found " << Bin->getType();
+        return llvm::make_error<Error>(std::move(Reason));
+      }
     }
   }
   OwnedBinaries.push_back(std::move(OwningBinary));
