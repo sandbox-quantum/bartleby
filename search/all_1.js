@@ -6,7 +6,7 @@ var searchData=
   ['bartleby_2eh_3',['Bartleby.h',['../Bartleby_8h.html',1,'']]],
   ['bazel_20integration_4',['Bazel integration',['../page-bi.html',1,'page-getting-started']]],
   ['bazel_20rule_5',['Bazel rule',['../page-bazel-rule.html',1,'page-bi']]],
-  ['build_6',['Build',['../classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveBuilder.html#a919d79bb38617d94a84523856b2d6b22',1,'saq::bartleby::Bartleby::ArchiveBuilder::Build(llvm::StringRef out_filepath) noexcept'],['../classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveBuilder.html#a014f96e6cbca96a209062f76b266fbab',1,'saq::bartleby::Bartleby::ArchiveBuilder::Build() noexcept']]],
+  ['build_6',['Build',['../classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#af9b73987c92d68f8531a6eac701f6240',1,'saq::bartleby::Bartleby::ArchiveWriter::Build(llvm::StringRef out_filepath) noexcept'],['../classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a5774bd7edb968ff53e91a28009873baf',1,'saq::bartleby::Bartleby::ArchiveWriter::Build() noexcept']]],
   ['buildfinalarchive_7',['BuildFinalArchive',['../classsaq_1_1bartleby_1_1Bartleby.html#a2b57e86f54f53b0cb9396a4ae4f1bb43',1,'saq::bartleby::Bartleby::BuildFinalArchive(Bartleby &amp;&amp;b, llvm::StringRef out_filepath) noexcept'],['../classsaq_1_1bartleby_1_1Bartleby.html#a1042d0ef16323c9b31f4594cf13151d0',1,'saq::bartleby::Bartleby::BuildFinalArchive(Bartleby &amp;&amp;b) noexcept']]],
   ['building_20from_20source_8',['Building from source',['../page-gs-building-from-source.html',1,'page-getting-started']]]
 ];
