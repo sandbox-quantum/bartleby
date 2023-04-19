@@ -11,15 +11,16 @@ def _bartleby_impl(ctx):
     )
 
     args = ctx.actions.args()
-    for l in libs:
-        args.add("--if", l)
 
     out_name = "lib{}_bartleby.a".format(ctx.label.name)
     out = ctx.actions.declare_file(out_name)
-    args.add("--of", out)
+    args.add("-o", out)
 
     if ctx.attr.prefix != None:
         args.add("--prefix", ctx.attr.prefix)
+
+    for l in libs:
+        args.add(l)
 
     ctx.actions.run(
         outputs = [out],
