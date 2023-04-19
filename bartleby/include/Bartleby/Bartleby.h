@@ -36,8 +36,8 @@ namespace saq::bartleby {
 /// \brief Object format.
 ///
 /// This structure defines an object format using the minimum amount of
-/// information. It uses the architecture type (`llvm::Triple::ArchType`)
-/// , the sub-architecture type (`llvm::Triple::SubArchType`) and the
+/// information. It uses the architecture type (`llvm::Triple::ArchType`),
+/// the sub-architecture type (`llvm::Triple::SubArchType`) and the
 /// object file format (`llvm::Triple::ObjectFormatType`).
 struct ObjectFormat {
   /// \brief The architecture.
