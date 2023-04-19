@@ -135,6 +135,11 @@ jobs:
           name: "Run buildifier check"
           command: |
             buildifier -r -mode check .
+      - run:
+          name: "Run cmake-format check"
+          command: |
+            find . -name CMakeLists.txt -exec cmake-format --check {} \;
+            find . -name '*.cmake' -exec cmake-format --check {} \;
 
 
 workflows:
