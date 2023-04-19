@@ -11,11 +11,13 @@ RUN apt install -y graphviz
 RUN apt install -y cmake
 RUN apt install -y ninja-build
 RUN apt install -y curl
+RUN apt install -y clang-format-15
 
 ENV CC=clang-15
 ENV CXX=clang++-15
 ENV LD=lld-15
 ENV LLVM_CONFIG=/usr/lib/llvm-15/bin/llvm-config
+ENV CLANG_FORMAT=clang-format-15
 
 RUN curl -Lo bazelisk-linux-amd64 'https://github.com/bazelbuild/bazelisk/releases/download/v1.16.0/bazelisk-linux-amd64'
 RUN sha384sum -c <<< "55d9ef786360f97902c886eff515c5dd2e05985c52d43809645f963b9a7e19ccf87cef3d07d2cfda8c2cf16aed119616  bazelisk-linux-amd64"
