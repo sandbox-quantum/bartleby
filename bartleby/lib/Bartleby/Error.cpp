@@ -36,6 +36,8 @@ void Error::log(llvm::raw_ostream &os) const noexcept {
         } else if constexpr (std::is_same_v<ObjectFormatTypeMismatchReason,
                                             ErrT>) {
           os << "expected " << err.constraint << ", got " << err.found;
+        } else if constexpr (std::is_same_v<MachOUniversalBinaryReason, ErrT>) {
+          os << err.msg;
         } else {
           __builtin_unreachable();
         }
@@ -55,6 +57,8 @@ std::string Error::message() const noexcept {
                                             ErrT>) {
           os << "invalid object format type: expected " << err.constraint
              << ", got " << err.found;
+        } else if constexpr (std::is_same_v<MachOUniversalBinaryReason, ErrT>) {
+          os << "fat Mach-O error: " << err.msg;
         } else {
           __builtin_unreachable();
         }
@@ -72,6 +76,8 @@ std::error_code Error::convertToErrorCode() const noexcept {
         } else if constexpr (std::is_same_v<ObjectFormatTypeMismatchReason,
                                             ErrT>) {
           return std::error_code(2, std::system_category());
+        } else if constexpr (std::is_same_v<MachOUniversalBinaryReason, ErrT>) {
+          return std::error_code(3, std::system_category());
         } else {
           __builtin_unreachable();
         }

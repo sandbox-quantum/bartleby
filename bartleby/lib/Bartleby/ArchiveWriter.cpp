@@ -13,6 +13,8 @@
 #include "llvm/ObjCopy/ObjCopy.h"
 #include "llvm/ObjCopy/XCOFF/XCOFFConfig.h"
 #include "llvm/ObjCopy/wasm/WasmConfig.h"
+#include "llvm/Object/Archive.h"
+#include "llvm/Object/MachOUniversalWriter.h"
 #include "llvm/Support/SmallVectorMemoryBuffer.h"
 
 #include "Bartleby/Bartleby.h"
@@ -23,6 +25,35 @@
 #define DEBUG_TYPE "Bartleby"
 
 namespace saq::bartleby {
+
+namespace {
+
+/// \brief An archive to build.
+struct Archive {
+  /// \brief Archive members.
+  llvm::SmallVector<llvm::NewArchiveMember, 128> members;
+
+  /// \brief The buffer which will contain the archive.
+  std::unique_ptr<llvm::MemoryBuffer> out_buffer;
+
+  /// \brief The final archive properties.
+  std::unique_ptr<llvm::object::Archive> out_ar;
+
+  /// \brief Archive triple.
+  llvm::Triple triple;
+
+  /// \brief Name.
+  std::unique_ptr<std::string> name;
+
+  /// \brief Alignment.
+  uint32_t alignment;
+};
+
+/// \brief A map that links an ObjectFormat with an Archive.
+using ArchiveMap =
+    std::unordered_map<ObjectFormat, Archive, ObjectFormat::Hash>;
+
+} // end anonymous namespace
 
 /// \brief Archive builder that implements our multi format config.
 ///
@@ -45,12 +76,130 @@ public:
     }
   }
 
+  /// \brief Build the slices needed for a fat Mach-O.
+  ///
+  /// \param slices Vector where to store slices.
+  /// \param archives Vector where to write archives.
+  ///
+  /// \return An error.
+  [[nodiscard]] llvm::Error BuildMachOUniversalBinarySlices(
+      llvm::SmallVectorImpl<llvm::object::Slice> &slices,
+      ArchiveMap &archives) noexcept {
+    assert(_b.isMachOUniversalBinary());
+
+    const auto &object_format_set =
+        std::get<ObjectFormatSet>(_b._object_format);
+
+    LLVM_DEBUG(for (const auto &object_format
+                    : object_format_set) {
+      llvm::dbgs() << "object format in fat Mach-O: " << object_format << '\n';
+    });
+
+    archives.reserve(object_format_set.size());
+    slices.reserve(object_format_set.size());
+
+    for (const auto &obj : _b._objects) {
+      const auto triple = obj.handle->makeTriple();
+      LLVM_DEBUG(llvm::dbgs()
+                 << "got object, triple is " << triple.str()
+                 << ", object format is " << ObjectFormat{triple} << '\n');
+      assert(object_format_set.count(triple) == 1);
+      auto final_obj_or_err = ExecuteObjCopyOnObject(obj);
+      if (!final_obj_or_err) {
+        return final_obj_or_err.takeError();
+      }
+      auto &ar = archives[ObjectFormat{triple}];
+      ar.triple = triple;
+      ar.alignment = obj.alignment;
+      auto &ar_member = ar.members.emplace_back();
+      ar_member.Buf = std::move(final_obj_or_err.get());
+      ar.name = std::make_unique<std::string>(triple.str());
+      ar_member.MemberName = *ar.name;
+    }
+
+    for (auto &[object_format, ar] : archives) {
+      if (auto buffer_or_err = llvm::writeArchiveToBuffer(
+              ar.members,
+              /* WriteSymtab= */ true, ar.members[0].detectKindFromObject(),
+              /* Deterministic=*/true, /*Thin=*/false)) {
+        ar.out_buffer = std::move(buffer_or_err.get());
+      } else {
+        return buffer_or_err.takeError();
+      }
+
+      auto new_ar_or_err = llvm::object::Archive::create(*ar.out_buffer);
+      if (!new_ar_or_err) {
+        return new_ar_or_err.takeError();
+      }
+
+      auto cpu_type_or_err = llvm::MachO::getCPUType(ar.triple);
+      if (!cpu_type_or_err) {
+        return cpu_type_or_err.takeError();
+      }
+
+      auto cpu_sub_type_or_err = llvm::MachO::getCPUSubType(ar.triple);
+      if (!cpu_sub_type_or_err) {
+        return cpu_sub_type_or_err.takeError();
+      }
+      ar.out_ar = std::move(new_ar_or_err.get());
+      slices.emplace_back(*ar.out_ar, cpu_type_or_err.get(),
+                          cpu_sub_type_or_err.get(), ar.triple.str(),
+                          ar.alignment);
+    }
+
+    return llvm::Error::success();
+  }
+
+  /// \brief Build a fat Mach-O file.
+  ///
+  /// \param out_filepath Path to out file.
+  ///
+  /// \return An error.
+  [[nodiscard]] llvm::Error
+  BuildMachOUniversalBinary(llvm::StringRef out_filepath) noexcept {
+    llvm::SmallVector<llvm::object::Slice, 3> slices;
+    ArchiveMap archives;
+
+    if (auto err = BuildMachOUniversalBinarySlices(slices, archives)) {
+      return err;
+    }
+
+    return llvm::object::writeUniversalBinary(slices, out_filepath);
+  }
+
+  /// \brief Build a fat Mach-O file.
+  ///
+  /// \return A memory buffer, or an error..
+  [[nodiscard]] llvm::Expected<std::unique_ptr<llvm::MemoryBuffer>>
+  BuildMachOUniversalBinary() noexcept {
+    llvm::SmallVector<llvm::object::Slice, 3> slices;
+    ArchiveMap archives;
+
+    if (auto err = BuildMachOUniversalBinarySlices(slices, archives)) {
+      return err;
+    }
+
+    llvm::SmallVector<char, 8192> content;
+    llvm::raw_svector_ostream os(content);
+
+    if (auto err = llvm::object::writeUniversalBinaryToStream(slices, os)) {
+      return err;
+    }
+
+    return std::make_unique<llvm::SmallVectorMemoryBuffer>(std::move(content),
+                                                           false);
+  }
+
   /// \brief Build the final archive.
   ///
   /// \param out_filepath Path to out file.
   ///
   /// \return An error.
   [[nodiscard]] llvm::Error Build(llvm::StringRef out_filepath) noexcept {
+    if (_b.isMachOUniversalBinary()) {
+      return BuildMachOUniversalBinary(out_filepath);
+    }
+
     if (auto err = ExecuteObjCopyOnObjects(); err) {
       return err;
     }
@@ -67,6 +216,10 @@ public:
   /// \return A memory buffer or an error.
   [[nodiscard]] llvm::Expected<std::unique_ptr<llvm::MemoryBuffer>>
   Build() noexcept {
+    if (_b.isMachOUniversalBinary()) {
+      return BuildMachOUniversalBinary();
+    }
+
     if (auto err = ExecuteObjCopyOnObjects(); err) {
       return err;
     }
@@ -111,6 +264,23 @@ public:
   }
 
 private:
+  /// \brief Execute objcopy on an object.
+  ///
+  /// \param obj The object.
+  ///
+  /// \return The content of the final object, or an error.
+  [[nodiscard]] llvm::Expected<std::unique_ptr<llvm::SmallVectorMemoryBuffer>>
+  ExecuteObjCopyOnObject(const ObjectFile &obj) noexcept {
+    llvm::SmallVector<char, 8192> content;
+    llvm::raw_svector_ostream os(content);
+    if (auto err =
+            llvm::objcopy::executeObjcopyOnBinary(*this, *obj.handle, os)) {
+      return err;
+    }
+    return std::make_unique<llvm::SmallVectorMemoryBuffer>(std::move(content),
+                                                           false);
+  }
+
   /// \brief Execute objcopy on objects that belongs to the Bartleby handle.
   ///
   /// \return An error.
@@ -118,16 +288,13 @@ private:
     LLVM_DEBUG(llvm::dbgs()
                << "processing " << _b._objects.size() << " object(s)\n");
     for (auto &obj : _b._objects) {
-      llvm::SmallVector<char, 8192> content;
-      llvm::raw_svector_ostream stream(content);
-      if (auto err = llvm::objcopy::executeObjcopyOnBinary(*this, *obj.handle,
-                                                           stream)) {
-        return err;
+      if (auto final_obj_or_err = ExecuteObjCopyOnObject(obj)) {
+        auto &ar_member = _ar_members.emplace_back();
+        ar_member.Buf = std::move(final_obj_or_err.get());
+        ar_member.MemberName = obj.name;
+      } else {
+        return final_obj_or_err.takeError();
       }
-      auto &ar_member = _ar_members.emplace_back();
-      ar_member.Buf = std::make_unique<llvm::SmallVectorMemoryBuffer>(
-          std::move(content), false);
-      ar_member.MemberName = obj.name;
     }
 
     return llvm::Error::success();

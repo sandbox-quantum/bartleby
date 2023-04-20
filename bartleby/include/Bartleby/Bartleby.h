@@ -161,6 +161,11 @@ private:
 
     /// \brief Its name.
     llvm::SmallString<32> name;
+
+    /// \brief Object alignment.
+    ///
+    /// This is used for writing fat Mach-O archives.
+    uint32_t alignment;
   };
 
   /// \brief A set of object formats.
@@ -189,6 +194,12 @@ private:
   /// \return true if this is a match, or if no object format was saved before.
   [[nodiscard]] bool
   objectFormatMatches(const ObjectFormat &object_format) const noexcept;
+
+  /// \brief Add a fat Mach-O, aka a Universal Mach-O Binary.
+  ///
+  /// \param owning_binary The owning binary containing the fat Mach-O.
+  [[nodiscard]] llvm::Error AddMachOUniversalBinary(
+      llvm::object::OwningBinary<llvm::object::Binary> owning_binary) noexcept;
 
   /// \brief Map of symbols.
   SymbolMap _symbols;
