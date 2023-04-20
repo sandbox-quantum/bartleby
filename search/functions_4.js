@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['getoverwritename_0',['getOverwriteName',['../classsaq_1_1bartleby_1_1Symbol.html#a1b7a66530dc7eaaf24e5c78dd9706f2b',1,'saq::bartleby::Symbol']]],
-  ['getreferences_1',['getReferences',['../classsaq_1_1bartleby_1_1Symbol.html#a0268318626f1790fc492b3e2570d4e45',1,'saq::bartleby::Symbol']]],
-  ['getsymbols_2',['getSymbols',['../classsaq_1_1bartleby_1_1Bartleby.html#a1d6deae631cbd1a746864830e550228a',1,'saq::bartleby::Bartleby']]]
+  ['isdefined_0',['isDefined',['../classsaq_1_1bartleby_1_1Symbol.html#a7e3283027ff308889259afa7494fd424',1,'saq::bartleby::Symbol']]],
+  ['isglobal_1',['isGlobal',['../classsaq_1_1bartleby_1_1Symbol.html#a37243834ed5812c53cc24a05c94ef96c',1,'saq::bartleby::Symbol']]],
+  ['ismacho_2',['isMachO',['../classsaq_1_1bartleby_1_1Symbol.html#a5c11fb1d8d006fdefa3204836b66be32',1,'saq::bartleby::Symbol']]]
 ];

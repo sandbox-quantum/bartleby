@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['displaysymbollist_0',['DisplaySymbolList',['../tools_2Bartleby_2Bartleby_8cpp.html#a1ed13fbf7d925acdf74c754e77246131',1,'Bartleby.cpp']]]
+  ['error_0',['Error',['../classsaq_1_1bartleby_1_1Error.html#a6fa8e39b8d0f7566a0853b5ff658f3fe',1,'saq::bartleby::Error']]]
 ];

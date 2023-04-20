@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['test_0',['TEST',['../Tests_8cpp.html#ada913b90c973087f22177bcaf16d52b5',1,'Tests.cpp']]]
+  ['updatewithnewsymbolinfo_0',['updateWithNewSymbolInfo',['../classsaq_1_1bartleby_1_1Symbol.html#a38ecf3ce2a34cae14002fea628ec251c',1,'saq::bartleby::Symbol']]]
 ];

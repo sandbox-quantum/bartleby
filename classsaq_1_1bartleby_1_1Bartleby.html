@@ -127,7 +127,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1d6deae631cbd1a746864830e550228a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html#ae51999b73c4246929fbd07f6615d9841">SymbolMap</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html#a1d6deae631cbd1a746864830e550228a">getSymbols</a> () const noexcept</td></tr>
 <tr class="memdesc:a1d6deae631cbd1a746864830e550228a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a const reference to the map of symbols.  <br /></td></tr>
 <tr class="separator:a1d6deae631cbd1a746864830e550228a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a85aeec2258089a9f73d1cb846d9917"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html#a5a85aeec2258089a9f73d1cb846d9917">prefixGlobalAndDefinedSymbols</a> (llvm::StringRef <a class="el" href="tools_2Bartleby_2Bartleby_8cpp.html#a43292e59da46a9f6a90a53ddd02cf991">Prefix</a>) noexcept</td></tr>
+<tr class="memitem:a5a85aeec2258089a9f73d1cb846d9917"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html#a5a85aeec2258089a9f73d1cb846d9917">prefixGlobalAndDefinedSymbols</a> (llvm::StringRef Prefix) noexcept</td></tr>
 <tr class="memdesc:a5a85aeec2258089a9f73d1cb846d9917"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a prefix to all global and defined symbols.  <br /></td></tr>
 <tr class="separator:a5a85aeec2258089a9f73d1cb846d9917"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -406,7 +406,7 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  227</span>      <span class="keywordflow">if</span> (Sym.isMachO()) {</div>
 <div class="line"><span class="lineno">  228</span>        NewName += <span class="charliteral">&#39;_&#39;</span>;</div>
 <div class="line"><span class="lineno">  229</span>      }</div>
-<div class="line"><span class="lineno">  230</span>      NewName += <a class="code hl_function" href="tools_2Bartleby_2Bartleby_8cpp.html#a43292e59da46a9f6a90a53ddd02cf991">Prefix</a>;</div>
+<div class="line"><span class="lineno">  230</span>      NewName += Prefix;</div>
 <div class="line"><span class="lineno">  231</span> </div>
 <div class="line"><span class="lineno">  232</span>      <span class="keywordflow">if</span> (Sym.isMachO()) {</div>
 <div class="line"><span class="lineno">  233</span>        NewName += Name.substr(1);</div>
@@ -420,7 +420,6 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  241</span> </div>
 <div class="line"><span class="lineno">  242</span>  <span class="keywordflow">return</span> N;</div>
 <div class="line"><span class="lineno">  243</span>}</div>
-<div class="ttc" id="atools_2Bartleby_2Bartleby_8cpp_html_a43292e59da46a9f6a90a53ddd02cf991"><div class="ttname"><a href="tools_2Bartleby_2Bartleby_8cpp.html#a43292e59da46a9f6a90a53ddd02cf991">Prefix</a></div><div class="ttdeci">llvm::cl::opt&lt; std::string &gt; Prefix(&quot;prefix&quot;, llvm::cl::desc(&quot;Prefix to set to global and defined symbols&quot;), llvm::cl::value_desc(&quot;prefix&quot;))</div><div class="ttdoc">Prefix to apply.</div></div>
 </div><!-- fragment -->
 </div>
 </div>
