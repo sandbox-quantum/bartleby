@@ -1,6 +1,6 @@
 var searchData=
 [
   ['machouniversalbinaryreason_0',['MachOUniversalBinaryReason',['../structsaq_1_1bartleby_1_1Error_1_1MachOUniversalBinaryReason.html',1,'saq::bartleby::Error']]],
-  ['matches_1',['matches',['../structsaq_1_1bartleby_1_1ObjectFormat.html#af1769d2cbc1eec62b10ffa94245f7a2c',1,'saq::bartleby::ObjectFormat']]],
-  ['msg_2',['msg',['../structsaq_1_1bartleby_1_1Error_1_1UnsupportedBinaryReason.html#ae29c8db4dae157917922a950efc899a3',1,'saq::bartleby::Error::UnsupportedBinaryReason::msg()'],['../structsaq_1_1bartleby_1_1Error_1_1MachOUniversalBinaryReason.html#a0999b87889ba2448eb01d8c6092e8e45',1,'saq::bartleby::Error::MachOUniversalBinaryReason::msg()']]]
+  ['matches_1',['matches',['../structsaq_1_1bartleby_1_1ObjectFormat.html#a3aa2b8add702b414ebe02b4e9be47e29',1,'saq::bartleby::ObjectFormat']]],
+  ['msg_2',['Msg',['../structsaq_1_1bartleby_1_1Error_1_1UnsupportedBinaryReason.html#ac8100248c6769b9e6c11d516d0cb1d6a',1,'saq::bartleby::Error::UnsupportedBinaryReason::Msg()'],['../structsaq_1_1bartleby_1_1Error_1_1MachOUniversalBinaryReason.html#a1d46aa34c1bfc2b569b065d2a7dbca09',1,'saq::bartleby::Error::MachOUniversalBinaryReason::Msg()']]]
 ];
