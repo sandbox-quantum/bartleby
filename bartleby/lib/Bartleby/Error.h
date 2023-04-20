@@ -66,10 +66,11 @@ public:
       std::variant<UnsupportedBinaryReason, ObjectFormatTypeMismatchReason,
                    MachOUniversalBinaryReason>;
 
-  /// \brief Constructor for a reason.
+  /// \brief Constructs an error using a reason.
+  ///
+  /// \param reason The reason of the error.
   template <typename T> Error(T reason) noexcept : _reason(std::move(reason)) {}
 
-  /// \brief Destructor.
   ~Error() noexcept override = default;
 
   void log(llvm::raw_ostream &os) const noexcept override;

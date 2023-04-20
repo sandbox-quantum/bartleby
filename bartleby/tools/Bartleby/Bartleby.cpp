@@ -47,7 +47,7 @@ llvm::cl::opt<std::string> OutputFileName(llvm::cl::Required, "of",
                                           llvm::cl::desc("Output filename"),
                                           llvm::cl::value_desc("filename"));
 
-/// \brief Display the list of symbols.
+/// \brief Displays the list of symbols.
 llvm::cl::opt<bool>
     DisplaySymbolList("display-symbols",
                       llvm::cl::desc("Display list of symbols"));
@@ -59,12 +59,18 @@ namespace {
 /// \brief Tool name;
 constexpr llvm::StringRef ToolName = "bartleby";
 
+/// \brief Reports an error by displaying a message.
+///
+/// \param message Message to display as an error string.
 [[noreturn]] void reportError(llvm::Twine message) noexcept {
   llvm::WithColor::error(llvm::errs(), ToolName) << message << '\n';
   llvm::errs().flush();
   std::exit(EXIT_FAILURE);
 }
 
+/// \brief Reports an error by extracting the message from a \p llvm::Error.
+///
+/// \param e The error to report.
 [[noreturn]] void reportError(llvm::Error e) noexcept {
   assert(e);
   std::string buf;
@@ -74,6 +80,10 @@ constexpr llvm::StringRef ToolName = "bartleby";
   reportError(buf);
 }
 
+/// \brief Reports an error related to a certain file manipulation.
+///
+/// \param filepath The file involved in the error.
+/// \param e The error to report.
 [[noreturn]] void reportError(llvm::StringRef filepath, llvm::Error e) {
   assert(e);
   std::string buf;
@@ -85,9 +95,9 @@ constexpr llvm::StringRef ToolName = "bartleby";
   std::exit(EXIT_FAILURE);
 }
 
-/// \brief Collect all input files.
+/// \brief Collects all input files.
 ///
-/// \return The bartleby handle, or nullopt if an error occurred.
+/// \returns The bartleby handle, or nullopt if an error occurred.
 [[nodiscard]] bartleby::Bartleby CollectObjects() noexcept {
   bartleby::Bartleby b;
 
@@ -103,7 +113,7 @@ constexpr llvm::StringRef ToolName = "bartleby";
   return b;
 }
 
-/// \brief Display symbols.
+/// \brief Displays the symbols previously collected.
 ///
 /// \param b Bartleby handle.
 void DisplaySymbols(const bartleby::Bartleby &b) noexcept {

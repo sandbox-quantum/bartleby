@@ -60,9 +60,9 @@ using ArchiveMap =
 /// See https://llvm.org/doxygen/classllvm_1_1objcopy_1_1MultiFormatConfig.html.
 class Bartleby::ArchiveWriter : public llvm::objcopy::MultiFormatConfig {
 public:
-  /// \brief Constructor using a Bartleby handle.
+  /// \brief Constructs an \p ArchiveWriter using a Bartleby handle.
   ///
-  /// \param b Bartleby handle.
+  /// \param[in] b Bartleby handle.
   ArchiveWriter(Bartleby &&b) noexcept : _b{std::move(b)} {
     const auto end = _b._symbols.end();
     for (auto entry = _b._symbols.begin(); entry != end; ++entry) {
@@ -76,12 +76,12 @@ public:
     }
   }
 
-  /// \brief Build the slices needed for a fat Mach-O.
+  /// \brief Constructs the slices needed for a fat Mach-O.
   ///
-  /// \param slices Vector where to store slices.
-  /// \param archives Vector where to write archives.
+  /// \param[out] slices Vector where to store slices.
+  /// \param[out] archives Vector where to write archives.
   ///
-  /// \return An error.
+  /// \returns An error.
   [[nodiscard]] llvm::Error BuildMachOUniversalBinarySlices(
       llvm::SmallVectorImpl<llvm::object::Slice> &slices,
       ArchiveMap &archives) noexcept {
@@ -150,11 +150,11 @@ public:
     return llvm::Error::success();
   }
 
-  /// \brief Build a fat Mach-O file.
+  /// \brief Builds a fat Mach-O file and writes the output to a file.
   ///
   /// \param out_filepath Path to out file.
   ///
-  /// \return An error.
+  /// \returns An error.
   [[nodiscard]] llvm::Error
   BuildMachOUniversalBinary(llvm::StringRef out_filepath) noexcept {
     llvm::SmallVector<llvm::object::Slice, 3> slices;
@@ -167,9 +167,9 @@ public:
     return llvm::object::writeUniversalBinary(slices, out_filepath);
   }
 
-  /// \brief Build a fat Mach-O file.
+  /// \brief Builds a fat Mach-O file and returns its content.
   ///
-  /// \return A memory buffer, or an error..
+  /// \returns A memory buffer, or an error.
   [[nodiscard]] llvm::Expected<std::unique_ptr<llvm::MemoryBuffer>>
   BuildMachOUniversalBinary() noexcept {
     llvm::SmallVector<llvm::object::Slice, 3> slices;
@@ -190,11 +190,11 @@ public:
                                                            false);
   }
 
-  /// \brief Build the final archive.
+  /// \brief Builds the final archive and writes the content to a file.
   ///
   /// \param out_filepath Path to out file.
   ///
-  /// \return An error.
+  /// \returns An error.
   [[nodiscard]] llvm::Error Build(llvm::StringRef out_filepath) noexcept {
     if (_b.isMachOUniversalBinary()) {
       return BuildMachOUniversalBinary(out_filepath);
@@ -211,9 +211,9 @@ public:
                               /* Thin= */ false);
   }
 
-  /// \brief Build the final archive.
+  /// \brief Builds the final archive and returns its content.
   ///
-  /// \return A memory buffer or an error.
+  /// \returns A memory buffer or an error.
   [[nodiscard]] llvm::Expected<std::unique_ptr<llvm::MemoryBuffer>>
   Build() noexcept {
     if (_b.isMachOUniversalBinary()) {
@@ -231,7 +231,6 @@ public:
                                       /* Thin= */ false);
   }
 
-  /// \brief Destructor.
   ~ArchiveWriter() noexcept override = default;
 
   const llvm::objcopy::CommonConfig &getCommonConfig() const noexcept override {
@@ -264,11 +263,11 @@ public:
   }
 
 private:
-  /// \brief Execute objcopy on an object.
+  /// \brief Executes \p objcopy on an object.
   ///
   /// \param obj The object.
   ///
-  /// \return The content of the final object, or an error.
+  /// \returns The content of the final object, or an error.
   [[nodiscard]] llvm::Expected<std::unique_ptr<llvm::SmallVectorMemoryBuffer>>
   ExecuteObjCopyOnObject(const ObjectFile &obj) noexcept {
     llvm::SmallVector<char, 8192> content;
@@ -281,9 +280,9 @@ private:
                                                            false);
   }
 
-  /// \brief Execute objcopy on objects that belongs to the Bartleby handle.
+  /// \brief Executes \p objcopy on objects belonging to the Bartleby handle.
   ///
-  /// \return An error.
+  /// \returns An error.
   [[nodiscard]] llvm::Error ExecuteObjCopyOnObjects() noexcept {
     LLVM_DEBUG(llvm::dbgs()
                << "processing " << _b._objects.size() << " object(s)\n");

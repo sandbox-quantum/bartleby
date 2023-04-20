@@ -51,58 +51,50 @@ struct SymbolInfo {
 /// \brief An high view of a symbol.
 class Symbol {
 public:
-  /// \brief Return the visibility of the symbol.
+  /// \brief Returns the visibility of the symbol.
   ///
-  /// \return true if symbol is global, else false.
+  /// \returns True if symbol is global, else false.
   [[nodiscard]] bool Global() const noexcept;
 
-  /// \brief Return the definedness of the symbol.
+  /// \brief Returns the definedness of the symbol.
   ///
-  /// \return true if symbol is defined, else false.
+  /// \returns True if symbol is defined, else false.
   [[nodiscard]] bool Defined() const noexcept;
 
-  /// \brief Count how many times this symbol is referenced.
+  /// \brief Counts how many times this symbol is referenced.
   ///
-  /// \return Number of references.
+  /// \returns Number of references.
   [[nodiscard]] size_t References() const noexcept;
 
   /// \brief Returns the overwrite name.
   ///
-  /// \return The overwrite name.
+  /// \returns The overwrite name.
   [[nodiscard]] std::optional<llvm::StringRef> OverwriteName() const noexcept;
 
-  /// \brief Return true if the symbol contains references to some mach-o
+  /// \brief Returns true if the symbol contains references to some mach-o
   /// symbols.
   ///
-  /// \return true if the symbol contains references to some mach-o, else false.
+  /// \returns True if the symbol contains references to some mach-o, else
+  /// false.
   [[nodiscard]] bool IsMachO() const noexcept;
 
-  /// \brief Set the name of the symbol.
+  /// \brief Sets the name of the symbol.
   ///
   /// \param name Name to set.
   void SetName(std::string name) noexcept;
 
-  /// \brief Update this symbol with new symbol information.
+  /// \brief Updates the symbol with new symbol information.
   ///
   /// \param syminfo Symbol information.
   void UpdateWithNewSymbolInfo(const SymbolInfo &syminfo) noexcept;
 
-  /// \brief Create a symbol.
+  /// \brief Constructs a new symbol.
   Symbol() noexcept;
 
-  /// \brief Copy constructor.
   Symbol(const Symbol &) noexcept = delete;
-
-  /// \brief Move constructor.
   Symbol(Symbol &&) noexcept = default;
-
-  /// \brief Copy assignment.
   Symbol &operator=(const Symbol &) noexcept = delete;
-
-  /// \brief Move assignment.
   Symbol &operator=(Symbol &&) noexcept = default;
-
-  /// \brief Destructor.
   ~Symbol() noexcept = default;
 
 private:

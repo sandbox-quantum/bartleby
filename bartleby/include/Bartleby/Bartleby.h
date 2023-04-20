@@ -36,9 +36,9 @@ namespace saq::bartleby {
 /// \brief Object format.
 ///
 /// This structure defines an object format using the minimum amount of
-/// information. It uses the architecture type (`llvm::Triple::ArchType`),
-/// the sub-architecture type (`llvm::Triple::SubArchType`) and the
-/// object file format (`llvm::Triple::ObjectFormatType`).
+/// information. It uses the architecture type (\p llvm::Triple::ArchType),
+/// the sub-architecture type (\p llvm::Triple::SubArchType) and the
+/// object file format (\p llvm::Triple::ObjectFormatType).
 struct ObjectFormat {
   /// \brief The architecture.
   llvm::Triple::ArchType arch;
@@ -49,32 +49,33 @@ struct ObjectFormat {
   /// \brief The object format file.
   llvm::Triple::ObjectFormatType format_type;
 
-  /// \brief Construct an ObjectFormat out of a `llvm::Triple`.
+  /// \brief Constructs an \p ObjectFormat out of a \p llvm::Triple.
   ///
   /// \param triple The triple to use.
   ObjectFormat(const llvm::Triple &triple) noexcept;
 
-  /// \brief Pack the architecture, sub-architecture and object format file
-  /// enums into a 8-bytes integer.
+  /// \brief Packs the architecture, sub-architecture and object format file
+  /// enums into a 8-bytes unsigned integer.
+  ///
+  /// \returns The packed values as a 8-bytes unsigned integer.
   [[nodiscard]] uint64_t pack() const noexcept;
 
-  /// \brief Comparison operator between two ObjectFormat.
   bool operator==(const ObjectFormat &other) const noexcept;
 
-  /// \brief Verify that a `llvm::Triple` matches the value from an
-  /// ObjectFormat.
+  /// \brief Verifies that a \p llvm::Triple matches the value from an
+  /// \p ObjectFormat.
   ///
   /// \param triple The triple to compare against the ObjectFormat.
   ///
-  /// \return True if the given triple has the same architecture,
+  /// \returns True if the given triple has the same architecture,
   /// sub-architecture and object format than the ones stored in ObjectFormat.
   bool matches(const llvm::Triple &triple) const noexcept;
 
-  /// \brief Stream operator with a llvm::raw_ostream.
+  /// \brief Dumps the \p ObjectFormat to a \p llvm::raw_ostream.
   friend llvm::raw_ostream &operator<<(llvm::raw_ostream &os,
                                        const ObjectFormat &format) noexcept;
 
-  /// \brief std::hash implementation for ObjectFormat.
+  /// \brief \p std::hash implementation for \p ObjectFormat.
   struct Hash {
     inline size_t operator()(const ObjectFormat &objformat) const noexcept {
       return static_cast<size_t>(objformat.pack());
@@ -88,81 +89,71 @@ public:
   /// \brief Symbol map type.
   using SymbolMap = llvm::StringMap<Symbol>;
 
-  /// \brief Constructor
+  /// \brief Constructs an empty Bartleby handle.
   Bartleby() noexcept;
 
-  /// \brief Copy constructor.
   Bartleby(const Bartleby &) noexcept = delete;
-
-  /// \brief Move constructor.
   Bartleby(Bartleby &&) noexcept = default;
-
-  /// \brief Copy assignment.
   Bartleby &operator=(const Bartleby &) noexcept = delete;
-
-  /// \brief Move assignment.
   Bartleby &operator=(Bartleby &&) noexcept = default;
-
-  /// \brief Destructor.
   ~Bartleby() noexcept = default;
 
-  /// \brief Add a new binary to Bartleby.
+  /// \brief Adds a new binary to Bartleby.
   ///
-  /// \param binary Binary.
+  /// \param[in] binary Binary.
   ///
-  /// \return true if success, else false.
+  /// \returns An error.
   [[nodiscard]] llvm::Error
   AddBinary(llvm::object::OwningBinary<llvm::object::Binary> binary) noexcept;
 
-  /// \brief Get the map of symbols.
+  /// \brief Gets a const reference to the map of symbols.
   ///
-  /// \return The map of symbols.
+  /// \returns The map of symbols.
   [[nodiscard]] const SymbolMap &Symbols() const noexcept { return _symbols; }
 
-  /// \brief Prefix all global and defined symbols.
+  /// \brief Applies a prefix to all global and defined symbols.
   ///
   /// \param prefix Prefix.
   ///
-  /// \return The number of symbols that have been prefixed.
+  /// \returns The number of symbols that have been prefixed.
   size_t PrefixGlobalAndDefinedSymbols(llvm::StringRef prefix) noexcept;
 
-  /// \brief Build final archive.
+  /// \brief Builds the final archive and writes its content to a file.
   ///
-  /// \param b Bartleby handle.
+  /// \param[in] b Bartleby handle.
   /// \param out_filepath Path to out file.
   ///
-  /// \return An error, or success.
+  /// \returns An error.
   [[nodiscard]] static llvm::Error
   BuildFinalArchive(Bartleby &&b, llvm::StringRef out_filepath) noexcept;
 
-  /// \brief Build final archive and return a memory buffer.
+  /// \brief Builds the final archive and returns its content.
   ///
-  /// \param b Bartleby handle.
+  /// \param[in] b Bartleby handle.
   ///
-  /// \return Memory buffer containing the archive, or an error.
+  /// \returns The memory buffer containing the archive, or an error.
   [[nodiscard]] static llvm::Expected<std::unique_ptr<llvm::MemoryBuffer>>
   BuildFinalArchive(Bartleby &&b) noexcept;
 
 private:
   /// \brief An object file.
   struct ObjectFile {
-    /// \brief Handle to `llvm::object::ObjectFile`.
-    ///
+    /// \brief Handle to \p llvm::object::ObjectFile.
     llvm::object::ObjectFile *handle;
 
     /// \brief Owner.
-    /// If the object comes from an `ObjectFile` (`.o`), then we only have
-    /// the pointer to the `ObjectFile`.
-    /// However, if it comes from an archive, then we get a `std::unique_ptr`
-    /// out of a `llvm::object::Archive::Child` using
+    /// If the object comes from an \p ObjectFile (\p .o), then we only have
+    /// the pointer to the \p ObjectFile.
+    /// However, if it comes from an archive, then we get a \p std::unique_ptr
+    /// out of a \p llvm::object::Archive::Child using
     /// https://llvm.org/doxygen/classllvm_1_1object_1_1Archive_1_1Child.html#a7e08f334d391b4c5c327739f3e460465.
-    /// So we have to keep a track of that binary.
+    /// We therefore have to keep a track of that binary.
     std::unique_ptr<llvm::object::Binary> owner;
 
     /// \brief Its name.
     llvm::SmallString<32> name;
 
-    /// \brief Object alignment.
+    /// \brief The object native alignment.
     ///
     /// This is used for writing fat Mach-O archives.
     uint32_t alignment;
@@ -173,31 +164,34 @@ private:
 
   /// \brief Type for the current object format.
   ///
-  /// This is either an ObjectFormat, or a set of ObjectFormat.
+  /// This is either an \p ObjectFormat, or a set of \p ObjectFormat.
   ///
   /// The set variant is used when the handle is dealing with fat Mach-O.
   using ObjectFormatVariant =
       std::variant<std::monostate, ObjectFormat, ObjectFormatSet>;
 
-  /// \brief Return true if the input objects have to be fat Mach-O.
+  /// \brief Returns true if the input objects have to be fat Mach-O.
   ///
-  /// \return true if at least one input object is a fat Mach-O.
+  /// \returns True if at least one input object is a fat Mach-O.
   [[nodiscard]] bool isMachOUniversalBinary() const noexcept;
 
-  /// \brief Verify that an given object format matches the one the handle
+  /// \brief Verifies that an given object format matches the one the handle
   /// actually handles.
   ///
   /// \param object_format Object format to compare against.
   ///
-  /// If no object format is specified (i.e. std::monostate), true is returned.
+  /// If no object format is specified (i.e. \p std::monostate), true is
+  /// returned.
   ///
-  /// \return true if this is a match, or if no object format was saved before.
+  /// \returns true if this is a match, or if no object format was saved before.
   [[nodiscard]] bool
   objectFormatMatches(const ObjectFormat &object_format) const noexcept;
 
-  /// \brief Add a fat Mach-O, aka a Universal Mach-O Binary.
+  /// \brief Adds a fat Mach-O, aka a Universal Mach-O Binary.
   ///
-  /// \param owning_binary The owning binary containing the fat Mach-O.
+  /// \param[in] owning_binary The owning binary containing the fat Mach-O.
+  ///
+  /// \returns An error.
   [[nodiscard]] llvm::Error AddMachOUniversalBinary(
       llvm::object::OwningBinary<llvm::object::Binary> owning_binary) noexcept;
 

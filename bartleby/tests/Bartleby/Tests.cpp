@@ -39,12 +39,12 @@ namespace {
 /// \brief Base directory for test data based on yaml files.
 #define TEST_DATA_BASE_DIR "bartleby/tests/Bartleby/testdata/yaml"
 
-/// \brief Convert a llvm::Triple::ObjectFormatType into a path to a
-/// sub-directory in kTestDataBaseDir.
+/// \brief Converts a \p llvm::Triple::ObjectFormatType into a path to a
+/// sub-directory of \p TEST_DATA_BASE_DIR.
 ///
 /// \param format Object format.
 ///
-/// \return Path to the directory containing yaml files for the format.
+/// \returns The path to the directory containing yaml files for the format.
 [[nodiscard]] llvm::StringRef
 ObjectFormatToPath(const llvm::Triple::ObjectFormatType format) {
   switch (format) {
@@ -78,20 +78,20 @@ ObjectFormatToPath(const llvm::Triple::ObjectFormatType format) {
   }
 }
 
-/// \brief Error Handler implementation.
+/// \brief Handles some errors that may occur when parsing a YAML document.
 ///
-/// \param msg Message
-void ErrorHandler(const llvm::Twine &msg) {
+/// \param msg The message that describes the error.
+void YAMLErrorHandler(const llvm::Twine &msg) {
   llvm::errs() << "an error occured: " << msg << '\n';
 }
 
-/// \brief Read a file under the directory of a specific format object.
+/// \brief Reads a file under the directory of a specific format object.
 ///
 /// \param filepath Filepath
 /// \param object_format Object format.
 /// \param[out] content Content of the file.
 ///
-/// \return An assertion result.
+/// \returns An assertion result.
 [[nodiscard]] testing::AssertionResult
 ReadYamlFile(llvm::StringRef filepath,
              const llvm::Triple::ObjectFormatType object_format,
@@ -106,14 +106,14 @@ ReadYamlFile(llvm::StringRef filepath,
   }
 }
 
-/// \brief Parse a yaml file and fill a vector with some llvm::ObjectFile.
+/// \brief Parses a YAML file and fills a vector with some \p llvm::ObjectFile.
 ///
 /// \param path Filepath to the yaml file.
 /// \param object_format Object format.
 /// \param[out] objects Vector of objects to fill.
 /// \param n Number of objects to retrieve.
 ///
-/// \return An assertion.
+/// \returns An assertion.
 [[nodiscard]] testing::AssertionResult YAML2Objects(
     llvm::StringRef filepath, llvm::Triple::ObjectFormatType object_format,
     llvm::SmallVectorImpl<llvm::object::OwningBinary<llvm::object::Binary>>
@@ -130,7 +130,7 @@ ReadYamlFile(llvm::StringRef filepath,
     llvm::raw_svector_ostream os(object_content);
 
     llvm::yaml::Input yaml_in(*content);
-    if (!llvm::yaml::convertYAML(yaml_in, os, ErrorHandler, doc_num + 1)) {
+    if (!llvm::yaml::convertYAML(yaml_in, os, YAMLErrorHandler, doc_num + 1)) {
       return testing::AssertionFailure() << "failed to convert YAML";
     }
 
@@ -150,17 +150,17 @@ ReadYamlFile(llvm::StringRef filepath,
   return testing::AssertionSuccess();
 }
 
-/// \brief Resolve symbol in map.
+/// \brief Resolves a symbol in the map of symbols.
 ///
 /// \param _b_ Bartleby handle.
 /// \param _name_ Name of the symbol.
 ///
-/// \return _s_ Symbol entry.
+/// \returns The symbol entry.
 #define ASSERT_SYM_RESOLVE(_b_, _name_)                                        \
   const auto &_s_ = (_b_).Symbols().find((_name_));                            \
   ASSERT_NE(_s_, (_b_).Symbols().end()) << "Symbol " << (_name_) << " not found"
 
-/// \brief Assert symbol globalness.
+/// \brief Asserts the globalness of a symbol.
 ///
 /// \param _b_ Bartleby handle.
 /// \param _name_ Name of the symbol.
@@ -170,21 +170,21 @@ ReadYamlFile(llvm::StringRef filepath,
     ASSERT_EQ(_s_->getValue().Global(), (_exp_));                              \
   } while (0)
 
-/// \brief Assert that a symbol is local.
+/// \brief Asserts that a symbol is local.
 ///
 /// \param _b_ Bartleby handle.
 /// \param _name_ Name of the symbol.
 #define ASSERT_SYM_LOCAL(_b_, _name_)                                          \
   ASSERT_SYM_GLOBALNESS((_b_), (_name_), false)
 
-/// \brief Assert that a symbol is local.
+/// \brief Asserts that a symbol is local.
 ///
 /// \param _b_ Bartleby handle.
 /// \param _name_ Name of the symbol.
 #define ASSERT_SYM_GLOBAL(_b_, _name_)                                         \
   ASSERT_SYM_GLOBALNESS((_b_), (_name_), true)
 
-/// \brief Assert symbol definedness.
+/// \brief Asserts the definedness of a symbol.
 ///
 /// \param _b_ Bartleby handle.
 /// \param _name_ Name of the symbol.
@@ -194,21 +194,21 @@ ReadYamlFile(llvm::StringRef filepath,
     ASSERT_EQ(_s_->getValue().Defined(), (_exp_));                             \
   } while (0)
 
-/// \brief Assert that a symbol is undefined.
+/// \brief Asserts that a symbol is undefined.
 ///
 /// \param _b_ Bartleby handle.
 /// \param _name_ Name of the symbol.
 #define ASSERT_SYM_UNDEFINED(_b_, _name_)                                      \
   ASSERT_SYM_DEFINEDNESS((_b_), (_name_), false)
 
-/// \brief Assert that a symbol is defined.
+/// \brief Asserts that a symbol is defined.
 ///
 /// \param _b_ Bartleby handle.
 /// \param _name_ Name of the symbol.
 #define ASSERT_SYM_DEFINED(_b_, _name_)                                        \
   ASSERT_SYM_DEFINEDNESS((_b_), (_name_), true)
 
-/// \brief Assert symbol overwrittenness.
+/// \brief Asserts the overwrittenness of a symbol.
 ///
 /// \param _b_ Bartleby handle.
 /// \param _name_ Name of the symbol.
@@ -218,14 +218,14 @@ ReadYamlFile(llvm::StringRef filepath,
     ASSERT_TRUE(_s_->getValue().OverwriteName().has_value() == _exp_);         \
   } while (0)
 
-/// \brief Assert that a symbol name will be overwritten.
+/// \brief Asserts that a symbol name will be overwritten.
 ///
 /// \param _b_ Bartleby handle.
 /// \param _name_ Name of the symbol.
 #define ASSERT_SYM_WILL_BE_RENAMED(_b_, _name_)                                \
   ASSERT_SYM_OVERWRITTEN((_b_), (_name_), true)
 
-/// \brief Assert that a symbol name will NOT be overwritten.
+/// \brief Asserts that a symbol name will NOT be overwritten.
 ///
 /// \param _b_ Bartleby handle.
 /// \param _name_ Name of the symbol.
