@@ -20,14 +20,13 @@
 
 #pragma once
 
-#include <string>
-#include <variant>
+#include "Bartleby/Bartleby.h"
 
 #include "llvm/ADT/SmallString.h"
 #include "llvm/ADT/Triple.h"
 #include "llvm/Support/Error.h"
 
-#include "Bartleby/Bartleby.h"
+#include <variant>
 
 namespace saq::bartleby {
 

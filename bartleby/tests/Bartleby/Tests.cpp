@@ -18,9 +18,7 @@
 ///
 /// \author thb-sb
 
-#include <unistd.h>
-
-#include "gtest/gtest.h"
+#include "Bartleby/Bartleby.h"
 
 #include "llvm/ADT/Triple.h"
 #include "llvm/ADT/Twine.h"
@@ -32,7 +30,9 @@
 #include "llvm/Support/YAMLParser.h"
 #include "llvm/Support/YAMLTraits.h"
 
-#include "Bartleby/Bartleby.h"
+#include <unistd.h>
+
+#include "gtest/gtest.h"
 
 namespace {
 

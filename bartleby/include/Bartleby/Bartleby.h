@@ -20,16 +20,14 @@
 
 #pragma once
 
-#include <optional>
-#include <unordered_set>
-#include <variant>
+#include "Bartleby/Symbol.h"
 
 #include "llvm/ADT/SmallVector.h"
 #include "llvm/ADT/StringMap.h"
-#include "llvm/Object/ArchiveWriter.h"
 #include "llvm/Object/Binary.h"
 
-#include "Bartleby/Symbol.h"
+#include <unordered_set>
+#include <variant>
 
 namespace saq::bartleby {
 
