@@ -84,8 +84,7 @@ $(function() {
 
 <p>Unit tests for Bartleby.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;unistd.h&gt;</code><br />
-<code>#include &quot;gtest/gtest.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="Bartleby_8h_source.html">Bartleby/Bartleby.h</a>&quot;</code><br />
 <code>#include &quot;llvm/ADT/Triple.h&quot;</code><br />
 <code>#include &quot;llvm/ADT/Twine.h&quot;</code><br />
 <code>#include &quot;llvm/Object/Binary.h&quot;</code><br />
@@ -95,7 +94,8 @@ $(function() {
 <code>#include &quot;llvm/Support/SourceMgr.h&quot;</code><br />
 <code>#include &quot;llvm/Support/YAMLParser.h&quot;</code><br />
 <code>#include &quot;llvm/Support/YAMLTraits.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="Bartleby_8h_source.html">Bartleby/Bartleby.h</a>&quot;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &quot;gtest/gtest.h&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
@@ -659,10 +659,10 @@ Functions</h2></td></tr>
 <div class="ttc" id="aTests_8cpp_html_a58d7a5da5bb6e2c00e8c7fe8ba3c23e5"><div class="ttname"><a href="Tests_8cpp.html#a58d7a5da5bb6e2c00e8c7fe8ba3c23e5">ASSERT_SYM_GLOBAL</a></div><div class="ttdeci">#define ASSERT_SYM_GLOBAL(_b_, _name_)</div><div class="ttdoc">Asserts that a symbol is local.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:184</div></div>
 <div class="ttc" id="aTests_8cpp_html_af1fe266c0abe27080fc92f65b8ad4f9c"><div class="ttname"><a href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a></div><div class="ttdeci">#define ASSERT_SYM_DEFINED(_b_, _name_)</div><div class="ttdoc">Asserts that a symbol is defined.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:208</div></div>
 <div class="ttc" id="aTests_8cpp_html_af603cc293cbe77c7e632d6524545eb37"><div class="ttname"><a href="Tests_8cpp.html#af603cc293cbe77c7e632d6524545eb37">ASSERT_SYM_LOCAL</a></div><div class="ttdeci">#define ASSERT_SYM_LOCAL(_b_, _name_)</div><div class="ttdoc">Asserts that a symbol is local.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:177</div></div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html">saq::bartleby::Bartleby</a></div><div class="ttdoc">Bartleby handle.</div><div class="ttdef"><b>Definition:</b> Bartleby.h:87</div></div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a2b57e86f54f53b0cb9396a4ae4f1bb43"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a2b57e86f54f53b0cb9396a4ae4f1bb43">saq::bartleby::Bartleby::BuildFinalArchive</a></div><div class="ttdeci">static llvm::Error BuildFinalArchive(Bartleby &amp;&amp;b, llvm::StringRef out_filepath) noexcept</div><div class="ttdoc">Builds the final archive and writes its content to a file.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:328</div></div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a77d7f8122271da32771eba4f5a57fe04"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a77d7f8122271da32771eba4f5a57fe04">saq::bartleby::Bartleby::AddBinary</a></div><div class="ttdeci">llvm::Error AddBinary(llvm::object::OwningBinary&lt; llvm::object::Binary &gt; binary) noexcept</div><div class="ttdoc">Adds a new binary to Bartleby.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:155</div></div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_aa6b4af127189370f053b034ffc12c3f8"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#aa6b4af127189370f053b034ffc12c3f8">saq::bartleby::Bartleby::PrefixGlobalAndDefinedSymbols</a></div><div class="ttdeci">size_t PrefixGlobalAndDefinedSymbols(llvm::StringRef prefix) noexcept</div><div class="ttdoc">Applies a prefix to all global and defined symbols.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:222</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html">saq::bartleby::Bartleby</a></div><div class="ttdoc">Bartleby handle.</div><div class="ttdef"><b>Definition:</b> Bartleby.h:85</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a2b57e86f54f53b0cb9396a4ae4f1bb43"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a2b57e86f54f53b0cb9396a4ae4f1bb43">saq::bartleby::Bartleby::BuildFinalArchive</a></div><div class="ttdeci">static llvm::Error BuildFinalArchive(Bartleby &amp;&amp;b, llvm::StringRef out_filepath) noexcept</div><div class="ttdoc">Builds the final archive and writes its content to a file.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:327</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a77d7f8122271da32771eba4f5a57fe04"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a77d7f8122271da32771eba4f5a57fe04">saq::bartleby::Bartleby::AddBinary</a></div><div class="ttdeci">llvm::Error AddBinary(llvm::object::OwningBinary&lt; llvm::object::Binary &gt; binary) noexcept</div><div class="ttdoc">Adds a new binary to Bartleby.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:152</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_aa6b4af127189370f053b034ffc12c3f8"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#aa6b4af127189370f053b034ffc12c3f8">saq::bartleby::Bartleby::PrefixGlobalAndDefinedSymbols</a></div><div class="ttdeci">size_t PrefixGlobalAndDefinedSymbols(llvm::StringRef prefix) noexcept</div><div class="ttdoc">Applies a prefix to all global and defined symbols.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:219</div></div>
 </div><!-- fragment -->
 </div>
 </div>

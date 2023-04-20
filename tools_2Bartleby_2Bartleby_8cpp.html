@@ -83,16 +83,13 @@ $(function() {
 
 <p>Bartleby tool implementation.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;cassert&gt;</code><br />
-<code>#include &lt;cstdlib&gt;</code><br />
-<code>#include &lt;iostream&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="Bartleby_8h_source.html">Bartleby/Bartleby.h</a>&quot;</code><br />
 <code>#include &quot;llvm/ADT/SmallVector.h&quot;</code><br />
 <code>#include &quot;llvm/ADT/Twine.h&quot;</code><br />
 <code>#include &quot;llvm/Support/CommandLine.h&quot;</code><br />
 <code>#include &quot;llvm/Support/Error.h&quot;</code><br />
 <code>#include &quot;llvm/Support/MemoryBuffer.h&quot;</code><br />
 <code>#include &quot;llvm/Support/WithColor.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="Bartleby_8h_source.html">Bartleby/Bartleby.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -144,29 +141,29 @@ llvm::cl::opt&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  141</span>                                {</div>
-<div class="line"><span class="lineno">  142</span>  llvm::cl::ParseCommandLineOptions(argc, argv);</div>
-<div class="line"><span class="lineno">  143</span> </div>
-<div class="line"><span class="lineno">  144</span>  <span class="keyword">auto</span> b = CollectObjects();</div>
-<div class="line"><span class="lineno">  145</span> </div>
-<div class="line"><span class="lineno">  146</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="tools_2Bartleby_2Bartleby_8cpp.html#a43292e59da46a9f6a90a53ddd02cf991">Prefix</a>.empty()) {</div>
-<div class="line"><span class="lineno">  147</span>    <span class="keyword">const</span> <span class="keyword">auto</span> n = b.PrefixGlobalAndDefinedSymbols(<a class="code hl_function" href="tools_2Bartleby_2Bartleby_8cpp.html#a43292e59da46a9f6a90a53ddd02cf991">Prefix</a>);</div>
-<div class="line"><span class="lineno">  148</span>    llvm::outs() &lt;&lt; n &lt;&lt; <span class="stringliteral">&quot; symbol(s) prefixed\n&quot;</span>;</div>
+<div class="fragment"><div class="line"><span class="lineno">  137</span>                                {</div>
+<div class="line"><span class="lineno">  138</span>  llvm::cl::ParseCommandLineOptions(argc, argv);</div>
+<div class="line"><span class="lineno">  139</span> </div>
+<div class="line"><span class="lineno">  140</span>  <span class="keyword">auto</span> b = CollectObjects();</div>
+<div class="line"><span class="lineno">  141</span> </div>
+<div class="line"><span class="lineno">  142</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="tools_2Bartleby_2Bartleby_8cpp.html#a43292e59da46a9f6a90a53ddd02cf991">Prefix</a>.empty()) {</div>
+<div class="line"><span class="lineno">  143</span>    <span class="keyword">const</span> <span class="keyword">auto</span> n = b.PrefixGlobalAndDefinedSymbols(<a class="code hl_function" href="tools_2Bartleby_2Bartleby_8cpp.html#a43292e59da46a9f6a90a53ddd02cf991">Prefix</a>);</div>
+<div class="line"><span class="lineno">  144</span>    llvm::outs() &lt;&lt; n &lt;&lt; <span class="stringliteral">&quot; symbol(s) prefixed\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  145</span>  }</div>
+<div class="line"><span class="lineno">  146</span> </div>
+<div class="line"><span class="lineno">  147</span>  <span class="keywordflow">if</span> (<a class="code hl_function" href="tools_2Bartleby_2Bartleby_8cpp.html#a1ed13fbf7d925acdf74c754e77246131">DisplaySymbolList</a>) {</div>
+<div class="line"><span class="lineno">  148</span>    DisplaySymbols(b);</div>
 <div class="line"><span class="lineno">  149</span>  }</div>
 <div class="line"><span class="lineno">  150</span> </div>
-<div class="line"><span class="lineno">  151</span>  <span class="keywordflow">if</span> (<a class="code hl_function" href="tools_2Bartleby_2Bartleby_8cpp.html#a1ed13fbf7d925acdf74c754e77246131">DisplaySymbolList</a>) {</div>
-<div class="line"><span class="lineno">  152</span>    DisplaySymbols(b);</div>
-<div class="line"><span class="lineno">  153</span>  }</div>
-<div class="line"><span class="lineno">  154</span> </div>
-<div class="line"><span class="lineno">  155</span>  <span class="keywordflow">if</span> (<span class="keyword">auto</span> err =</div>
-<div class="line"><span class="lineno">  156</span>          bartleby::Bartleby::BuildFinalArchive(std::move(b), <a class="code hl_function" href="tools_2Bartleby_2Bartleby_8cpp.html#af10af98cf66017cdd910aeb57a142d55">OutputFileName</a>);</div>
-<div class="line"><span class="lineno">  157</span>      err) {</div>
-<div class="line"><span class="lineno">  158</span>    reportError(std::move(err));</div>
-<div class="line"><span class="lineno">  159</span>  }</div>
-<div class="line"><span class="lineno">  160</span>  llvm::outs() &lt;&lt; <a class="code hl_function" href="tools_2Bartleby_2Bartleby_8cpp.html#af10af98cf66017cdd910aeb57a142d55">OutputFileName</a> &lt;&lt; <span class="stringliteral">&quot; produced.\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  161</span> </div>
-<div class="line"><span class="lineno">  162</span>  <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
-<div class="line"><span class="lineno">  163</span>}</div>
+<div class="line"><span class="lineno">  151</span>  <span class="keywordflow">if</span> (<span class="keyword">auto</span> err =</div>
+<div class="line"><span class="lineno">  152</span>          bartleby::Bartleby::BuildFinalArchive(std::move(b), <a class="code hl_function" href="tools_2Bartleby_2Bartleby_8cpp.html#af10af98cf66017cdd910aeb57a142d55">OutputFileName</a>);</div>
+<div class="line"><span class="lineno">  153</span>      err) {</div>
+<div class="line"><span class="lineno">  154</span>    reportError(std::move(err));</div>
+<div class="line"><span class="lineno">  155</span>  }</div>
+<div class="line"><span class="lineno">  156</span>  llvm::outs() &lt;&lt; <a class="code hl_function" href="tools_2Bartleby_2Bartleby_8cpp.html#af10af98cf66017cdd910aeb57a142d55">OutputFileName</a> &lt;&lt; <span class="stringliteral">&quot; produced.\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  157</span> </div>
+<div class="line"><span class="lineno">  158</span>  <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
+<div class="line"><span class="lineno">  159</span>}</div>
 <div class="ttc" id="atools_2Bartleby_2Bartleby_8cpp_html_a1ed13fbf7d925acdf74c754e77246131"><div class="ttname"><a href="tools_2Bartleby_2Bartleby_8cpp.html#a1ed13fbf7d925acdf74c754e77246131">DisplaySymbolList</a></div><div class="ttdeci">llvm::cl::opt&lt; bool &gt; DisplaySymbolList(&quot;display-symbols&quot;, llvm::cl::desc(&quot;Display list of symbols&quot;))</div><div class="ttdoc">Displays the list of symbols.</div></div>
 <div class="ttc" id="atools_2Bartleby_2Bartleby_8cpp_html_a43292e59da46a9f6a90a53ddd02cf991"><div class="ttname"><a href="tools_2Bartleby_2Bartleby_8cpp.html#a43292e59da46a9f6a90a53ddd02cf991">Prefix</a></div><div class="ttdeci">llvm::cl::opt&lt; std::string &gt; Prefix(&quot;prefix&quot;, llvm::cl::desc(&quot;Prefix to set to global and defined symbols&quot;), llvm::cl::value_desc(&quot;prefix&quot;))</div><div class="ttdoc">Prefix to apply.</div></div>
 <div class="ttc" id="atools_2Bartleby_2Bartleby_8cpp_html_af10af98cf66017cdd910aeb57a142d55"><div class="ttname"><a href="tools_2Bartleby_2Bartleby_8cpp.html#af10af98cf66017cdd910aeb57a142d55">OutputFileName</a></div><div class="ttdeci">llvm::cl::opt&lt; std::string &gt; OutputFileName(llvm::cl::Required, &quot;of&quot;, llvm::cl::desc(&quot;Output filename&quot;), llvm::cl::value_desc(&quot;filename&quot;))</div><div class="ttdoc">Output file.</div></div>

@@ -159,19 +159,19 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">   66</span>                                       : _b{std::move(b)} {</div>
-<div class="line"><span class="lineno">   67</span>    <span class="keyword">const</span> <span class="keyword">auto</span> end = _b._symbols.end();</div>
-<div class="line"><span class="lineno">   68</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> entry = _b._symbols.begin(); entry != end; ++entry) {</div>
-<div class="line"><span class="lineno">   69</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;<a class="code hl_variable" href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a> = entry-&gt;first();</div>
-<div class="line"><span class="lineno">   70</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;sym = entry-&gt;getValue();</div>
-<div class="line"><span class="lineno">   71</span>      <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> oname = sym.OverwriteName(); oname) {</div>
-<div class="line"><span class="lineno">   72</span>        LLVM_DEBUG(llvm::dbgs() &lt;&lt; <span class="stringliteral">&quot;bartleby is going to rename &#39;&quot;</span> &lt;&lt; <a class="code hl_variable" href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a></div>
-<div class="line"><span class="lineno">   73</span>                                &lt;&lt; <span class="stringliteral">&quot;&#39; into &#39;&quot;</span> &lt;&lt; *oname &lt;&lt; <span class="stringliteral">&quot;&#39;\n&quot;</span>);</div>
-<div class="line"><span class="lineno">   74</span>        _common_config.SymbolsToRename[<a class="code hl_variable" href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a>] = *oname;</div>
-<div class="line"><span class="lineno">   75</span>      }</div>
-<div class="line"><span class="lineno">   76</span>    }</div>
-<div class="line"><span class="lineno">   77</span>  }</div>
-<div class="ttc" id="aArchiveWriter_8cpp_html_ad99876d5df830fc1a981d57e6794576c"><div class="ttname"><a href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a></div><div class="ttdeci">std::unique_ptr&lt; std::string &gt; name</div><div class="ttdoc">Name.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:46</div></div>
+<div class="fragment"><div class="line"><span class="lineno">   65</span>                                       : _b{std::move(b)} {</div>
+<div class="line"><span class="lineno">   66</span>    <span class="keyword">const</span> <span class="keyword">auto</span> end = _b._symbols.end();</div>
+<div class="line"><span class="lineno">   67</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> entry = _b._symbols.begin(); entry != end; ++entry) {</div>
+<div class="line"><span class="lineno">   68</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;<a class="code hl_variable" href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a> = entry-&gt;first();</div>
+<div class="line"><span class="lineno">   69</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;sym = entry-&gt;getValue();</div>
+<div class="line"><span class="lineno">   70</span>      <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> oname = sym.OverwriteName(); oname) {</div>
+<div class="line"><span class="lineno">   71</span>        LLVM_DEBUG(llvm::dbgs() &lt;&lt; <span class="stringliteral">&quot;bartleby is going to rename &#39;&quot;</span> &lt;&lt; <a class="code hl_variable" href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a></div>
+<div class="line"><span class="lineno">   72</span>                                &lt;&lt; <span class="stringliteral">&quot;&#39; into &#39;&quot;</span> &lt;&lt; *oname &lt;&lt; <span class="stringliteral">&quot;&#39;\n&quot;</span>);</div>
+<div class="line"><span class="lineno">   73</span>        _common_config.SymbolsToRename[<a class="code hl_variable" href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a>] = *oname;</div>
+<div class="line"><span class="lineno">   74</span>      }</div>
+<div class="line"><span class="lineno">   75</span>    }</div>
+<div class="line"><span class="lineno">   76</span>  }</div>
+<div class="ttc" id="aArchiveWriter_8cpp_html_ad99876d5df830fc1a981d57e6794576c"><div class="ttname"><a href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a></div><div class="ttdeci">std::unique_ptr&lt; std::string &gt; name</div><div class="ttdoc">Name.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:45</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -201,22 +201,22 @@ Public Member Functions</h2></td></tr>
 
 <p>Builds the final archive and returns its content. </p>
 <dl class="section return"><dt>Returns</dt><dd>A memory buffer or an error. </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  218</span>                   {</div>
-<div class="line"><span class="lineno">  219</span>    <span class="keywordflow">if</span> (_b.isMachOUniversalBinary()) {</div>
-<div class="line"><span class="lineno">  220</span>      <span class="keywordflow">return</span> <a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a1cbe41c811409c08a87a85da469516be">BuildMachOUniversalBinary</a>();</div>
-<div class="line"><span class="lineno">  221</span>    }</div>
-<div class="line"><span class="lineno">  222</span> </div>
-<div class="line"><span class="lineno">  223</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = ExecuteObjCopyOnObjects(); err) {</div>
-<div class="line"><span class="lineno">  224</span>      <span class="keywordflow">return</span> err;</div>
-<div class="line"><span class="lineno">  225</span>    }</div>
-<div class="line"><span class="lineno">  226</span> </div>
-<div class="line"><span class="lineno">  227</span>    <span class="keywordflow">return</span> llvm::writeArchiveToBuffer(_ar_members,</div>
-<div class="line"><span class="lineno">  228</span>                                      <span class="comment">/* WriteSymtab= */</span> <span class="keyword">true</span>,</div>
-<div class="line"><span class="lineno">  229</span>                                      _ar_members[0].detectKindFromObject(),</div>
-<div class="line"><span class="lineno">  230</span>                                      <span class="comment">/* Deterministic= */</span> <span class="keyword">true</span>,</div>
-<div class="line"><span class="lineno">  231</span>                                      <span class="comment">/* Thin= */</span> <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  232</span>  }</div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter_html_a1cbe41c811409c08a87a85da469516be"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a1cbe41c811409c08a87a85da469516be">saq::bartleby::Bartleby::ArchiveWriter::BuildMachOUniversalBinary</a></div><div class="ttdeci">llvm::Expected&lt; std::unique_ptr&lt; llvm::MemoryBuffer &gt; &gt; BuildMachOUniversalBinary() noexcept</div><div class="ttdoc">Builds a fat Mach-O file and returns its content.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:174</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  217</span>                   {</div>
+<div class="line"><span class="lineno">  218</span>    <span class="keywordflow">if</span> (_b.isMachOUniversalBinary()) {</div>
+<div class="line"><span class="lineno">  219</span>      <span class="keywordflow">return</span> <a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a1cbe41c811409c08a87a85da469516be">BuildMachOUniversalBinary</a>();</div>
+<div class="line"><span class="lineno">  220</span>    }</div>
+<div class="line"><span class="lineno">  221</span> </div>
+<div class="line"><span class="lineno">  222</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = ExecuteObjCopyOnObjects(); err) {</div>
+<div class="line"><span class="lineno">  223</span>      <span class="keywordflow">return</span> err;</div>
+<div class="line"><span class="lineno">  224</span>    }</div>
+<div class="line"><span class="lineno">  225</span> </div>
+<div class="line"><span class="lineno">  226</span>    <span class="keywordflow">return</span> llvm::writeArchiveToBuffer(_ar_members,</div>
+<div class="line"><span class="lineno">  227</span>                                      <span class="comment">/* WriteSymtab= */</span> <span class="keyword">true</span>,</div>
+<div class="line"><span class="lineno">  228</span>                                      _ar_members[0].detectKindFromObject(),</div>
+<div class="line"><span class="lineno">  229</span>                                      <span class="comment">/* Deterministic= */</span> <span class="keyword">true</span>,</div>
+<div class="line"><span class="lineno">  230</span>                                      <span class="comment">/* Thin= */</span> <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  231</span>  }</div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter_html_a1cbe41c811409c08a87a85da469516be"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a1cbe41c811409c08a87a85da469516be">saq::bartleby::Bartleby::ArchiveWriter::BuildMachOUniversalBinary</a></div><div class="ttdeci">llvm::Expected&lt; std::unique_ptr&lt; llvm::MemoryBuffer &gt; &gt; BuildMachOUniversalBinary() noexcept</div><div class="ttdoc">Builds a fat Mach-O file and returns its content.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:173</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -252,21 +252,21 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An error. </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  198</span>                                                                     {</div>
-<div class="line"><span class="lineno">  199</span>    <span class="keywordflow">if</span> (_b.isMachOUniversalBinary()) {</div>
-<div class="line"><span class="lineno">  200</span>      <span class="keywordflow">return</span> <a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a1cbe41c811409c08a87a85da469516be">BuildMachOUniversalBinary</a>(out_filepath);</div>
-<div class="line"><span class="lineno">  201</span>    }</div>
-<div class="line"><span class="lineno">  202</span> </div>
-<div class="line"><span class="lineno">  203</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = ExecuteObjCopyOnObjects(); err) {</div>
-<div class="line"><span class="lineno">  204</span>      <span class="keywordflow">return</span> err;</div>
-<div class="line"><span class="lineno">  205</span>    }</div>
-<div class="line"><span class="lineno">  206</span> </div>
-<div class="line"><span class="lineno">  207</span>    <span class="keywordflow">return</span> llvm::writeArchive(out_filepath, _ar_members,</div>
-<div class="line"><span class="lineno">  208</span>                              <span class="comment">/* WriteSymtab= */</span> <span class="keyword">true</span>,</div>
-<div class="line"><span class="lineno">  209</span>                              _ar_members[0].detectKindFromObject(),</div>
-<div class="line"><span class="lineno">  210</span>                              <span class="comment">/* Deterministic= */</span> <span class="keyword">true</span>,</div>
-<div class="line"><span class="lineno">  211</span>                              <span class="comment">/* Thin= */</span> <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  212</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  197</span>                                                                     {</div>
+<div class="line"><span class="lineno">  198</span>    <span class="keywordflow">if</span> (_b.isMachOUniversalBinary()) {</div>
+<div class="line"><span class="lineno">  199</span>      <span class="keywordflow">return</span> <a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a1cbe41c811409c08a87a85da469516be">BuildMachOUniversalBinary</a>(out_filepath);</div>
+<div class="line"><span class="lineno">  200</span>    }</div>
+<div class="line"><span class="lineno">  201</span> </div>
+<div class="line"><span class="lineno">  202</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = ExecuteObjCopyOnObjects(); err) {</div>
+<div class="line"><span class="lineno">  203</span>      <span class="keywordflow">return</span> err;</div>
+<div class="line"><span class="lineno">  204</span>    }</div>
+<div class="line"><span class="lineno">  205</span> </div>
+<div class="line"><span class="lineno">  206</span>    <span class="keywordflow">return</span> llvm::writeArchive(out_filepath, _ar_members,</div>
+<div class="line"><span class="lineno">  207</span>                              <span class="comment">/* WriteSymtab= */</span> <span class="keyword">true</span>,</div>
+<div class="line"><span class="lineno">  208</span>                              _ar_members[0].detectKindFromObject(),</div>
+<div class="line"><span class="lineno">  209</span>                              <span class="comment">/* Deterministic= */</span> <span class="keyword">true</span>,</div>
+<div class="line"><span class="lineno">  210</span>                              <span class="comment">/* Thin= */</span> <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  211</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -295,25 +295,25 @@ Public Member Functions</h2></td></tr>
 
 <p>Builds a fat Mach-O file and returns its content. </p>
 <dl class="section return"><dt>Returns</dt><dd>A memory buffer, or an error. </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  174</span>                                       {</div>
-<div class="line"><span class="lineno">  175</span>    llvm::SmallVector&lt;llvm::object::Slice, 3&gt; slices;</div>
-<div class="line"><span class="lineno">  176</span>    ArchiveMap archives;</div>
-<div class="line"><span class="lineno">  177</span> </div>
-<div class="line"><span class="lineno">  178</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = <a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a0048bf91a3426aeab3e754740c3a92e0">BuildMachOUniversalBinarySlices</a>(slices, archives)) {</div>
-<div class="line"><span class="lineno">  179</span>      <span class="keywordflow">return</span> err;</div>
-<div class="line"><span class="lineno">  180</span>    }</div>
-<div class="line"><span class="lineno">  181</span> </div>
-<div class="line"><span class="lineno">  182</span>    llvm::SmallVector&lt;char, 8192&gt; content;</div>
-<div class="line"><span class="lineno">  183</span>    llvm::raw_svector_ostream os(content);</div>
-<div class="line"><span class="lineno">  184</span> </div>
-<div class="line"><span class="lineno">  185</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = llvm::object::writeUniversalBinaryToStream(slices, os)) {</div>
-<div class="line"><span class="lineno">  186</span>      <span class="keywordflow">return</span> err;</div>
-<div class="line"><span class="lineno">  187</span>    }</div>
-<div class="line"><span class="lineno">  188</span> </div>
-<div class="line"><span class="lineno">  189</span>    <span class="keywordflow">return</span> std::make_unique&lt;llvm::SmallVectorMemoryBuffer&gt;(std::move(content),</div>
-<div class="line"><span class="lineno">  190</span>                                                           <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  191</span>  }</div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter_html_a0048bf91a3426aeab3e754740c3a92e0"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a0048bf91a3426aeab3e754740c3a92e0">saq::bartleby::Bartleby::ArchiveWriter::BuildMachOUniversalBinarySlices</a></div><div class="ttdeci">llvm::Error BuildMachOUniversalBinarySlices(llvm::SmallVectorImpl&lt; llvm::object::Slice &gt; &amp;slices, ArchiveMap &amp;archives) noexcept</div><div class="ttdoc">Constructs the slices needed for a fat Mach-O.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:85</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  173</span>                                       {</div>
+<div class="line"><span class="lineno">  174</span>    llvm::SmallVector&lt;llvm::object::Slice, 3&gt; slices;</div>
+<div class="line"><span class="lineno">  175</span>    ArchiveMap archives;</div>
+<div class="line"><span class="lineno">  176</span> </div>
+<div class="line"><span class="lineno">  177</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = <a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a0048bf91a3426aeab3e754740c3a92e0">BuildMachOUniversalBinarySlices</a>(slices, archives)) {</div>
+<div class="line"><span class="lineno">  178</span>      <span class="keywordflow">return</span> err;</div>
+<div class="line"><span class="lineno">  179</span>    }</div>
+<div class="line"><span class="lineno">  180</span> </div>
+<div class="line"><span class="lineno">  181</span>    llvm::SmallVector&lt;char, 8192&gt; content;</div>
+<div class="line"><span class="lineno">  182</span>    llvm::raw_svector_ostream os(content);</div>
+<div class="line"><span class="lineno">  183</span> </div>
+<div class="line"><span class="lineno">  184</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = llvm::object::writeUniversalBinaryToStream(slices, os)) {</div>
+<div class="line"><span class="lineno">  185</span>      <span class="keywordflow">return</span> err;</div>
+<div class="line"><span class="lineno">  186</span>    }</div>
+<div class="line"><span class="lineno">  187</span> </div>
+<div class="line"><span class="lineno">  188</span>    <span class="keywordflow">return</span> std::make_unique&lt;llvm::SmallVectorMemoryBuffer&gt;(std::move(content),</div>
+<div class="line"><span class="lineno">  189</span>                                                           <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  190</span>  }</div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter_html_a0048bf91a3426aeab3e754740c3a92e0"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a0048bf91a3426aeab3e754740c3a92e0">saq::bartleby::Bartleby::ArchiveWriter::BuildMachOUniversalBinarySlices</a></div><div class="ttdeci">llvm::Error BuildMachOUniversalBinarySlices(llvm::SmallVectorImpl&lt; llvm::object::Slice &gt; &amp;slices, ArchiveMap &amp;archives) noexcept</div><div class="ttdoc">Constructs the slices needed for a fat Mach-O.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:84</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -349,16 +349,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An error. </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  159</span>                                                                 {</div>
-<div class="line"><span class="lineno">  160</span>    llvm::SmallVector&lt;llvm::object::Slice, 3&gt; slices;</div>
-<div class="line"><span class="lineno">  161</span>    ArchiveMap archives;</div>
-<div class="line"><span class="lineno">  162</span> </div>
-<div class="line"><span class="lineno">  163</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = <a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a0048bf91a3426aeab3e754740c3a92e0">BuildMachOUniversalBinarySlices</a>(slices, archives)) {</div>
-<div class="line"><span class="lineno">  164</span>      <span class="keywordflow">return</span> err;</div>
-<div class="line"><span class="lineno">  165</span>    }</div>
-<div class="line"><span class="lineno">  166</span> </div>
-<div class="line"><span class="lineno">  167</span>    <span class="keywordflow">return</span> llvm::object::writeUniversalBinary(slices, out_filepath);</div>
-<div class="line"><span class="lineno">  168</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  158</span>                                                                 {</div>
+<div class="line"><span class="lineno">  159</span>    llvm::SmallVector&lt;llvm::object::Slice, 3&gt; slices;</div>
+<div class="line"><span class="lineno">  160</span>    ArchiveMap archives;</div>
+<div class="line"><span class="lineno">  161</span> </div>
+<div class="line"><span class="lineno">  162</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> err = <a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a0048bf91a3426aeab3e754740c3a92e0">BuildMachOUniversalBinarySlices</a>(slices, archives)) {</div>
+<div class="line"><span class="lineno">  163</span>      <span class="keywordflow">return</span> err;</div>
+<div class="line"><span class="lineno">  164</span>    }</div>
+<div class="line"><span class="lineno">  165</span> </div>
+<div class="line"><span class="lineno">  166</span>    <span class="keywordflow">return</span> llvm::object::writeUniversalBinary(slices, out_filepath);</div>
+<div class="line"><span class="lineno">  167</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -405,72 +405,72 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An error. </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">   87</span>                                     {</div>
-<div class="line"><span class="lineno">   88</span>    assert(_b.isMachOUniversalBinary());</div>
-<div class="line"><span class="lineno">   89</span> </div>
-<div class="line"><span class="lineno">   90</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;object_format_set =</div>
-<div class="line"><span class="lineno">   91</span>        std::get&lt;ObjectFormatSet&gt;(_b._object_format);</div>
-<div class="line"><span class="lineno">   92</span> </div>
-<div class="line"><span class="lineno">   93</span>    LLVM_DEBUG(<span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;object_format</div>
-<div class="line"><span class="lineno">   94</span>                    : object_format_set) {</div>
-<div class="line"><span class="lineno">   95</span>      llvm::dbgs() &lt;&lt; <span class="stringliteral">&quot;object format in fat Mach-O: &quot;</span> &lt;&lt; object_format &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">   96</span>    });</div>
-<div class="line"><span class="lineno">   97</span> </div>
-<div class="line"><span class="lineno">   98</span>    archives.reserve(object_format_set.size());</div>
-<div class="line"><span class="lineno">   99</span>    slices.reserve(object_format_set.size());</div>
-<div class="line"><span class="lineno">  100</span> </div>
-<div class="line"><span class="lineno">  101</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;obj : _b._objects) {</div>
-<div class="line"><span class="lineno">  102</span>      <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a> = obj.handle-&gt;makeTriple();</div>
-<div class="line"><span class="lineno">  103</span>      LLVM_DEBUG(llvm::dbgs()</div>
-<div class="line"><span class="lineno">  104</span>                 &lt;&lt; <span class="stringliteral">&quot;got object, triple is &quot;</span> &lt;&lt; <a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>.str()</div>
-<div class="line"><span class="lineno">  105</span>                 &lt;&lt; <span class="stringliteral">&quot;, object format is &quot;</span> &lt;&lt; ObjectFormat{triple} &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>);</div>
-<div class="line"><span class="lineno">  106</span>      assert(object_format_set.count(<a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>) == 1);</div>
-<div class="line"><span class="lineno">  107</span>      <span class="keyword">auto</span> final_obj_or_err = ExecuteObjCopyOnObject(obj);</div>
-<div class="line"><span class="lineno">  108</span>      <span class="keywordflow">if</span> (!final_obj_or_err) {</div>
-<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">return</span> final_obj_or_err.takeError();</div>
-<div class="line"><span class="lineno">  110</span>      }</div>
-<div class="line"><span class="lineno">  111</span>      <span class="keyword">auto</span> &amp;ar = archives[ObjectFormat{<a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>}];</div>
-<div class="line"><span class="lineno">  112</span>      ar.triple = <a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>;</div>
-<div class="line"><span class="lineno">  113</span>      ar.alignment = obj.alignment;</div>
-<div class="line"><span class="lineno">  114</span>      <span class="keyword">auto</span> &amp;ar_member = ar.members.emplace_back();</div>
-<div class="line"><span class="lineno">  115</span>      ar_member.Buf = std::move(final_obj_or_err.get());</div>
-<div class="line"><span class="lineno">  116</span>      ar.name = std::make_unique&lt;std::string&gt;(<a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>.str());</div>
-<div class="line"><span class="lineno">  117</span>      ar_member.MemberName = *ar.name;</div>
-<div class="line"><span class="lineno">  118</span>    }</div>
-<div class="line"><span class="lineno">  119</span> </div>
-<div class="line"><span class="lineno">  120</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;[object_format, ar] : archives) {</div>
-<div class="line"><span class="lineno">  121</span>      <span class="keywordflow">if</span> (<span class="keyword">auto</span> buffer_or_err = llvm::writeArchiveToBuffer(</div>
-<div class="line"><span class="lineno">  122</span>              ar.members,</div>
-<div class="line"><span class="lineno">  123</span>              <span class="comment">/* WriteSymtab= */</span> <span class="keyword">true</span>, ar.members[0].detectKindFromObject(),</div>
-<div class="line"><span class="lineno">  124</span>              <span class="comment">/* Deterministic=*/</span><span class="keyword">true</span>, <span class="comment">/*Thin=*/</span><span class="keyword">false</span>)) {</div>
-<div class="line"><span class="lineno">  125</span>        ar.out_buffer = std::move(buffer_or_err.get());</div>
-<div class="line"><span class="lineno">  126</span>      } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">return</span> buffer_or_err.takeError();</div>
-<div class="line"><span class="lineno">  128</span>      }</div>
-<div class="line"><span class="lineno">  129</span> </div>
-<div class="line"><span class="lineno">  130</span>      <span class="keyword">auto</span> new_ar_or_err = llvm::object::Archive::create(*ar.out_buffer);</div>
-<div class="line"><span class="lineno">  131</span>      <span class="keywordflow">if</span> (!new_ar_or_err) {</div>
-<div class="line"><span class="lineno">  132</span>        <span class="keywordflow">return</span> new_ar_or_err.takeError();</div>
-<div class="line"><span class="lineno">  133</span>      }</div>
-<div class="line"><span class="lineno">  134</span> </div>
-<div class="line"><span class="lineno">  135</span>      <span class="keyword">auto</span> cpu_type_or_err = llvm::MachO::getCPUType(ar.triple);</div>
-<div class="line"><span class="lineno">  136</span>      <span class="keywordflow">if</span> (!cpu_type_or_err) {</div>
-<div class="line"><span class="lineno">  137</span>        <span class="keywordflow">return</span> cpu_type_or_err.takeError();</div>
-<div class="line"><span class="lineno">  138</span>      }</div>
-<div class="line"><span class="lineno">  139</span> </div>
-<div class="line"><span class="lineno">  140</span>      <span class="keyword">auto</span> cpu_sub_type_or_err = llvm::MachO::getCPUSubType(ar.triple);</div>
-<div class="line"><span class="lineno">  141</span>      <span class="keywordflow">if</span> (!cpu_sub_type_or_err) {</div>
-<div class="line"><span class="lineno">  142</span>        <span class="keywordflow">return</span> cpu_sub_type_or_err.takeError();</div>
-<div class="line"><span class="lineno">  143</span>      }</div>
-<div class="line"><span class="lineno">  144</span>      ar.out_ar = std::move(new_ar_or_err.get());</div>
-<div class="line"><span class="lineno">  145</span>      slices.emplace_back(*ar.out_ar, cpu_type_or_err.get(),</div>
-<div class="line"><span class="lineno">  146</span>                          cpu_sub_type_or_err.get(), ar.triple.str(),</div>
-<div class="line"><span class="lineno">  147</span>                          ar.alignment);</div>
-<div class="line"><span class="lineno">  148</span>    }</div>
-<div class="line"><span class="lineno">  149</span> </div>
-<div class="line"><span class="lineno">  150</span>    <span class="keywordflow">return</span> llvm::Error::success();</div>
-<div class="line"><span class="lineno">  151</span>  }</div>
-<div class="ttc" id="aArchiveWriter_8cpp_html_aa33e81633f502f89f8598e2b2959920f"><div class="ttname"><a href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a></div><div class="ttdeci">llvm::Triple triple</div><div class="ttdoc">Archive triple.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:43</div></div>
+<div class="fragment"><div class="line"><span class="lineno">   86</span>                                     {</div>
+<div class="line"><span class="lineno">   87</span>    assert(_b.isMachOUniversalBinary());</div>
+<div class="line"><span class="lineno">   88</span> </div>
+<div class="line"><span class="lineno">   89</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;object_format_set =</div>
+<div class="line"><span class="lineno">   90</span>        std::get&lt;ObjectFormatSet&gt;(_b._object_format);</div>
+<div class="line"><span class="lineno">   91</span> </div>
+<div class="line"><span class="lineno">   92</span>    LLVM_DEBUG(<span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;object_format</div>
+<div class="line"><span class="lineno">   93</span>                    : object_format_set) {</div>
+<div class="line"><span class="lineno">   94</span>      llvm::dbgs() &lt;&lt; <span class="stringliteral">&quot;object format in fat Mach-O: &quot;</span> &lt;&lt; object_format &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">   95</span>    });</div>
+<div class="line"><span class="lineno">   96</span> </div>
+<div class="line"><span class="lineno">   97</span>    archives.reserve(object_format_set.size());</div>
+<div class="line"><span class="lineno">   98</span>    slices.reserve(object_format_set.size());</div>
+<div class="line"><span class="lineno">   99</span> </div>
+<div class="line"><span class="lineno">  100</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;obj : _b._objects) {</div>
+<div class="line"><span class="lineno">  101</span>      <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a> = obj.handle-&gt;makeTriple();</div>
+<div class="line"><span class="lineno">  102</span>      LLVM_DEBUG(llvm::dbgs()</div>
+<div class="line"><span class="lineno">  103</span>                 &lt;&lt; <span class="stringliteral">&quot;got object, triple is &quot;</span> &lt;&lt; <a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>.str()</div>
+<div class="line"><span class="lineno">  104</span>                 &lt;&lt; <span class="stringliteral">&quot;, object format is &quot;</span> &lt;&lt; ObjectFormat{triple} &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>);</div>
+<div class="line"><span class="lineno">  105</span>      assert(object_format_set.count(<a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>) == 1);</div>
+<div class="line"><span class="lineno">  106</span>      <span class="keyword">auto</span> final_obj_or_err = ExecuteObjCopyOnObject(obj);</div>
+<div class="line"><span class="lineno">  107</span>      <span class="keywordflow">if</span> (!final_obj_or_err) {</div>
+<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">return</span> final_obj_or_err.takeError();</div>
+<div class="line"><span class="lineno">  109</span>      }</div>
+<div class="line"><span class="lineno">  110</span>      <span class="keyword">auto</span> &amp;ar = archives[ObjectFormat{<a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>}];</div>
+<div class="line"><span class="lineno">  111</span>      ar.triple = <a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>;</div>
+<div class="line"><span class="lineno">  112</span>      ar.alignment = obj.alignment;</div>
+<div class="line"><span class="lineno">  113</span>      <span class="keyword">auto</span> &amp;ar_member = ar.members.emplace_back();</div>
+<div class="line"><span class="lineno">  114</span>      ar_member.Buf = std::move(final_obj_or_err.get());</div>
+<div class="line"><span class="lineno">  115</span>      ar.name = std::make_unique&lt;std::string&gt;(<a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>.str());</div>
+<div class="line"><span class="lineno">  116</span>      ar_member.MemberName = *ar.name;</div>
+<div class="line"><span class="lineno">  117</span>    }</div>
+<div class="line"><span class="lineno">  118</span> </div>
+<div class="line"><span class="lineno">  119</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;[object_format, ar] : archives) {</div>
+<div class="line"><span class="lineno">  120</span>      <span class="keywordflow">if</span> (<span class="keyword">auto</span> buffer_or_err = llvm::writeArchiveToBuffer(</div>
+<div class="line"><span class="lineno">  121</span>              ar.members,</div>
+<div class="line"><span class="lineno">  122</span>              <span class="comment">/* WriteSymtab= */</span> <span class="keyword">true</span>, ar.members[0].detectKindFromObject(),</div>
+<div class="line"><span class="lineno">  123</span>              <span class="comment">/* Deterministic=*/</span><span class="keyword">true</span>, <span class="comment">/*Thin=*/</span><span class="keyword">false</span>)) {</div>
+<div class="line"><span class="lineno">  124</span>        ar.out_buffer = std::move(buffer_or_err.get());</div>
+<div class="line"><span class="lineno">  125</span>      } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  126</span>        <span class="keywordflow">return</span> buffer_or_err.takeError();</div>
+<div class="line"><span class="lineno">  127</span>      }</div>
+<div class="line"><span class="lineno">  128</span> </div>
+<div class="line"><span class="lineno">  129</span>      <span class="keyword">auto</span> new_ar_or_err = llvm::object::Archive::create(*ar.out_buffer);</div>
+<div class="line"><span class="lineno">  130</span>      <span class="keywordflow">if</span> (!new_ar_or_err) {</div>
+<div class="line"><span class="lineno">  131</span>        <span class="keywordflow">return</span> new_ar_or_err.takeError();</div>
+<div class="line"><span class="lineno">  132</span>      }</div>
+<div class="line"><span class="lineno">  133</span> </div>
+<div class="line"><span class="lineno">  134</span>      <span class="keyword">auto</span> cpu_type_or_err = llvm::MachO::getCPUType(ar.triple);</div>
+<div class="line"><span class="lineno">  135</span>      <span class="keywordflow">if</span> (!cpu_type_or_err) {</div>
+<div class="line"><span class="lineno">  136</span>        <span class="keywordflow">return</span> cpu_type_or_err.takeError();</div>
+<div class="line"><span class="lineno">  137</span>      }</div>
+<div class="line"><span class="lineno">  138</span> </div>
+<div class="line"><span class="lineno">  139</span>      <span class="keyword">auto</span> cpu_sub_type_or_err = llvm::MachO::getCPUSubType(ar.triple);</div>
+<div class="line"><span class="lineno">  140</span>      <span class="keywordflow">if</span> (!cpu_sub_type_or_err) {</div>
+<div class="line"><span class="lineno">  141</span>        <span class="keywordflow">return</span> cpu_sub_type_or_err.takeError();</div>
+<div class="line"><span class="lineno">  142</span>      }</div>
+<div class="line"><span class="lineno">  143</span>      ar.out_ar = std::move(new_ar_or_err.get());</div>
+<div class="line"><span class="lineno">  144</span>      slices.emplace_back(*ar.out_ar, cpu_type_or_err.get(),</div>
+<div class="line"><span class="lineno">  145</span>                          cpu_sub_type_or_err.get(), ar.triple.str(),</div>
+<div class="line"><span class="lineno">  146</span>                          ar.alignment);</div>
+<div class="line"><span class="lineno">  147</span>    }</div>
+<div class="line"><span class="lineno">  148</span> </div>
+<div class="line"><span class="lineno">  149</span>    <span class="keywordflow">return</span> llvm::Error::success();</div>
+<div class="line"><span class="lineno">  150</span>  }</div>
+<div class="ttc" id="aArchiveWriter_8cpp_html_aa33e81633f502f89f8598e2b2959920f"><div class="ttname"><a href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a></div><div class="ttdeci">llvm::Triple triple</div><div class="ttdoc">Archive triple.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:42</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -496,9 +496,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  246</span>                                          {</div>
-<div class="line"><span class="lineno">  247</span>    <span class="keywordflow">return</span> _coff_config;</div>
-<div class="line"><span class="lineno">  248</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  245</span>                                          {</div>
+<div class="line"><span class="lineno">  246</span>    <span class="keywordflow">return</span> _coff_config;</div>
+<div class="line"><span class="lineno">  247</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -524,9 +524,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  236</span>                                                                           {</div>
-<div class="line"><span class="lineno">  237</span>    <span class="keywordflow">return</span> _common_config;</div>
-<div class="line"><span class="lineno">  238</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  235</span>                                                                           {</div>
+<div class="line"><span class="lineno">  236</span>    <span class="keywordflow">return</span> _common_config;</div>
+<div class="line"><span class="lineno">  237</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -552,9 +552,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  241</span>                                         {</div>
-<div class="line"><span class="lineno">  242</span>    <span class="keywordflow">return</span> _elf_config;</div>
-<div class="line"><span class="lineno">  243</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  240</span>                                         {</div>
+<div class="line"><span class="lineno">  241</span>    <span class="keywordflow">return</span> _elf_config;</div>
+<div class="line"><span class="lineno">  242</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -580,9 +580,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  251</span>                                           {</div>
-<div class="line"><span class="lineno">  252</span>    <span class="keywordflow">return</span> _macho_config;</div>
-<div class="line"><span class="lineno">  253</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  250</span>                                           {</div>
+<div class="line"><span class="lineno">  251</span>    <span class="keywordflow">return</span> _macho_config;</div>
+<div class="line"><span class="lineno">  252</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -608,9 +608,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  256</span>                                          {</div>
-<div class="line"><span class="lineno">  257</span>    <span class="keywordflow">return</span> _wasm_config;</div>
-<div class="line"><span class="lineno">  258</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  255</span>                                          {</div>
+<div class="line"><span class="lineno">  256</span>    <span class="keywordflow">return</span> _wasm_config;</div>
+<div class="line"><span class="lineno">  257</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -636,9 +636,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  261</span>                                           {</div>
-<div class="line"><span class="lineno">  262</span>    <span class="keywordflow">return</span> _xcoff_config;</div>
-<div class="line"><span class="lineno">  263</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  260</span>                                           {</div>
+<div class="line"><span class="lineno">  261</span>    <span class="keywordflow">return</span> _xcoff_config;</div>
+<div class="line"><span class="lineno">  262</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
