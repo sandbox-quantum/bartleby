@@ -8,7 +8,6 @@
 #include "Bartleby/Error.h"
 #include "Bartleby/Export.h"
 
-#include "llvm/Object/ArchiveWriter.h"
 #include "llvm/ObjCopy/COFF/COFFConfig.h"
 #include "llvm/ObjCopy/CommonConfig.h"
 #include "llvm/ObjCopy/ELF/ELFConfig.h"
@@ -18,12 +17,13 @@
 #include "llvm/ObjCopy/XCOFF/XCOFFConfig.h"
 #include "llvm/ObjCopy/wasm/WasmConfig.h"
 #include "llvm/Object/Archive.h"
+#include "llvm/Object/ArchiveWriter.h"
 #include "llvm/Object/MachOUniversalWriter.h"
 #include "llvm/Support/SmallVectorMemoryBuffer.h"
 
 #define DEBUG_TYPE "Bartleby"
 
-namespace saq::bartleby {
+using namespace saq::bartleby;
 
 namespace {
 
@@ -335,5 +335,3 @@ Bartleby::BuildFinalArchive(Bartleby &&b) noexcept {
   ArchiveWriter builder(std::move(b));
   return builder.Build();
 }
-
-} // end namespace saq::bartleby
