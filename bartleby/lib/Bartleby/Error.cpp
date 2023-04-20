@@ -24,51 +24,51 @@ using namespace saq::bartleby;
 
 char Error::ID = 'b';
 
-void Error::log(llvm::raw_ostream &os) const noexcept {
-  os << message();
+void Error::log(llvm::raw_ostream &OS) const noexcept {
+  OS << message();
   std::visit(
-      [&os](auto &&err) {
-        using ErrT = std::decay_t<decltype(err)>;
+      [&OS](auto &&Err) {
+        using ErrT = std::decay_t<decltype(Err)>;
         if constexpr (std::is_same_v<UnsupportedBinaryReason, ErrT>) {
-          os << err.msg;
+          OS << Err.Msg;
         } else if constexpr (std::is_same_v<ObjectFormatTypeMismatchReason,
                                             ErrT>) {
-          os << "expected " << err.constraint << ", got " << err.found;
+          OS << "expected " << Err.Constraint << ", got " << Err.Found;
         } else if constexpr (std::is_same_v<MachOUniversalBinaryReason, ErrT>) {
-          os << err.msg;
+          OS << Err.Msg;
         } else {
           __builtin_unreachable();
         }
       },
-      _reason);
+      Reason);
 }
 
 std::string Error::message() const noexcept {
-  std::string msg;
-  llvm::raw_string_ostream os(msg);
+  std::string Msg;
+  llvm::raw_string_ostream OS(Msg);
   std::visit(
-      [&os](auto &&err) {
-        using ErrT = std::decay_t<decltype(err)>;
+      [&OS](auto &&Err) {
+        using ErrT = std::decay_t<decltype(Err)>;
         if constexpr (std::is_same_v<UnsupportedBinaryReason, ErrT>) {
-          os << "error while reading binary: " << err.msg;
+          OS << "error while reading binary: " << Err.Msg;
         } else if constexpr (std::is_same_v<ObjectFormatTypeMismatchReason,
                                             ErrT>) {
-          os << "invalid object format type: expected " << err.constraint
-             << ", got " << err.found;
+          OS << "invalid object format type: expected " << Err.Constraint
+             << ", got " << Err.Found;
         } else if constexpr (std::is_same_v<MachOUniversalBinaryReason, ErrT>) {
-          os << "fat Mach-O error: " << err.msg;
+          OS << "fat Mach-O error: " << Err.Msg;
         } else {
           __builtin_unreachable();
         }
       },
-      _reason);
-  return msg;
+      Reason);
+  return Msg;
 }
 
 std::error_code Error::convertToErrorCode() const noexcept {
   return std::visit(
-      [](auto &&err) {
-        using ErrT = std::decay_t<decltype(err)>;
+      [](auto &&Err) {
+        using ErrT = std::decay_t<decltype(Err)>;
         if constexpr (std::is_same_v<UnsupportedBinaryReason, ErrT>) {
           return std::error_code(1, std::system_category());
         } else if constexpr (std::is_same_v<ObjectFormatTypeMismatchReason,
@@ -80,5 +80,5 @@ std::error_code Error::convertToErrorCode() const noexcept {
           __builtin_unreachable();
         }
       },
-      _reason);
+      Reason);
 }

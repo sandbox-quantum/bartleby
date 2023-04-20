@@ -38,58 +38,58 @@ namespace {
 
 /// \brief Fetches various information from a symbol.
 ///
-/// \param sym Symbol.
+/// \param Sym Symbol.
 ///
 /// \returns Pieces of information about the given symbol.
 [[nodiscard]] SymbolInfo
-getSymbolInfo(const llvm::object::SymbolRef &sym) noexcept {
-  SymbolInfo info{.sym = sym};
+getSymbolInfo(const llvm::object::SymbolRef &Sym) noexcept {
+  SymbolInfo Info{.Sym = Sym};
 
-  if (auto err = sym.getName().moveInto(info.name)) {
-    LLVM_DEBUG(llvm::dbgs() << "failed to get name: " << err << '\n');
-    info.err = true;
+  if (auto Err = Sym.getName().moveInto(Info.Name)) {
+    LLVM_DEBUG(llvm::dbgs() << "failed to get name: " << Err << '\n');
+    Info.Err = true;
   }
-  if (auto err = sym.getFlags().moveInto(info.flags)) {
-    LLVM_DEBUG(llvm::dbgs() << "failed to get flags: " << err << '\n');
-    info.err = true;
+  if (auto Err = Sym.getFlags().moveInto(Info.Flags)) {
+    LLVM_DEBUG(llvm::dbgs() << "failed to get flags: " << Err << '\n');
+    Info.Err = true;
   }
-  if (auto err = sym.getType().moveInto(info.type)) {
-    LLVM_DEBUG(llvm::dbgs() << "failed to get type: " << err << '\n');
-    info.err = true;
+  if (auto Err = Sym.getType().moveInto(Info.Type)) {
+    LLVM_DEBUG(llvm::dbgs() << "failed to get type: " << Err << '\n');
+    Info.Err = true;
   }
-  return info;
+  return Info;
 }
 
 /// \brief Collects all the information of all symbols from an object.
 ///
-/// \param obj Object.
-/// \param[out] syminfos Container where to store the symbol infos.
-void collectSymbolInfos(const llvm::object::ObjectFile *obj,
-                        llvm::SmallVectorImpl<SymbolInfo> &syminfos) noexcept {
-  for (const auto &sym : obj->symbols()) {
-    auto &info = syminfos.emplace_back(getSymbolInfo(sym));
-    info.object_type = obj->getTripleObjectFormat();
+/// \param Obj Object.
+/// \param[out] SymInfos Container where to store the symbol infos.
+void collectSymbolInfos(const llvm::object::ObjectFile *Obj,
+                        llvm::SmallVectorImpl<SymbolInfo> &SymInfos) noexcept {
+  for (const auto &Sym : Obj->symbols()) {
+    auto &Info = SymInfos.emplace_back(getSymbolInfo(Sym));
+    Info.ObjectType = Obj->getTripleObjectFormat();
   }
 }
 
 /// \brief Determines if we should skip a symbol based on its information.
 ///
-/// \param syminfo Symbol information.
+/// \param SymInfo Symbol information.
 ///
 /// \returns True if we should skip it, else false.
-[[nodiscard]] bool shouldSkipSymbol(const SymbolInfo &syminfo) noexcept {
-  if (syminfo.err) {
+[[nodiscard]] bool shouldSkipSymbol(const SymbolInfo &SymInfo) noexcept {
+  if (SymInfo.Err) {
     LLVM_DEBUG(llvm::dbgs()
                << "failed to get all info for symbol. Skipping it\n");
     return true;
   }
 
-  switch (*syminfo.type) {
+  switch (*SymInfo.Type) {
   case llvm::object::SymbolRef::Type::ST_Other:
   case llvm::object::SymbolRef::Type::ST_Debug:
   case llvm::object::SymbolRef::Type::ST_File: {
     LLVM_DEBUG(llvm::dbgs()
-               << "skipping " << syminfo.name.value().data()
+               << "skipping " << SymInfo.Name.value().data()
                << " because it isn't a function or an unknown symbol\n");
     return true;
   }
@@ -101,212 +101,210 @@ void collectSymbolInfos(const llvm::object::ObjectFile *obj,
 
 /// \brief Processes an object file.
 ///
-/// \param object The object file.
-/// \param[out] symbols Symbol map to update.
-void ProcessObjectFile(const llvm::object::ObjectFile *object,
-                       Bartleby::SymbolMap &symbols) {
-  llvm::SmallVector<SymbolInfo, 128> syminfos;
-  collectSymbolInfos(object, syminfos);
-  for (const auto &syminfo : syminfos) {
-    if (shouldSkipSymbol(syminfo)) {
+/// \param Object The object file.
+/// \param[out] Symbols Symbol map to update.
+void ProcessObjectFile(const llvm::object::ObjectFile *Object,
+                       Bartleby::SymbolMap &Symbols) {
+  llvm::SmallVector<SymbolInfo, 128> SymInfos;
+  collectSymbolInfos(Object, SymInfos);
+  for (const auto &SymInfo : SymInfos) {
+    if (shouldSkipSymbol(SymInfo)) {
       continue;
     }
 
-    std::string name(*syminfo.name);
+    std::string Name(*SymInfo.Name);
 
     LLVM_DEBUG(llvm::dbgs()
-               << "Found symbol '" << name << "', type: " << *syminfo.type
-               << ", flags: " << *syminfo.flags << '\n');
-    auto &sym = symbols[name];
-    sym.UpdateWithNewSymbolInfo(syminfo);
+               << "Found symbol '" << Name << "', type: " << *SymInfo.Type
+               << ", flags: " << *SymInfo.Flags << '\n');
+    auto &Sym = Symbols[Name];
+    Sym.updateWithNewSymbolInfo(SymInfo);
   }
 }
 
 } // end anonymous namespace
 
-ObjectFormat::ObjectFormat(const llvm::Triple &triple) noexcept
-    : arch(triple.getArch()), subarch(triple.getSubArch()),
-      format_type(triple.getObjectFormat()) {}
+ObjectFormat::ObjectFormat(const llvm::Triple &Triple) noexcept
+    : Arch(Triple.getArch()), SubArch(Triple.getSubArch()),
+      FormatType(Triple.getObjectFormat()) {}
 
 uint64_t ObjectFormat::pack() const noexcept {
-  return (static_cast<uint64_t>(arch)) |
-         (static_cast<uint64_t>(subarch) << 16) |
-         (static_cast<uint64_t>(format_type) << 32);
+  return (static_cast<uint64_t>(Arch)) |
+         (static_cast<uint64_t>(SubArch) << 16) |
+         (static_cast<uint64_t>(FormatType) << 32);
 }
 
-bool ObjectFormat::operator==(const ObjectFormat &other) const noexcept {
-  return pack() == other.pack();
+bool ObjectFormat::operator==(const ObjectFormat &Other) const noexcept {
+  return pack() == Other.pack();
 }
 
-bool ObjectFormat::matches(const llvm::Triple &triple) const noexcept {
-  return ObjectFormat{triple}.pack() == pack();
+bool ObjectFormat::matches(const llvm::Triple &Triple) const noexcept {
+  return ObjectFormat{Triple}.pack() == pack();
 }
 
 llvm::raw_ostream &
-saq::bartleby::operator<<(llvm::raw_ostream &os,
-                          const ObjectFormat &object_format) noexcept {
-  return os << "ObjectFormat(arch=" << object_format.arch
-            << ", subarch=" << object_format.subarch
-            << ", file format=" << object_format.format_type << ')';
+saq::bartleby::operator<<(llvm::raw_ostream &OS,
+                          const ObjectFormat &ObjFormat) noexcept {
+  return OS << "ObjectFormat(arch=" << ObjFormat.Arch
+            << ", subarch=" << ObjFormat.SubArch
+            << ", file format=" << ObjFormat.FormatType << ')';
 }
 
-BARTLEBY_API llvm::Error Bartleby::AddBinary(
-    llvm::object::OwningBinary<llvm::object::Binary> owning_binary) noexcept {
-  auto *binary = owning_binary.getBinary();
-  llvm::Error e = llvm::Error::success();
+BARTLEBY_API llvm::Error Bartleby::addBinary(
+    llvm::object::OwningBinary<llvm::object::Binary> OwningBinary) noexcept {
+  auto *Binary = OwningBinary.getBinary();
+  llvm::Error E = llvm::Error::success();
 
-  if (auto *obj = llvm::dyn_cast<llvm::object::ObjectFile>(binary)) {
-    const auto triple = obj->makeTriple();
-    if (!objectFormatMatches(triple)) {
+  if (auto *Obj = llvm::dyn_cast<llvm::object::ObjectFile>(Binary)) {
+    const auto Triple = Obj->makeTriple();
+    if (!objectFormatMatches(Triple)) {
       return llvm::make_error<Error>(Error::ObjectFormatTypeMismatchReason{
-          .constraint = std::get<ObjectFormat>(_object_format),
-          .found = {triple}});
+          .Constraint = std::get<ObjectFormat>(ObjFormat), .Found = {Triple}});
     }
-    _object_format = triple;
-    ProcessObjectFile(obj, _symbols);
-    auto &entry = _objects.emplace_back(ObjectFile{.handle = obj});
-    (llvm::Twine(llvm::utostr(_objects.size())) + ".o")
-        .toNullTerminatedStringRef(entry.name);
-  } else if (auto *archive = llvm::dyn_cast<llvm::object::Archive>(binary)) {
-    llvm::Error e = llvm::Error::success();
-    for (const auto &ch : archive->children(e)) {
-      auto bin_or_err = ch.getAsBinary();
-      if (!bin_or_err) {
-        return bin_or_err.takeError();
+    ObjFormat = Triple;
+    ProcessObjectFile(Obj, Symbols);
+    auto &Entry = Objects.emplace_back(ObjectFile{.Handle = Obj});
+    (llvm::Twine(llvm::utostr(Objects.size())) + ".o")
+        .toNullTerminatedStringRef(Entry.Name);
+  } else if (auto *Archive = llvm::dyn_cast<llvm::object::Archive>(Binary)) {
+    llvm::Error E = llvm::Error::success();
+    for (const auto &Ch : Archive->children(E)) {
+      auto BinOrErr = Ch.getAsBinary();
+      if (!BinOrErr) {
+        return BinOrErr.takeError();
       }
-      if (auto *obj = llvm::dyn_cast<llvm::object::ObjectFile>(
-              bin_or_err.get().get())) {
-        const auto triple = obj->makeTriple();
-        if (!objectFormatMatches(triple)) {
+      if (auto *Obj =
+              llvm::dyn_cast<llvm::object::ObjectFile>(BinOrErr.get().get())) {
+        const auto Triple = Obj->makeTriple();
+        if (!objectFormatMatches(Triple)) {
           return llvm::make_error<Error>(Error::ObjectFormatTypeMismatchReason{
-              .constraint = std::get<ObjectFormat>(_object_format),
-              .found = {triple}});
+              .Constraint = std::get<ObjectFormat>(ObjFormat),
+              .Found = {Triple}});
         }
-        _object_format = triple;
+        ObjFormat = Triple;
 
-        ProcessObjectFile(obj, _symbols);
-        auto &entry = _objects.emplace_back(ObjectFile{
-            .owner = std::move(bin_or_err.get()),
+        ProcessObjectFile(Obj, Symbols);
+        auto &Entry = Objects.emplace_back(ObjectFile{
+            .Owner = std::move(BinOrErr.get()),
         });
-        entry.handle = obj;
-        if (auto name_or_err = ch.getName()) {
-          entry.name = name_or_err.get();
+        Entry.Handle = Obj;
+        if (auto NameOrErr = Ch.getName()) {
+          Entry.Name = *NameOrErr;
         } else {
-          (llvm::Twine(llvm::utostr(_objects.size())) + ".o")
-              .toNullTerminatedStringRef(entry.name);
+          (llvm::Twine(llvm::utostr(Objects.size())) + ".o")
+              .toNullTerminatedStringRef(Entry.Name);
         }
       } else {
-        Error::UnsupportedBinaryReason reason;
-        llvm::raw_svector_ostream os(reason.msg);
-        os << "unsupported binary '" << binary->getType()
-           << "' (triple: " << binary->getTripleObjectFormat() << ')';
-        return llvm::make_error<Error>(std::move(reason));
+        Error::UnsupportedBinaryReason Reason;
+        llvm::raw_svector_ostream OS(Reason.Msg);
+        OS << "unsupported binary '" << Binary->getType()
+           << "' (triple: " << Binary->getTripleObjectFormat() << ')';
+        return llvm::make_error<Error>(std::move(Reason));
       }
     }
-  } else if (binary->isMachOUniversalBinary()) {
-    return AddMachOUniversalBinary(std::move(owning_binary));
+  } else if (Binary->isMachOUniversalBinary()) {
+    return addMachOUniversalBinary(std::move(OwningBinary));
   } else {
-    Error::UnsupportedBinaryReason reason;
-    llvm::raw_svector_ostream os(reason.msg);
-    os << "unsupported binary '" << binary->getType()
-       << "' (triple: " << binary->getTripleObjectFormat() << ')';
-    return llvm::make_error<Error>(std::move(reason));
+    Error::UnsupportedBinaryReason Reason;
+    llvm::raw_svector_ostream OS(Reason.Msg);
+    OS << "unsupported binary '" << Binary->getType()
+       << "' (triple: " << Binary->getTripleObjectFormat() << ')';
+    return llvm::make_error<Error>(std::move(Reason));
   }
-  _owned_binaries.push_back(std::move(owning_binary));
+  OwnedBinaries.push_back(std::move(OwningBinary));
   return llvm::Error::success();
 }
 
 BARTLEBY_API size_t
-Bartleby::PrefixGlobalAndDefinedSymbols(llvm::StringRef prefix) noexcept {
-  size_t n = 0;
-  const auto end = _symbols.end();
-  for (auto entry = _symbols.begin(); entry != end; ++entry) {
-    const auto &name = entry->first();
-    auto &sym = entry->getValue();
-    if (sym.Global() && sym.Defined()) {
-      std::string new_name;
-      if (sym.IsMachO()) {
-        new_name += '_';
+Bartleby::prefixGlobalAndDefinedSymbols(llvm::StringRef Prefix) noexcept {
+  size_t N = 0;
+  const auto End = Symbols.end();
+  for (auto Entry = Symbols.begin(); Entry != End; ++Entry) {
+    const auto &Name = Entry->first();
+    auto &Sym = Entry->getValue();
+    if (Sym.isGlobal() && Sym.isDefined()) {
+      std::string NewName;
+      if (Sym.isMachO()) {
+        NewName += '_';
       }
-      new_name += prefix;
+      NewName += Prefix;
 
-      if (sym.IsMachO()) {
-        new_name += name.substr(1);
+      if (Sym.isMachO()) {
+        NewName += Name.substr(1);
       } else {
-        new_name += name;
+        NewName += Name;
       }
-      sym.SetName(std::move(new_name));
-      ++n;
+      Sym.setName(std::move(NewName));
+      ++N;
     }
   }
 
-  return n;
+  return N;
 }
 
-bool Bartleby::objectFormatMatches(
-    const ObjectFormat &object_format) const noexcept {
-  if (const auto *f = std::get_if<ObjectFormat>(&_object_format)) {
-    return *f == object_format;
+bool Bartleby::objectFormatMatches(const ObjectFormat &ObjFmt) const noexcept {
+  if (const auto *F = std::get_if<ObjectFormat>(&ObjFormat)) {
+    return *F == ObjFmt;
   }
-  return std::holds_alternative<std::monostate>(_object_format);
+  return std::holds_alternative<std::monostate>(ObjFormat);
 }
 
 bool Bartleby::isMachOUniversalBinary() const noexcept {
-  return std::holds_alternative<ObjectFormatSet>(_object_format);
+  return std::holds_alternative<ObjectFormatSet>(ObjFormat);
 }
 
-llvm::Error Bartleby::AddMachOUniversalBinary(
-    llvm::object::OwningBinary<llvm::object::Binary> owning_binary) noexcept {
-  auto *fat = llvm::dyn_cast<llvm::object::MachOUniversalBinary>(
-      owning_binary.getBinary());
-  assert(fat != nullptr);
+llvm::Error Bartleby::addMachOUniversalBinary(
+    llvm::object::OwningBinary<llvm::object::Binary> OwningBinary) noexcept {
+  auto *Fat = llvm::dyn_cast<llvm::object::MachOUniversalBinary>(
+      OwningBinary.getBinary());
+  assert(Fat != nullptr);
 
-  if (const auto *type = std::get_if<ObjectFormat>(&_object_format)) {
-    Error::MachOUniversalBinaryReason reason;
-    llvm::raw_svector_ostream os(reason.msg);
-    os << "expected an object of type " << *type << ", got a fat Mach-O";
-    return llvm::make_error<Error>(std::move(reason));
+  if (const auto *Type = std::get_if<ObjectFormat>(&ObjFormat)) {
+    Error::MachOUniversalBinaryReason Reason;
+    llvm::raw_svector_ostream OS(Reason.Msg);
+    OS << "expected an object of type " << *Type << ", got a fat Mach-O";
+    return llvm::make_error<Error>(std::move(Reason));
   }
 
-  auto *formats = std::get_if<ObjectFormatSet>(&_object_format);
-  if ((formats != nullptr) && (formats->size() != fat->getNumberOfObjects())) {
-    Error::MachOUniversalBinaryReason reason;
-    llvm::raw_svector_ostream os(reason.msg);
-    os << "expected a fat Mach-O with " << formats->size() << " arch(s), got "
-       << fat->getNumberOfObjects() << " arch(s).";
-    return llvm::make_error<Error>(std::move(reason));
+  auto *Formats = std::get_if<ObjectFormatSet>(&ObjFormat);
+  if ((Formats != nullptr) && (Formats->size() != Fat->getNumberOfObjects())) {
+    Error::MachOUniversalBinaryReason Reason;
+    llvm::raw_svector_ostream OS(Reason.Msg);
+    OS << "expected a fat Mach-O with " << Formats->size() << " arch(s), got "
+       << Fat->getNumberOfObjects() << " arch(s).";
+    return llvm::make_error<Error>(std::move(Reason));
   }
 
-  if (formats == nullptr) {
-    _object_format = ObjectFormatSet();
-    formats = std::get_if<ObjectFormatSet>(&_object_format);
-    for (const auto &ofa : fat->objects()) {
-      formats->insert(ofa.getTriple());
+  if (Formats == nullptr) {
+    ObjFormat = ObjectFormatSet();
+    Formats = std::get_if<ObjectFormatSet>(&ObjFormat);
+    for (const auto &Ofa : Fat->objects()) {
+      Formats->insert(Ofa.getTriple());
     }
   }
 
-  for (auto &ofa : fat->objects()) {
-    const auto triple = ofa.getTriple();
-    if (formats->count(triple) == 0) {
-      Error::MachOUniversalBinaryReason reason;
-      llvm::raw_svector_ostream os(reason.msg);
-      os << "unexpected triple " << ofa.getTriple().str() << " in fat Mach-O";
-      return llvm::make_error<Error>(std::move(reason));
+  for (auto &Ofa : Fat->objects()) {
+    const auto Triple = Ofa.getTriple();
+    if (Formats->count(Triple) == 0) {
+      Error::MachOUniversalBinaryReason Reason;
+      llvm::raw_svector_ostream OS(Reason.Msg);
+      OS << "unexpected triple " << Ofa.getTriple().str() << " in fat Mach-O";
+      return llvm::make_error<Error>(std::move(Reason));
     }
 
-    if (auto obj_or_err = ofa.getAsObjectFile()) {
-      auto obj = std::move(obj_or_err.get());
-      ProcessObjectFile(&*obj, _symbols);
-      auto &entry = _objects.emplace_back(ObjectFile{
-          .handle = &*obj,
-          .owner = std::move(obj),
-          .alignment = ofa.getAlign(),
+    if (auto ObjOrErr = Ofa.getAsObjectFile()) {
+      auto Obj = std::move(*ObjOrErr);
+      ProcessObjectFile(&*Obj, Symbols);
+      auto &Entry = Objects.emplace_back(ObjectFile{
+          .Handle = &*Obj,
+          .Owner = std::move(Obj),
+          .Alignment = Ofa.getAlign(),
       });
-      (llvm::Twine(llvm::utostr(_objects.size())) + ".o")
-          .toNullTerminatedStringRef(entry.name);
+      (llvm::Twine(llvm::utostr(Objects.size())) + ".o")
+          .toNullTerminatedStringRef(Entry.Name);
     }
   }
-  _owned_binaries.push_back(std::move(owning_binary));
+  OwnedBinaries.push_back(std::move(OwningBinary));
 
   return llvm::Error::success();
 }
