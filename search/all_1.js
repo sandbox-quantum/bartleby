@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bartleby_0',['Bartleby',['../classsaq_1_1bartleby_1_1Bartleby.html#ae27a860be413c32008c833d2b35b59fc',1,'saq::bartleby::Bartleby::Bartleby() noexcept'],['../classsaq_1_1bartleby_1_1Bartleby.html#a822b901feda11884792fea48b38546c5',1,'saq::bartleby::Bartleby::Bartleby(const Bartleby &amp;) noexcept=delete'],['../classsaq_1_1bartleby_1_1Bartleby.html#a00523995d7f474c1b67b688108edfd62',1,'saq::bartleby::Bartleby::Bartleby(Bartleby &amp;&amp;) noexcept=default'],['../index.html',1,'(Global Namespace)'],['../classsaq_1_1bartleby_1_1Bartleby.html',1,'saq::bartleby::Bartleby']]],
+  ['bartleby_0',['Bartleby',['../classsaq_1_1bartleby_1_1Bartleby.html#ae27a860be413c32008c833d2b35b59fc',1,'saq::bartleby::Bartleby::Bartleby()'],['../index.html',1,'(Global Namespace)'],['../classsaq_1_1bartleby_1_1Bartleby.html',1,'saq::bartleby::Bartleby']]],
   ['bartleby_20command_20guide_1',['Bartleby Command Guide',['../page-cmd.html',1,'page-getting-started']]],
   ['bartleby_2ecpp_2',['Bartleby.cpp',['../lib_2Bartleby_2Bartleby_8cpp.html',1,'(Global Namespace)'],['../tools_2Bartleby_2Bartleby_8cpp.html',1,'(Global Namespace)']]],
   ['bartleby_2eh_3',['Bartleby.h',['../Bartleby_8h.html',1,'']]],

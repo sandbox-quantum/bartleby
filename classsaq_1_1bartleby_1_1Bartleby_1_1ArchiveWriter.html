@@ -94,27 +94,23 @@ Inheritance diagram for saq::bartleby::Bartleby::ArchiveWriter:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a5baa032e6b485690c8fd59bcbd331285"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a5baa032e6b485690c8fd59bcbd331285">ArchiveWriter</a> (<a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html">Bartleby</a> &amp;&amp;b) noexcept</td></tr>
-<tr class="memdesc:a5baa032e6b485690c8fd59bcbd331285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a <a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html" title="Bartleby handle.">Bartleby</a> handle.  <br /></td></tr>
+<tr class="memdesc:a5baa032e6b485690c8fd59bcbd331285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <code><a class="el" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html" title="Archive builder that implements our multi format config.">ArchiveWriter</a></code> using a <a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html" title="Bartleby handle.">Bartleby</a> handle.  <br /></td></tr>
 <tr class="separator:a5baa032e6b485690c8fd59bcbd331285"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0048bf91a3426aeab3e754740c3a92e0"><td class="memItemLeft" align="right" valign="top">llvm::Error&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a0048bf91a3426aeab3e754740c3a92e0">BuildMachOUniversalBinarySlices</a> (llvm::SmallVectorImpl&lt; llvm::object::Slice &gt; &amp;slices, ArchiveMap &amp;archives) noexcept</td></tr>
-<tr class="memdesc:a0048bf91a3426aeab3e754740c3a92e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the slices needed for a fat Mach-O.  <br /></td></tr>
+<tr class="memdesc:a0048bf91a3426aeab3e754740c3a92e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the slices needed for a fat Mach-O.  <br /></td></tr>
 <tr class="separator:a0048bf91a3426aeab3e754740c3a92e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac47395ed109d726401936f869dc2eeae"><td class="memItemLeft" align="right" valign="top">llvm::Error&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#ac47395ed109d726401936f869dc2eeae">BuildMachOUniversalBinary</a> (llvm::StringRef out_filepath) noexcept</td></tr>
-<tr class="memdesc:ac47395ed109d726401936f869dc2eeae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a fat Mach-O file.  <br /></td></tr>
+<tr class="memdesc:ac47395ed109d726401936f869dc2eeae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a fat Mach-O file and writes the output to a file.  <br /></td></tr>
 <tr class="separator:ac47395ed109d726401936f869dc2eeae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cbe41c811409c08a87a85da469516be"><td class="memItemLeft" align="right" valign="top">llvm::Expected&lt; std::unique_ptr&lt; llvm::MemoryBuffer &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a1cbe41c811409c08a87a85da469516be">BuildMachOUniversalBinary</a> () noexcept</td></tr>
-<tr class="memdesc:a1cbe41c811409c08a87a85da469516be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a fat Mach-O file.  <br /></td></tr>
+<tr class="memdesc:a1cbe41c811409c08a87a85da469516be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a fat Mach-O file and returns its content.  <br /></td></tr>
 <tr class="separator:a1cbe41c811409c08a87a85da469516be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9b73987c92d68f8531a6eac701f6240"><td class="memItemLeft" align="right" valign="top">llvm::Error&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#af9b73987c92d68f8531a6eac701f6240">Build</a> (llvm::StringRef out_filepath) noexcept</td></tr>
-<tr class="memdesc:af9b73987c92d68f8531a6eac701f6240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the final archive.  <br /></td></tr>
+<tr class="memdesc:af9b73987c92d68f8531a6eac701f6240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds the final archive and writes the content to a file.  <br /></td></tr>
 <tr class="separator:af9b73987c92d68f8531a6eac701f6240"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5774bd7edb968ff53e91a28009873baf"><td class="memItemLeft" align="right" valign="top">llvm::Expected&lt; std::unique_ptr&lt; llvm::MemoryBuffer &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a5774bd7edb968ff53e91a28009873baf">Build</a> () noexcept</td></tr>
-<tr class="memdesc:a5774bd7edb968ff53e91a28009873baf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the final archive.  <br /></td></tr>
+<tr class="memdesc:a5774bd7edb968ff53e91a28009873baf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds the final archive and returns its content.  <br /></td></tr>
 <tr class="separator:a5774bd7edb968ff53e91a28009873baf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa66d71ecc99e0d08b5cf10d273d9e733"><td class="memItemLeft" align="right" valign="top"><a id="aa66d71ecc99e0d08b5cf10d273d9e733" name="aa66d71ecc99e0d08b5cf10d273d9e733"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>~ArchiveWriter</b> () noexcept override=default</td></tr>
-<tr class="memdesc:aa66d71ecc99e0d08b5cf10d273d9e733"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:aa66d71ecc99e0d08b5cf10d273d9e733"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a1f9402bdca84a60651111ac1452c3f"><td class="memItemLeft" align="right" valign="top">const llvm::objcopy::CommonConfig &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a1a1f9402bdca84a60651111ac1452c3f">getCommonConfig</a> () const noexcept override</td></tr>
 <tr class="separator:a1a1f9402bdca84a60651111ac1452c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a694c01160ee25c5b982424135c78b134"><td class="memItemLeft" align="right" valign="top">llvm::Expected&lt; const llvm::objcopy::ELFConfig &amp; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a694c01160ee25c5b982424135c78b134">getELFConfig</a> () const noexcept override</td></tr>
@@ -156,10 +152,10 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor using a <a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html" title="Bartleby handle.">Bartleby</a> handle. </p>
+<p>Constructs an <code><a class="el" href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html" title="Archive builder that implements our multi format config.">ArchiveWriter</a></code> using a <a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html" title="Bartleby handle.">Bartleby</a> handle. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">b</td><td><a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html" title="Bartleby handle.">Bartleby</a> handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td><a class="el" href="classsaq_1_1bartleby_1_1Bartleby.html" title="Bartleby handle.">Bartleby</a> handle. </td></tr>
   </table>
   </dd>
 </dl>
@@ -203,7 +199,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Build the final archive. </p>
+<p>Builds the final archive and returns its content. </p>
 <dl class="section return"><dt>Returns</dt><dd>A memory buffer or an error. </dd></dl>
 <div class="fragment"><div class="line"><span class="lineno">  218</span>                   {</div>
 <div class="line"><span class="lineno">  219</span>    <span class="keywordflow">if</span> (_b.isMachOUniversalBinary()) {</div>
@@ -220,7 +216,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  230</span>                                      <span class="comment">/* Deterministic= */</span> <span class="keyword">true</span>,</div>
 <div class="line"><span class="lineno">  231</span>                                      <span class="comment">/* Thin= */</span> <span class="keyword">false</span>);</div>
 <div class="line"><span class="lineno">  232</span>  }</div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter_html_a1cbe41c811409c08a87a85da469516be"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a1cbe41c811409c08a87a85da469516be">saq::bartleby::Bartleby::ArchiveWriter::BuildMachOUniversalBinary</a></div><div class="ttdeci">llvm::Expected&lt; std::unique_ptr&lt; llvm::MemoryBuffer &gt; &gt; BuildMachOUniversalBinary() noexcept</div><div class="ttdoc">Build a fat Mach-O file.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:174</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter_html_a1cbe41c811409c08a87a85da469516be"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a1cbe41c811409c08a87a85da469516be">saq::bartleby::Bartleby::ArchiveWriter::BuildMachOUniversalBinary</a></div><div class="ttdeci">llvm::Expected&lt; std::unique_ptr&lt; llvm::MemoryBuffer &gt; &gt; BuildMachOUniversalBinary() noexcept</div><div class="ttdoc">Builds a fat Mach-O file and returns its content.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:174</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -248,7 +244,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Build the final archive. </p>
+<p>Builds the final archive and writes the content to a file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">out_filepath</td><td>Path to out file.</td></tr>
@@ -297,8 +293,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Build a fat Mach-O file. </p>
-<dl class="section return"><dt>Returns</dt><dd>A memory buffer, or an error.. </dd></dl>
+<p>Builds a fat Mach-O file and returns its content. </p>
+<dl class="section return"><dt>Returns</dt><dd>A memory buffer, or an error. </dd></dl>
 <div class="fragment"><div class="line"><span class="lineno">  174</span>                                       {</div>
 <div class="line"><span class="lineno">  175</span>    llvm::SmallVector&lt;llvm::object::Slice, 3&gt; slices;</div>
 <div class="line"><span class="lineno">  176</span>    ArchiveMap archives;</div>
@@ -317,7 +313,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  189</span>    <span class="keywordflow">return</span> std::make_unique&lt;llvm::SmallVectorMemoryBuffer&gt;(std::move(content),</div>
 <div class="line"><span class="lineno">  190</span>                                                           <span class="keyword">false</span>);</div>
 <div class="line"><span class="lineno">  191</span>  }</div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter_html_a0048bf91a3426aeab3e754740c3a92e0"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a0048bf91a3426aeab3e754740c3a92e0">saq::bartleby::Bartleby::ArchiveWriter::BuildMachOUniversalBinarySlices</a></div><div class="ttdeci">llvm::Error BuildMachOUniversalBinarySlices(llvm::SmallVectorImpl&lt; llvm::object::Slice &gt; &amp;slices, ArchiveMap &amp;archives) noexcept</div><div class="ttdoc">Build the slices needed for a fat Mach-O.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:85</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter_html_a0048bf91a3426aeab3e754740c3a92e0"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby_1_1ArchiveWriter.html#a0048bf91a3426aeab3e754740c3a92e0">saq::bartleby::Bartleby::ArchiveWriter::BuildMachOUniversalBinarySlices</a></div><div class="ttdeci">llvm::Error BuildMachOUniversalBinarySlices(llvm::SmallVectorImpl&lt; llvm::object::Slice &gt; &amp;slices, ArchiveMap &amp;archives) noexcept</div><div class="ttdoc">Constructs the slices needed for a fat Mach-O.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:85</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -345,7 +341,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Build a fat Mach-O file. </p>
+<p>Builds a fat Mach-O file and writes the output to a file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">out_filepath</td><td>Path to out file.</td></tr>
@@ -400,11 +396,11 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Build the slices needed for a fat Mach-O. </p>
+<p>Constructs the slices needed for a fat Mach-O. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">slices</td><td>Vector where to store slices. </td></tr>
-    <tr><td class="paramname">archives</td><td>Vector where to write archives.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">slices</td><td>Vector where to store slices. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">archives</td><td>Vector where to write archives.</td></tr>
   </table>
   </dd>
 </dl>
@@ -500,9 +496,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  247</span>                                          {</div>
-<div class="line"><span class="lineno">  248</span>    <span class="keywordflow">return</span> _coff_config;</div>
-<div class="line"><span class="lineno">  249</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  246</span>                                          {</div>
+<div class="line"><span class="lineno">  247</span>    <span class="keywordflow">return</span> _coff_config;</div>
+<div class="line"><span class="lineno">  248</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -528,9 +524,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  237</span>                                                                           {</div>
-<div class="line"><span class="lineno">  238</span>    <span class="keywordflow">return</span> _common_config;</div>
-<div class="line"><span class="lineno">  239</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  236</span>                                                                           {</div>
+<div class="line"><span class="lineno">  237</span>    <span class="keywordflow">return</span> _common_config;</div>
+<div class="line"><span class="lineno">  238</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -556,9 +552,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  242</span>                                         {</div>
-<div class="line"><span class="lineno">  243</span>    <span class="keywordflow">return</span> _elf_config;</div>
-<div class="line"><span class="lineno">  244</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  241</span>                                         {</div>
+<div class="line"><span class="lineno">  242</span>    <span class="keywordflow">return</span> _elf_config;</div>
+<div class="line"><span class="lineno">  243</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -584,9 +580,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  252</span>                                           {</div>
-<div class="line"><span class="lineno">  253</span>    <span class="keywordflow">return</span> _macho_config;</div>
-<div class="line"><span class="lineno">  254</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  251</span>                                           {</div>
+<div class="line"><span class="lineno">  252</span>    <span class="keywordflow">return</span> _macho_config;</div>
+<div class="line"><span class="lineno">  253</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -612,9 +608,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  257</span>                                          {</div>
-<div class="line"><span class="lineno">  258</span>    <span class="keywordflow">return</span> _wasm_config;</div>
-<div class="line"><span class="lineno">  259</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  256</span>                                          {</div>
+<div class="line"><span class="lineno">  257</span>    <span class="keywordflow">return</span> _wasm_config;</div>
+<div class="line"><span class="lineno">  258</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -640,9 +636,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  262</span>                                           {</div>
-<div class="line"><span class="lineno">  263</span>    <span class="keywordflow">return</span> _xcoff_config;</div>
-<div class="line"><span class="lineno">  264</span>  }</div>
+<div class="fragment"><div class="line"><span class="lineno">  261</span>                                           {</div>
+<div class="line"><span class="lineno">  262</span>    <span class="keywordflow">return</span> _xcoff_config;</div>
+<div class="line"><span class="lineno">  263</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>

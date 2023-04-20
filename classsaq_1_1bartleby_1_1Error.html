@@ -119,12 +119,8 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>Reason</b> = std::va
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0127f576151dbe89b49ffa92bfde1090"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a0127f576151dbe89b49ffa92bfde1090"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Error.html#a0127f576151dbe89b49ffa92bfde1090">Error</a> (T reason) noexcept</td></tr>
-<tr class="memdesc:a0127f576151dbe89b49ffa92bfde1090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a reason.  <br /></td></tr>
+<tr class="memdesc:a0127f576151dbe89b49ffa92bfde1090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an error using a reason.  <br /></td></tr>
 <tr class="separator:a0127f576151dbe89b49ffa92bfde1090"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5171d99ad85202c12dc8b7a1d3aa4e73"><td class="memItemLeft" align="right" valign="top"><a id="a5171d99ad85202c12dc8b7a1d3aa4e73" name="a5171d99ad85202c12dc8b7a1d3aa4e73"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>~Error</b> () noexcept override=default</td></tr>
-<tr class="memdesc:a5171d99ad85202c12dc8b7a1d3aa4e73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a5171d99ad85202c12dc8b7a1d3aa4e73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10eb7876970a6de6baef524e0f51dd1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Error.html#a10eb7876970a6de6baef524e0f51dd1c">log</a> (llvm::raw_ostream &amp;os) const noexcept override</td></tr>
 <tr class="separator:a10eb7876970a6de6baef524e0f51dd1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31859fa115749bfcc6ca0b4ddf95c213"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Error.html#a31859fa115749bfcc6ca0b4ddf95c213">message</a> () const noexcept override</td></tr>
@@ -168,8 +164,14 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor for a reason. </p>
-<div class="fragment"><div class="line"><span class="lineno">   70</span>: _reason(std::move(reason)) {}</div>
+<p>Constructs an error using a reason. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reason</td><td>The reason of the error. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="fragment"><div class="line"><span class="lineno">   72</span>: _reason(std::move(reason)) {}</div>
 </div><!-- fragment -->
 </div>
 </div>

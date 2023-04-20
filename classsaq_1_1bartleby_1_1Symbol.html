@@ -90,49 +90,41 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a30961809bcbb4a14e04a075761e3652a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#a30961809bcbb4a14e04a075761e3652a">Global</a> () const noexcept</td></tr>
-<tr class="memdesc:a30961809bcbb4a14e04a075761e3652a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the visibility of the symbol.  <br /></td></tr>
+<tr class="memdesc:a30961809bcbb4a14e04a075761e3652a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the visibility of the symbol.  <br /></td></tr>
 <tr class="separator:a30961809bcbb4a14e04a075761e3652a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab811177888bdb5a73a384b3ce8af70f0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#ab811177888bdb5a73a384b3ce8af70f0">Defined</a> () const noexcept</td></tr>
-<tr class="memdesc:ab811177888bdb5a73a384b3ce8af70f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the definedness of the symbol.  <br /></td></tr>
+<tr class="memdesc:ab811177888bdb5a73a384b3ce8af70f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the definedness of the symbol.  <br /></td></tr>
 <tr class="separator:ab811177888bdb5a73a384b3ce8af70f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ba2a2c59732f9904bd089d1271d9afd"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#a5ba2a2c59732f9904bd089d1271d9afd">References</a> () const noexcept</td></tr>
-<tr class="memdesc:a5ba2a2c59732f9904bd089d1271d9afd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count how many times this symbol is referenced.  <br /></td></tr>
+<tr class="memdesc:a5ba2a2c59732f9904bd089d1271d9afd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts how many times this symbol is referenced.  <br /></td></tr>
 <tr class="separator:a5ba2a2c59732f9904bd089d1271d9afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f898b7d303d68ad0ca60aefc9900efa"><td class="memItemLeft" align="right" valign="top">std::optional&lt; llvm::StringRef &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#a4f898b7d303d68ad0ca60aefc9900efa">OverwriteName</a> () const noexcept</td></tr>
 <tr class="memdesc:a4f898b7d303d68ad0ca60aefc9900efa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the overwrite name.  <br /></td></tr>
 <tr class="separator:a4f898b7d303d68ad0ca60aefc9900efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5867ccce178201c0f14192044d86d81"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#ac5867ccce178201c0f14192044d86d81">IsMachO</a> () const noexcept</td></tr>
-<tr class="memdesc:ac5867ccce178201c0f14192044d86d81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the symbol contains references to some mach-o symbols.  <br /></td></tr>
+<tr class="memdesc:ac5867ccce178201c0f14192044d86d81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the symbol contains references to some mach-o symbols.  <br /></td></tr>
 <tr class="separator:ac5867ccce178201c0f14192044d86d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90513fa4fd65d2b096bbcdf98007c0d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#a90513fa4fd65d2b096bbcdf98007c0d8">SetName</a> (std::string <a class="el" href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a>) noexcept</td></tr>
-<tr class="memdesc:a90513fa4fd65d2b096bbcdf98007c0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the name of the symbol.  <br /></td></tr>
+<tr class="memdesc:a90513fa4fd65d2b096bbcdf98007c0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the name of the symbol.  <br /></td></tr>
 <tr class="separator:a90513fa4fd65d2b096bbcdf98007c0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4813a6417024db559e8277748e9c803c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#a4813a6417024db559e8277748e9c803c">UpdateWithNewSymbolInfo</a> (const <a class="el" href="structsaq_1_1bartleby_1_1SymbolInfo.html">SymbolInfo</a> &amp;syminfo) noexcept</td></tr>
-<tr class="memdesc:a4813a6417024db559e8277748e9c803c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update this symbol with new symbol information.  <br /></td></tr>
+<tr class="memdesc:a4813a6417024db559e8277748e9c803c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the symbol with new symbol information.  <br /></td></tr>
 <tr class="separator:a4813a6417024db559e8277748e9c803c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa37b4de2447355b47ed92ec52618726a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#aa37b4de2447355b47ed92ec52618726a">Symbol</a> () noexcept</td></tr>
-<tr class="memdesc:aa37b4de2447355b47ed92ec52618726a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a symbol.  <br /></td></tr>
+<tr class="memdesc:aa37b4de2447355b47ed92ec52618726a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new symbol.  <br /></td></tr>
 <tr class="separator:aa37b4de2447355b47ed92ec52618726a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d79386a04700f0fa450fd6d0e31e59a"><td class="memItemLeft" align="right" valign="top"><a id="a0d79386a04700f0fa450fd6d0e31e59a" name="a0d79386a04700f0fa450fd6d0e31e59a"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Symbol</b> (const <a class="el" href="classsaq_1_1bartleby_1_1Symbol.html">Symbol</a> &amp;) noexcept=delete</td></tr>
-<tr class="memdesc:a0d79386a04700f0fa450fd6d0e31e59a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor. <br /></td></tr>
 <tr class="separator:a0d79386a04700f0fa450fd6d0e31e59a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f1303d7bdbaa9dfb80b34cbcdcb417d"><td class="memItemLeft" align="right" valign="top"><a id="a1f1303d7bdbaa9dfb80b34cbcdcb417d" name="a1f1303d7bdbaa9dfb80b34cbcdcb417d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Symbol</b> (<a class="el" href="classsaq_1_1bartleby_1_1Symbol.html">Symbol</a> &amp;&amp;) noexcept=default</td></tr>
-<tr class="memdesc:a1f1303d7bdbaa9dfb80b34cbcdcb417d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor. <br /></td></tr>
 <tr class="separator:a1f1303d7bdbaa9dfb80b34cbcdcb417d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90c0b75f862111eaf0583bcad7652a87"><td class="memItemLeft" align="right" valign="top"><a id="a90c0b75f862111eaf0583bcad7652a87" name="a90c0b75f862111eaf0583bcad7652a87"></a>
 <a class="el" href="classsaq_1_1bartleby_1_1Symbol.html">Symbol</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classsaq_1_1bartleby_1_1Symbol.html">Symbol</a> &amp;) noexcept=delete</td></tr>
-<tr class="memdesc:a90c0b75f862111eaf0583bcad7652a87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy assignment. <br /></td></tr>
 <tr class="separator:a90c0b75f862111eaf0583bcad7652a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6788f9f8dc64b182b2ca4cc632ca1a5d"><td class="memItemLeft" align="right" valign="top"><a id="a6788f9f8dc64b182b2ca4cc632ca1a5d" name="a6788f9f8dc64b182b2ca4cc632ca1a5d"></a>
 <a class="el" href="classsaq_1_1bartleby_1_1Symbol.html">Symbol</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classsaq_1_1bartleby_1_1Symbol.html">Symbol</a> &amp;&amp;) noexcept=default</td></tr>
-<tr class="memdesc:a6788f9f8dc64b182b2ca4cc632ca1a5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment. <br /></td></tr>
 <tr class="separator:a6788f9f8dc64b182b2ca4cc632ca1a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accdab36b30f823d7c68e689028d40c2a"><td class="memItemLeft" align="right" valign="top"><a id="accdab36b30f823d7c68e689028d40c2a" name="accdab36b30f823d7c68e689028d40c2a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>~Symbol</b> () noexcept=default</td></tr>
-<tr class="memdesc:accdab36b30f823d7c68e689028d40c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:accdab36b30f823d7c68e689028d40c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An high view of a symbol. </p>
@@ -160,7 +152,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create a symbol. </p>
+<p>Constructs a new symbol. </p>
 <div class="fragment"><div class="line"><span class="lineno">   33</span>{}</div>
 </div><!-- fragment -->
 </div>
@@ -189,8 +181,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return the definedness of the symbol. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if symbol is defined, else false. </dd></dl>
+<p>Returns the definedness of the symbol. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if symbol is defined, else false. </dd></dl>
 <div class="fragment"><div class="line"><span class="lineno">   62</span>{ <span class="keywordflow">return</span> _defined; }</div>
 </div><!-- fragment -->
 </div>
@@ -218,8 +210,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return the visibility of the symbol. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if symbol is global, else false. </dd></dl>
+<p>Returns the visibility of the symbol. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if symbol is global, else false. </dd></dl>
 <div class="fragment"><div class="line"><span class="lineno">   60</span>{ <span class="keywordflow">return</span> _global; }</div>
 </div><!-- fragment -->
 </div>
@@ -247,8 +239,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return true if the symbol contains references to some mach-o symbols. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if the symbol contains references to some mach-o, else false. </dd></dl>
+<p>Returns true if the symbol contains references to some mach-o symbols. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the symbol contains references to some mach-o, else false. </dd></dl>
 <div class="fragment"><div class="line"><span class="lineno">   52</span>                                    {</div>
 <div class="line"><span class="lineno">   53</span>  <span class="keywordflow">return</span> _type == llvm::Triple::ObjectFormatType::MachO;</div>
 <div class="line"><span class="lineno">   54</span>}</div>
@@ -309,7 +301,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Count how many times this symbol is referenced. </p>
+<p>Counts how many times this symbol is referenced. </p>
 <dl class="section return"><dt>Returns</dt><dd>Number of references. </dd></dl>
 
 </div>
@@ -338,7 +330,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Set the name of the symbol. </p>
+<p>Sets the name of the symbol. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>Name to set. </td></tr>
@@ -376,7 +368,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Update this symbol with new symbol information. </p>
+<p>Updates the symbol with new symbol information. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">syminfo</td><td><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html" title="An high view of a symbol.">Symbol</a> information. </td></tr>
