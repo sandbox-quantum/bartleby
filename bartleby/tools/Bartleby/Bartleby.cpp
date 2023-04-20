@@ -27,30 +27,34 @@
 #include "llvm/Support/MemoryBuffer.h"
 #include "llvm/Support/WithColor.h"
 
+namespace bartleby = saq::bartleby;
+
+namespace {
+
+llvm::cl::OptionCategory Cat("bartleby Options");
+
 /// \brief Input file.
-llvm::cl::list<std::string> InputFileNames(llvm::cl::Required, "if",
-                                           llvm::cl::desc("Input filename"),
-                                           llvm::cl::value_desc("filename"));
+llvm::cl::list<std::string> InputFileNames(llvm::cl::Positional,
+                                           llvm::cl::desc("Filenames…"),
+                                           llvm::cl::value_desc("filename"),
+                                           llvm::cl::cat(Cat));
 
 /// \brief Prefix to apply.
 llvm::cl::opt<std::string>
     Prefix("prefix",
            llvm::cl::desc("Prefix to set to global and defined symbols"),
-           llvm::cl::value_desc("prefix"));
+           llvm::cl::value_desc("prefix"), llvm::cl::cat(Cat));
 
 /// \brief Output file.
-llvm::cl::opt<std::string> OutputFileName(llvm::cl::Required, "of",
+llvm::cl::opt<std::string> OutputFileName(llvm::cl::Required, "o",
                                           llvm::cl::desc("Output filename"),
-                                          llvm::cl::value_desc("filename"));
+                                          llvm::cl::value_desc("filename"),
+                                          llvm::cl::cat(Cat));
 
 /// \brief Displays the list of symbols.
-llvm::cl::opt<bool>
-    DisplaySymbolList("display-symbols",
-                      llvm::cl::desc("Display list of symbols"));
-
-namespace bartleby = saq::bartleby;
-
-namespace {
+llvm::cl::opt<bool> DisplaySymbolList("display-symbols",
+                                      llvm::cl::desc("Display list of symbols"),
+                                      llvm::cl::cat(Cat));
 
 /// \brief Tool name;
 constexpr llvm::StringRef ToolName = "bartleby";
@@ -135,7 +139,9 @@ void displaySymbols(const bartleby::Bartleby &B) noexcept {
 } // end anonymous namespace
 
 int main(int argc, char **argv) {
-  llvm::cl::ParseCommandLineOptions(argc, argv);
+  llvm::cl::HideUnrelatedOptions(Cat);
+  llvm::cl::ParseCommandLineOptions(
+      argc, argv, "Combine and optionally prefix libraries and objects");
 
   auto B = CollectObjects();
 

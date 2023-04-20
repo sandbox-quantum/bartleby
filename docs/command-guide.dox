@@ -8,7 +8,7 @@
 /// \section sec-cmd-synopsis Synopsis
 ///
 ///
-/// <b>bartleby</b> [<em>options</em>] <em>--if input</em>… <em>--of output</em>
+/// <b>bartleby</b> [<em>options</em>] <em>\<input files…\></em> <em>-o output</em>
 ///
 ///
 /// \section sec-cmd-description Description
@@ -46,12 +46,12 @@
 ///     <th>Description</th>
 ///   </tr>
 ///   <tr>
-///     <td><tt>--if</tt></td>
-///     <td>Input file. <b>At least one input file is required</b>. It can be an
+///     <td><tt>\<input files\></tt></td>
+///     <td>Input files. <b>At least one input file is required</b>. It can be an
 ///     object file or an archive (i.e. a static library).</td>
 ///   </tr>
 ///   <tr>
-///     <td><tt>--of</tt></td>
+///     <td><tt>-o</tt></td>
 ///     <td>Output file. <b>Required</b>.</td>
 ///   </tr>
 ///   <tr>
