@@ -98,6 +98,9 @@ Inheritance diagram for saq::bartleby::Error:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsaq_1_1bartleby_1_1Error_1_1MachOUniversalBinaryReason.html">MachOUniversalBinaryReason</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fat Mach-O related error.  <a href="structsaq_1_1bartleby_1_1Error_1_1MachOUniversalBinaryReason.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason.html">ObjectFormatTypeMismatchReason</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mismatch between object format type.  <a href="structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -107,10 +110,10 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a9cb6ae7c35d9b1e8c19a3829748224d2"><td class="memItemLeft" align="right" valign="top"><a id="a9cb6ae7c35d9b1e8c19a3829748224d2" name="a9cb6ae7c35d9b1e8c19a3829748224d2"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>Reason</b> = std::variant&lt; <a class="el" href="structsaq_1_1bartleby_1_1Error_1_1UnsupportedBinaryReason.html">UnsupportedBinaryReason</a>, <a class="el" href="structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason.html">ObjectFormatTypeMismatchReason</a> &gt;</td></tr>
-<tr class="memdesc:a9cb6ae7c35d9b1e8c19a3829748224d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reason for error. <br /></td></tr>
-<tr class="separator:a9cb6ae7c35d9b1e8c19a3829748224d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebbeef986c858a8f9b2b06c40b975337"><td class="memItemLeft" align="right" valign="top"><a id="aebbeef986c858a8f9b2b06c40b975337" name="aebbeef986c858a8f9b2b06c40b975337"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>Reason</b> = std::variant&lt; <a class="el" href="structsaq_1_1bartleby_1_1Error_1_1UnsupportedBinaryReason.html">UnsupportedBinaryReason</a>, <a class="el" href="structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason.html">ObjectFormatTypeMismatchReason</a>, <a class="el" href="structsaq_1_1bartleby_1_1Error_1_1MachOUniversalBinaryReason.html">MachOUniversalBinaryReason</a> &gt;</td></tr>
+<tr class="memdesc:aebbeef986c858a8f9b2b06c40b975337"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reason for error. <br /></td></tr>
+<tr class="separator:aebbeef986c858a8f9b2b06c40b975337"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -166,7 +169,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Constructor for a reason. </p>
-<div class="fragment"><div class="line"><span class="lineno">   63</span>: _reason(std::move(reason)) {}</div>
+<div class="fragment"><div class="line"><span class="lineno">   70</span>: _reason(std::move(reason)) {}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -193,21 +196,23 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   66</span>                                                       {</div>
-<div class="line"><span class="lineno">   67</span>  <span class="keywordflow">return</span> std::visit(</div>
-<div class="line"><span class="lineno">   68</span>      [](<span class="keyword">auto</span> &amp;&amp;err) {</div>
-<div class="line"><span class="lineno">   69</span>        <span class="keyword">using </span>ErrT = std::decay_t&lt;<span class="keyword">decltype</span>(err)&gt;;</div>
-<div class="line"><span class="lineno">   70</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;UnsupportedBinaryReason, ErrT&gt;) {</div>
-<div class="line"><span class="lineno">   71</span>          <span class="keywordflow">return</span> std::error_code(1, std::system_category());</div>
-<div class="line"><span class="lineno">   72</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;ObjectFormatTypeMismatchReason,</div>
-<div class="line"><span class="lineno">   73</span>                                            ErrT&gt;) {</div>
-<div class="line"><span class="lineno">   74</span>          <span class="keywordflow">return</span> std::error_code(2, std::system_category());</div>
-<div class="line"><span class="lineno">   75</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   76</span>          __builtin_unreachable();</div>
-<div class="line"><span class="lineno">   77</span>        }</div>
-<div class="line"><span class="lineno">   78</span>      },</div>
-<div class="line"><span class="lineno">   79</span>      _reason);</div>
-<div class="line"><span class="lineno">   80</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">   70</span>                                                       {</div>
+<div class="line"><span class="lineno">   71</span>  <span class="keywordflow">return</span> std::visit(</div>
+<div class="line"><span class="lineno">   72</span>      [](<span class="keyword">auto</span> &amp;&amp;err) {</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keyword">using </span>ErrT = std::decay_t&lt;<span class="keyword">decltype</span>(err)&gt;;</div>
+<div class="line"><span class="lineno">   74</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;UnsupportedBinaryReason, ErrT&gt;) {</div>
+<div class="line"><span class="lineno">   75</span>          <span class="keywordflow">return</span> std::error_code(1, std::system_category());</div>
+<div class="line"><span class="lineno">   76</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;ObjectFormatTypeMismatchReason,</div>
+<div class="line"><span class="lineno">   77</span>                                            ErrT&gt;) {</div>
+<div class="line"><span class="lineno">   78</span>          <span class="keywordflow">return</span> std::error_code(2, std::system_category());</div>
+<div class="line"><span class="lineno">   79</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;MachOUniversalBinaryReason, ErrT&gt;) {</div>
+<div class="line"><span class="lineno">   80</span>          <span class="keywordflow">return</span> std::error_code(3, std::system_category());</div>
+<div class="line"><span class="lineno">   81</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   82</span>          __builtin_unreachable();</div>
+<div class="line"><span class="lineno">   83</span>        }</div>
+<div class="line"><span class="lineno">   84</span>      },</div>
+<div class="line"><span class="lineno">   85</span>      _reason);</div>
+<div class="line"><span class="lineno">   86</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -244,12 +249,14 @@ template&lt;typename T &gt; </div>
 <div class="line"><span class="lineno">   36</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;ObjectFormatTypeMismatchReason,</div>
 <div class="line"><span class="lineno">   37</span>                                            ErrT&gt;) {</div>
 <div class="line"><span class="lineno">   38</span>          os &lt;&lt; <span class="stringliteral">&quot;expected &quot;</span> &lt;&lt; err.constraint &lt;&lt; <span class="stringliteral">&quot;, got &quot;</span> &lt;&lt; err.found;</div>
-<div class="line"><span class="lineno">   39</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   40</span>          __builtin_unreachable();</div>
-<div class="line"><span class="lineno">   41</span>        }</div>
-<div class="line"><span class="lineno">   42</span>      },</div>
-<div class="line"><span class="lineno">   43</span>      _reason);</div>
-<div class="line"><span class="lineno">   44</span>}</div>
+<div class="line"><span class="lineno">   39</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;MachOUniversalBinaryReason, ErrT&gt;) {</div>
+<div class="line"><span class="lineno">   40</span>          os &lt;&lt; err.msg;</div>
+<div class="line"><span class="lineno">   41</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   42</span>          __builtin_unreachable();</div>
+<div class="line"><span class="lineno">   43</span>        }</div>
+<div class="line"><span class="lineno">   44</span>      },</div>
+<div class="line"><span class="lineno">   45</span>      _reason);</div>
+<div class="line"><span class="lineno">   46</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -275,25 +282,27 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   46</span>                                        {</div>
-<div class="line"><span class="lineno">   47</span>  std::string msg;</div>
-<div class="line"><span class="lineno">   48</span>  llvm::raw_string_ostream os(msg);</div>
-<div class="line"><span class="lineno">   49</span>  std::visit(</div>
-<div class="line"><span class="lineno">   50</span>      [&amp;os](<span class="keyword">auto</span> &amp;&amp;err) {</div>
-<div class="line"><span class="lineno">   51</span>        <span class="keyword">using </span>ErrT = std::decay_t&lt;<span class="keyword">decltype</span>(err)&gt;;</div>
-<div class="line"><span class="lineno">   52</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;UnsupportedBinaryReason, ErrT&gt;) {</div>
-<div class="line"><span class="lineno">   53</span>          os &lt;&lt; <span class="stringliteral">&quot;error while reading binary: &quot;</span> &lt;&lt; err.msg;</div>
-<div class="line"><span class="lineno">   54</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;ObjectFormatTypeMismatchReason,</div>
-<div class="line"><span class="lineno">   55</span>                                            ErrT&gt;) {</div>
-<div class="line"><span class="lineno">   56</span>          os &lt;&lt; <span class="stringliteral">&quot;invalid object format type: expected &quot;</span> &lt;&lt; err.constraint</div>
-<div class="line"><span class="lineno">   57</span>             &lt;&lt; <span class="stringliteral">&quot;, got &quot;</span> &lt;&lt; err.found;</div>
-<div class="line"><span class="lineno">   58</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   59</span>          __builtin_unreachable();</div>
-<div class="line"><span class="lineno">   60</span>        }</div>
-<div class="line"><span class="lineno">   61</span>      },</div>
-<div class="line"><span class="lineno">   62</span>      _reason);</div>
-<div class="line"><span class="lineno">   63</span>  <span class="keywordflow">return</span> msg;</div>
-<div class="line"><span class="lineno">   64</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">   48</span>                                        {</div>
+<div class="line"><span class="lineno">   49</span>  std::string msg;</div>
+<div class="line"><span class="lineno">   50</span>  llvm::raw_string_ostream os(msg);</div>
+<div class="line"><span class="lineno">   51</span>  std::visit(</div>
+<div class="line"><span class="lineno">   52</span>      [&amp;os](<span class="keyword">auto</span> &amp;&amp;err) {</div>
+<div class="line"><span class="lineno">   53</span>        <span class="keyword">using </span>ErrT = std::decay_t&lt;<span class="keyword">decltype</span>(err)&gt;;</div>
+<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;UnsupportedBinaryReason, ErrT&gt;) {</div>
+<div class="line"><span class="lineno">   55</span>          os &lt;&lt; <span class="stringliteral">&quot;error while reading binary: &quot;</span> &lt;&lt; err.msg;</div>
+<div class="line"><span class="lineno">   56</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;ObjectFormatTypeMismatchReason,</div>
+<div class="line"><span class="lineno">   57</span>                                            ErrT&gt;) {</div>
+<div class="line"><span class="lineno">   58</span>          os &lt;&lt; <span class="stringliteral">&quot;invalid object format type: expected &quot;</span> &lt;&lt; err.constraint</div>
+<div class="line"><span class="lineno">   59</span>             &lt;&lt; <span class="stringliteral">&quot;, got &quot;</span> &lt;&lt; err.found;</div>
+<div class="line"><span class="lineno">   60</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;MachOUniversalBinaryReason, ErrT&gt;) {</div>
+<div class="line"><span class="lineno">   61</span>          os &lt;&lt; <span class="stringliteral">&quot;fat Mach-O error: &quot;</span> &lt;&lt; err.msg;</div>
+<div class="line"><span class="lineno">   62</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   63</span>          __builtin_unreachable();</div>
+<div class="line"><span class="lineno">   64</span>        }</div>
+<div class="line"><span class="lineno">   65</span>      },</div>
+<div class="line"><span class="lineno">   66</span>      _reason);</div>
+<div class="line"><span class="lineno">   67</span>  <span class="keywordflow">return</span> msg;</div>
+<div class="line"><span class="lineno">   68</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -89,6 +89,7 @@ $(function() {
 <code>#include &quot;llvm/ADT/Twine.h&quot;</code><br />
 <code>#include &quot;llvm/Object/Archive.h&quot;</code><br />
 <code>#include &quot;llvm/Object/ArchiveWriter.h&quot;</code><br />
+<code>#include &quot;llvm/Object/MachOUniversal.h&quot;</code><br />
 <code>#include &quot;llvm/Support/MemoryBuffer.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="Error_8h_source.html">Bartleby/Error.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Export_8h_source.html">Bartleby/Export.h</a>&quot;</code><br />
@@ -142,11 +143,11 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  148</span>                                                                          {</div>
-<div class="line"><span class="lineno">  149</span>  <span class="keywordflow">return</span> os &lt;&lt; <span class="stringliteral">&quot;ObjectFormat(arch=&quot;</span> &lt;&lt; object_format.arch</div>
-<div class="line"><span class="lineno">  150</span>            &lt;&lt; <span class="stringliteral">&quot;, subarch=&quot;</span> &lt;&lt; object_format.subarch</div>
-<div class="line"><span class="lineno">  151</span>            &lt;&lt; <span class="stringliteral">&quot;, file format=&quot;</span> &lt;&lt; object_format.format_type &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
-<div class="line"><span class="lineno">  152</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  149</span>                                                                          {</div>
+<div class="line"><span class="lineno">  150</span>  <span class="keywordflow">return</span> os &lt;&lt; <span class="stringliteral">&quot;ObjectFormat(arch=&quot;</span> &lt;&lt; object_format.arch</div>
+<div class="line"><span class="lineno">  151</span>            &lt;&lt; <span class="stringliteral">&quot;, subarch=&quot;</span> &lt;&lt; object_format.subarch</div>
+<div class="line"><span class="lineno">  152</span>            &lt;&lt; <span class="stringliteral">&quot;, file format=&quot;</span> &lt;&lt; object_format.format_type &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
+<div class="line"><span class="lineno">  153</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>

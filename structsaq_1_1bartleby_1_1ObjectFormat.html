@@ -98,7 +98,7 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a330450623d43367df590e05cb6c155d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a330450623d43367df590e05cb6c155d1">ObjectFormat</a> (const llvm::Triple &amp;triple) noexcept</td></tr>
+<tr class="memitem:a330450623d43367df590e05cb6c155d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a330450623d43367df590e05cb6c155d1">ObjectFormat</a> (const llvm::Triple &amp;<a class="el" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>) noexcept</td></tr>
 <tr class="memdesc:a330450623d43367df590e05cb6c155d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an <a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html" title="Object format.">ObjectFormat</a> out of a <code>llvm::Triple</code>.  <br /></td></tr>
 <tr class="separator:a330450623d43367df590e05cb6c155d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68e2b34eef92fcc60e84ef16bca51a34"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a68e2b34eef92fcc60e84ef16bca51a34">pack</a> () const noexcept</td></tr>
@@ -107,7 +107,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a79cceb4f9e9b8bba663bfeb12bcadcf8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a79cceb4f9e9b8bba663bfeb12bcadcf8">operator==</a> (const <a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html">ObjectFormat</a> &amp;other) const noexcept</td></tr>
 <tr class="memdesc:a79cceb4f9e9b8bba663bfeb12bcadcf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Comparison operator between two <a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html" title="Object format.">ObjectFormat</a>.  <br /></td></tr>
 <tr class="separator:a79cceb4f9e9b8bba663bfeb12bcadcf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6b881c7672328209def2c406ecc667b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html#ac6b881c7672328209def2c406ecc667b">matches</a> (const llvm::Triple &amp;triple) const noexcept</td></tr>
+<tr class="memitem:ac6b881c7672328209def2c406ecc667b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html#ac6b881c7672328209def2c406ecc667b">matches</a> (const llvm::Triple &amp;<a class="el" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>) const noexcept</td></tr>
 <tr class="memdesc:ac6b881c7672328209def2c406ecc667b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify that a <code>llvm::Triple</code> matches the value from an <a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html" title="Object format.">ObjectFormat</a>.  <br /></td></tr>
 <tr class="separator:ac6b881c7672328209def2c406ecc667b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -167,8 +167,9 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  130</span>    : <a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a312d1f25db1251d8dd847ccbd77acf64">arch</a>(triple.getArch()), <a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a5189b8676776e726d855f4d78e5bc862">subarch</a>(triple.getSubArch()),</div>
-<div class="line"><span class="lineno">  131</span>      <a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#acabfc51274d979c4c6ab6f077f9dbad9">format_type</a>(triple.getObjectFormat()) {}</div>
+<div class="fragment"><div class="line"><span class="lineno">  131</span>    : <a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a312d1f25db1251d8dd847ccbd77acf64">arch</a>(<a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>.getArch()), <a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a5189b8676776e726d855f4d78e5bc862">subarch</a>(<a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>.getSubArch()),</div>
+<div class="line"><span class="lineno">  132</span>      <a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#acabfc51274d979c4c6ab6f077f9dbad9">format_type</a>(<a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>.getObjectFormat()) {}</div>
+<div class="ttc" id="aArchiveWriter_8cpp_html_aa33e81633f502f89f8598e2b2959920f"><div class="ttname"><a href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a></div><div class="ttdeci">llvm::Triple triple</div><div class="ttdoc">Archive triple.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:43</div></div>
 <div class="ttc" id="astructsaq_1_1bartleby_1_1ObjectFormat_html_a312d1f25db1251d8dd847ccbd77acf64"><div class="ttname"><a href="structsaq_1_1bartleby_1_1ObjectFormat.html#a312d1f25db1251d8dd847ccbd77acf64">saq::bartleby::ObjectFormat::arch</a></div><div class="ttdeci">llvm::Triple::ArchType arch</div><div class="ttdoc">The architecture.</div><div class="ttdef"><b>Definition:</b> Bartleby.h:44</div></div>
 <div class="ttc" id="astructsaq_1_1bartleby_1_1ObjectFormat_html_a5189b8676776e726d855f4d78e5bc862"><div class="ttname"><a href="structsaq_1_1bartleby_1_1ObjectFormat.html#a5189b8676776e726d855f4d78e5bc862">saq::bartleby::ObjectFormat::subarch</a></div><div class="ttdeci">llvm::Triple::SubArchType subarch</div><div class="ttdoc">The sub-architecture.</div><div class="ttdef"><b>Definition:</b> Bartleby.h:47</div></div>
 <div class="ttc" id="astructsaq_1_1bartleby_1_1ObjectFormat_html_acabfc51274d979c4c6ab6f077f9dbad9"><div class="ttname"><a href="structsaq_1_1bartleby_1_1ObjectFormat.html#acabfc51274d979c4c6ab6f077f9dbad9">saq::bartleby::ObjectFormat::format_type</a></div><div class="ttdeci">llvm::Triple::ObjectFormatType format_type</div><div class="ttdoc">The object format file.</div><div class="ttdef"><b>Definition:</b> Bartleby.h:50</div></div>
@@ -208,11 +209,11 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the given triple has the same architecture, sub-architecture and object format than the ones stored in <a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html" title="Object format.">ObjectFormat</a>. </dd></dl>
-<div class="fragment"><div class="line"><span class="lineno">  143</span>                                                                  {</div>
-<div class="line"><span class="lineno">  144</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a330450623d43367df590e05cb6c155d1">ObjectFormat</a>{triple}.pack() == <a class="code hl_function" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a68e2b34eef92fcc60e84ef16bca51a34">pack</a>();</div>
-<div class="line"><span class="lineno">  145</span>}</div>
-<div class="ttc" id="astructsaq_1_1bartleby_1_1ObjectFormat_html_a330450623d43367df590e05cb6c155d1"><div class="ttname"><a href="structsaq_1_1bartleby_1_1ObjectFormat.html#a330450623d43367df590e05cb6c155d1">saq::bartleby::ObjectFormat::ObjectFormat</a></div><div class="ttdeci">ObjectFormat(const llvm::Triple &amp;triple) noexcept</div><div class="ttdoc">Construct an ObjectFormat out of a llvm::Triple.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:129</div></div>
-<div class="ttc" id="astructsaq_1_1bartleby_1_1ObjectFormat_html_a68e2b34eef92fcc60e84ef16bca51a34"><div class="ttname"><a href="structsaq_1_1bartleby_1_1ObjectFormat.html#a68e2b34eef92fcc60e84ef16bca51a34">saq::bartleby::ObjectFormat::pack</a></div><div class="ttdeci">uint64_t pack() const noexcept</div><div class="ttdoc">Pack the architecture, sub-architecture and object format file enums into a 8-bytes integer.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:133</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  144</span>                                                                  {</div>
+<div class="line"><span class="lineno">  145</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a330450623d43367df590e05cb6c155d1">ObjectFormat</a>{<a class="code hl_variable" href="ArchiveWriter_8cpp.html#aa33e81633f502f89f8598e2b2959920f">triple</a>}.pack() == <a class="code hl_function" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a68e2b34eef92fcc60e84ef16bca51a34">pack</a>();</div>
+<div class="line"><span class="lineno">  146</span>}</div>
+<div class="ttc" id="astructsaq_1_1bartleby_1_1ObjectFormat_html_a330450623d43367df590e05cb6c155d1"><div class="ttname"><a href="structsaq_1_1bartleby_1_1ObjectFormat.html#a330450623d43367df590e05cb6c155d1">saq::bartleby::ObjectFormat::ObjectFormat</a></div><div class="ttdeci">ObjectFormat(const llvm::Triple &amp;triple) noexcept</div><div class="ttdoc">Construct an ObjectFormat out of a llvm::Triple.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:130</div></div>
+<div class="ttc" id="astructsaq_1_1bartleby_1_1ObjectFormat_html_a68e2b34eef92fcc60e84ef16bca51a34"><div class="ttname"><a href="structsaq_1_1bartleby_1_1ObjectFormat.html#a68e2b34eef92fcc60e84ef16bca51a34">saq::bartleby::ObjectFormat::pack</a></div><div class="ttdeci">uint64_t pack() const noexcept</div><div class="ttdoc">Pack the architecture, sub-architecture and object format file enums into a 8-bytes integer.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:134</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -241,9 +242,9 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Comparison operator between two <a class="el" href="structsaq_1_1bartleby_1_1ObjectFormat.html" title="Object format.">ObjectFormat</a>. </p>
-<div class="fragment"><div class="line"><span class="lineno">  139</span>                                                                      {</div>
-<div class="line"><span class="lineno">  140</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a68e2b34eef92fcc60e84ef16bca51a34">pack</a>() == other.pack();</div>
-<div class="line"><span class="lineno">  141</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  140</span>                                                                      {</div>
+<div class="line"><span class="lineno">  141</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a68e2b34eef92fcc60e84ef16bca51a34">pack</a>() == other.pack();</div>
+<div class="line"><span class="lineno">  142</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -271,11 +272,11 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Pack the architecture, sub-architecture and object format file enums into a 8-bytes integer. </p>
-<div class="fragment"><div class="line"><span class="lineno">  133</span>                                           {</div>
-<div class="line"><span class="lineno">  134</span>  <span class="keywordflow">return</span> (<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(<a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a312d1f25db1251d8dd847ccbd77acf64">arch</a>)) |</div>
-<div class="line"><span class="lineno">  135</span>         (<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(<a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a5189b8676776e726d855f4d78e5bc862">subarch</a>) &lt;&lt; 16) |</div>
-<div class="line"><span class="lineno">  136</span>         (<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(<a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#acabfc51274d979c4c6ab6f077f9dbad9">format_type</a>) &lt;&lt; 32);</div>
-<div class="line"><span class="lineno">  137</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  134</span>                                           {</div>
+<div class="line"><span class="lineno">  135</span>  <span class="keywordflow">return</span> (<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(<a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a312d1f25db1251d8dd847ccbd77acf64">arch</a>)) |</div>
+<div class="line"><span class="lineno">  136</span>         (<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(<a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#a5189b8676776e726d855f4d78e5bc862">subarch</a>) &lt;&lt; 16) |</div>
+<div class="line"><span class="lineno">  137</span>         (<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(<a class="code hl_variable" href="structsaq_1_1bartleby_1_1ObjectFormat.html#acabfc51274d979c4c6ab6f077f9dbad9">format_type</a>) &lt;&lt; 32);</div>
+<div class="line"><span class="lineno">  138</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -315,11 +316,11 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Stream operator with a llvm::raw_ostream. </p>
-<div class="fragment"><div class="line"><span class="lineno">  148</span>                                                                          {</div>
-<div class="line"><span class="lineno">  149</span>  <span class="keywordflow">return</span> os &lt;&lt; <span class="stringliteral">&quot;ObjectFormat(arch=&quot;</span> &lt;&lt; object_format.arch</div>
-<div class="line"><span class="lineno">  150</span>            &lt;&lt; <span class="stringliteral">&quot;, subarch=&quot;</span> &lt;&lt; object_format.subarch</div>
-<div class="line"><span class="lineno">  151</span>            &lt;&lt; <span class="stringliteral">&quot;, file format=&quot;</span> &lt;&lt; object_format.format_type &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
-<div class="line"><span class="lineno">  152</span>}</div>
+<div class="fragment"><div class="line"><span class="lineno">  149</span>                                                                          {</div>
+<div class="line"><span class="lineno">  150</span>  <span class="keywordflow">return</span> os &lt;&lt; <span class="stringliteral">&quot;ObjectFormat(arch=&quot;</span> &lt;&lt; object_format.arch</div>
+<div class="line"><span class="lineno">  151</span>            &lt;&lt; <span class="stringliteral">&quot;, subarch=&quot;</span> &lt;&lt; object_format.subarch</div>
+<div class="line"><span class="lineno">  152</span>            &lt;&lt; <span class="stringliteral">&quot;, file format=&quot;</span> &lt;&lt; object_format.format_type &lt;&lt; <span class="charliteral">&#39;)&#39;</span>;</div>
+<div class="line"><span class="lineno">  153</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>

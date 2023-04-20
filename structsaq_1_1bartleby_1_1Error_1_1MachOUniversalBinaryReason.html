@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bartleby: Member List</title>
+<title>Bartleby: saq::bartleby::Error::MachOUniversalBinaryReason Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -71,24 +71,35 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>saq</b></li><li class="navelem"><b>bartleby</b></li><li class="navelem"><a class="el" href="classsaq_1_1bartleby_1_1Error.html">Error</a></li>  </ul>
+<li class="navelem"><b>saq</b></li><li class="navelem"><b>bartleby</b></li><li class="navelem"><a class="el" href="classsaq_1_1bartleby_1_1Error.html">Error</a></li><li class="navelem"><a class="el" href="structsaq_1_1bartleby_1_1Error_1_1MachOUniversalBinaryReason.html">MachOUniversalBinaryReason</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle"><div class="title">saq::bartleby::Error Member List</div></div>
+  <div class="summary">
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="structsaq_1_1bartleby_1_1Error_1_1MachOUniversalBinaryReason-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">saq::bartleby::Error::MachOUniversalBinaryReason Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a>, including all inherited members.</p>
-<table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>convertToErrorCode</b>() const noexcept override (defined in <a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a>)</td><td class="entry"><a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classsaq_1_1bartleby_1_1Error.html#a0127f576151dbe89b49ffa92bfde1090">Error</a>(T reason) noexcept</td><td class="entry"><a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classsaq_1_1bartleby_1_1Error.html#a96f8aeb6423fd0043407fcfc5f590d4c">ID</a></td><td class="entry"><a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>log</b>(llvm::raw_ostream &amp;os) const noexcept override (defined in <a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a>)</td><td class="entry"><a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>message</b>() const noexcept override (defined in <a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a>)</td><td class="entry"><a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classsaq_1_1bartleby_1_1Error.html#aebbeef986c858a8f9b2b06c40b975337">Reason</a> typedef</td><td class="entry"><a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classsaq_1_1bartleby_1_1Error.html#a5171d99ad85202c12dc8b7a1d3aa4e73">~Error</a>() noexcept override=default</td><td class="entry"><a class="el" href="classsaq_1_1bartleby_1_1Error.html">saq::bartleby::Error</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p>Fat Mach-O related error.  
+ <a href="structsaq_1_1bartleby_1_1Error_1_1MachOUniversalBinaryReason.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Error_8h_source.html">Error.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a0999b87889ba2448eb01d8c6092e8e45"><td class="memItemLeft" align="right" valign="top"><a id="a0999b87889ba2448eb01d8c6092e8e45" name="a0999b87889ba2448eb01d8c6092e8e45"></a>
+llvm::SmallString&lt; 32 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>msg</b></td></tr>
+<tr class="memdesc:a0999b87889ba2448eb01d8c6092e8e45"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classsaq_1_1bartleby_1_1Error.html" title="Custom error info for Bartleby.">Error</a> message. <br /></td></tr>
+<tr class="separator:a0999b87889ba2448eb01d8c6092e8e45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Fat Mach-O related error. </p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<li>bartleby/lib/Bartleby/<a class="el" href="Error_8h_source.html">Error.h</a></li>
+</ul>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6

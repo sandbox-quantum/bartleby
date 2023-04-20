@@ -104,7 +104,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac5867ccce178201c0f14192044d86d81"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#ac5867ccce178201c0f14192044d86d81">IsMachO</a> () const noexcept</td></tr>
 <tr class="memdesc:ac5867ccce178201c0f14192044d86d81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the symbol contains references to some mach-o symbols.  <br /></td></tr>
 <tr class="separator:ac5867ccce178201c0f14192044d86d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90513fa4fd65d2b096bbcdf98007c0d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#a90513fa4fd65d2b096bbcdf98007c0d8">SetName</a> (std::string name) noexcept</td></tr>
+<tr class="memitem:a90513fa4fd65d2b096bbcdf98007c0d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#a90513fa4fd65d2b096bbcdf98007c0d8">SetName</a> (std::string <a class="el" href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a>) noexcept</td></tr>
 <tr class="memdesc:a90513fa4fd65d2b096bbcdf98007c0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the name of the symbol.  <br /></td></tr>
 <tr class="separator:a90513fa4fd65d2b096bbcdf98007c0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4813a6417024db559e8277748e9c803c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsaq_1_1bartleby_1_1Symbol.html#a4813a6417024db559e8277748e9c803c">UpdateWithNewSymbolInfo</a> (const <a class="el" href="structsaq_1_1bartleby_1_1SymbolInfo.html">SymbolInfo</a> &amp;syminfo) noexcept</td></tr>
@@ -346,8 +346,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <div class="fragment"><div class="line"><span class="lineno">   56</span>                                                         {</div>
-<div class="line"><span class="lineno">   57</span>  _overwrite_name = name;</div>
+<div class="line"><span class="lineno">   57</span>  _overwrite_name = <a class="code hl_variable" href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a>;</div>
 <div class="line"><span class="lineno">   58</span>}</div>
+<div class="ttc" id="aArchiveWriter_8cpp_html_ad99876d5df830fc1a981d57e6794576c"><div class="ttname"><a href="ArchiveWriter_8cpp.html#ad99876d5df830fc1a981d57e6794576c">name</a></div><div class="ttdeci">std::unique_ptr&lt; std::string &gt; name</div><div class="ttdoc">Name.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:46</div></div>
 </div><!-- fragment -->
 </div>
 </div>
