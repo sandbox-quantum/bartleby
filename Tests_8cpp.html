@@ -141,6 +141,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ada913b90c973087f22177bcaf16d52b5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Tests_8cpp.html#ada913b90c973087f22177bcaf16d52b5">TEST</a> (BartleByObjectYamlError, ObjectTypeMisMatch)</td></tr>
 <tr class="memdesc:ada913b90c973087f22177bcaf16d52b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that passing two objects with different format types is an error.  <br /></td></tr>
 <tr class="separator:ada913b90c973087f22177bcaf16d52b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac1ee4af6486c8cebf8d085791031fa7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Tests_8cpp.html#aac1ee4af6486c8cebf8d085791031fa7">TEST</a> (BartleByObjectYamlELF, SymbolInBSS)</td></tr>
+<tr class="memdesc:aac1ee4af6486c8cebf8d085791031fa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that a symbol in a BSS section is well renamed.  <br /></td></tr>
+<tr class="separator:aac1ee4af6486c8cebf8d085791031fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Unit tests for Bartleby. </p>
@@ -552,7 +555,7 @@ Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a4f70ac0be2e4ec7ce5b7c43d183c8e29" name="a4f70ac0be2e4ec7ce5b7c43d183c8e29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f70ac0be2e4ec7ce5b7c43d183c8e29">&#9670;&#160;</a></span>TEST() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f70ac0be2e4ec7ce5b7c43d183c8e29">&#9670;&#160;</a></span>TEST() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -661,14 +664,59 @@ Functions</h2></td></tr>
 <div class="ttc" id="aTests_8cpp_html_af1fe266c0abe27080fc92f65b8ad4f9c"><div class="ttname"><a href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a></div><div class="ttdeci">#define ASSERT_SYM_DEFINED(_b_, _name_)</div><div class="ttdoc">Asserts that a symbol is defined.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:209</div></div>
 <div class="ttc" id="aTests_8cpp_html_af603cc293cbe77c7e632d6524545eb37"><div class="ttname"><a href="Tests_8cpp.html#af603cc293cbe77c7e632d6524545eb37">ASSERT_SYM_LOCAL</a></div><div class="ttdeci">#define ASSERT_SYM_LOCAL(_b_, _name_)</div><div class="ttdoc">Asserts that a symbol is local.</div><div class="ttdef"><b>Definition:</b> Tests.cpp:178</div></div>
 <div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html">saq::bartleby::Bartleby</a></div><div class="ttdoc">Bartleby handle.</div><div class="ttdef"><b>Definition:</b> Bartleby.h:85</div></div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a28bfc536ac0ece95a0891123cd5afedc"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a28bfc536ac0ece95a0891123cd5afedc">saq::bartleby::Bartleby::addBinary</a></div><div class="ttdeci">llvm::Error addBinary(llvm::object::OwningBinary&lt; llvm::object::Binary &gt; Binary) noexcept</div><div class="ttdoc">Adds a new binary to Bartleby.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:153</div></div>
-<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a5a85aeec2258089a9f73d1cb846d9917"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a5a85aeec2258089a9f73d1cb846d9917">saq::bartleby::Bartleby::prefixGlobalAndDefinedSymbols</a></div><div class="ttdeci">size_t prefixGlobalAndDefinedSymbols(llvm::StringRef Prefix) noexcept</div><div class="ttdoc">Applies a prefix to all global and defined symbols.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:219</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a28bfc536ac0ece95a0891123cd5afedc"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a28bfc536ac0ece95a0891123cd5afedc">saq::bartleby::Bartleby::addBinary</a></div><div class="ttdeci">llvm::Error addBinary(llvm::object::OwningBinary&lt; llvm::object::Binary &gt; Binary) noexcept</div><div class="ttdoc">Adds a new binary to Bartleby.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:152</div></div>
+<div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_a5a85aeec2258089a9f73d1cb846d9917"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#a5a85aeec2258089a9f73d1cb846d9917">saq::bartleby::Bartleby::prefixGlobalAndDefinedSymbols</a></div><div class="ttdeci">size_t prefixGlobalAndDefinedSymbols(llvm::StringRef Prefix) noexcept</div><div class="ttdoc">Applies a prefix to all global and defined symbols.</div><div class="ttdef"><b>Definition:</b> Bartleby.cpp:218</div></div>
 <div class="ttc" id="aclasssaq_1_1bartleby_1_1Bartleby_html_aa3ed6b072dd96a5ec413bd3d39baf943"><div class="ttname"><a href="classsaq_1_1bartleby_1_1Bartleby.html#aa3ed6b072dd96a5ec413bd3d39baf943">saq::bartleby::Bartleby::buildFinalArchive</a></div><div class="ttdeci">static llvm::Error buildFinalArchive(Bartleby &amp;&amp;B, llvm::StringRef OutFilepath) noexcept</div><div class="ttdoc">Builds the final archive and writes its content to a file.</div><div class="ttdef"><b>Definition:</b> ArchiveWriter.cpp:325</div></div>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="aac1ee4af6486c8cebf8d085791031fa7" name="aac1ee4af6486c8cebf8d085791031fa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac1ee4af6486c8cebf8d085791031fa7">&#9670;&#160;</a></span>TEST() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">BartleByObjectYamlELF&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SymbolInBSS&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test that a symbol in a BSS section is well renamed. </p>
+<div class="fragment"><div class="line"><span class="lineno">  337</span>                                         {</div>
+<div class="line"><span class="lineno">  338</span>  llvm::SmallVector&lt;llvm::object::OwningBinary&lt;llvm::object::Binary&gt;, 1&gt;</div>
+<div class="line"><span class="lineno">  339</span>      Objects;</div>
+<div class="line"><span class="lineno">  340</span>  ASSERT_TRUE(YAML2Objects(<span class="stringliteral">&quot;uninit_symbol_in_BSS.yaml&quot;</span>,</div>
+<div class="line"><span class="lineno">  341</span>                           llvm::Triple::ObjectFormatType::ELF, Objects));</div>
+<div class="line"><span class="lineno">  342</span>  <a class="code hl_class" href="classsaq_1_1bartleby_1_1Bartleby.html">Bartleby</a> B;</div>
+<div class="line"><span class="lineno">  343</span>  <span class="keyword">auto</span> Err = B.<a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby.html#a28bfc536ac0ece95a0891123cd5afedc">addBinary</a>(std::move(Objects[0]));</div>
+<div class="line"><span class="lineno">  344</span>  ASSERT_FALSE(Err);</div>
+<div class="line"><span class="lineno">  345</span> </div>
+<div class="line"><span class="lineno">  346</span>  <a class="code hl_define" href="Tests_8cpp.html#af1fe266c0abe27080fc92f65b8ad4f9c">ASSERT_SYM_DEFINED</a>(B, <span class="stringliteral">&quot;thread_local_var&quot;</span>);</div>
+<div class="line"><span class="lineno">  347</span>  <a class="code hl_define" href="Tests_8cpp.html#a58d7a5da5bb6e2c00e8c7fe8ba3c23e5">ASSERT_SYM_GLOBAL</a>(B, <span class="stringliteral">&quot;thread_local_var&quot;</span>);</div>
+<div class="line"><span class="lineno">  348</span> </div>
+<div class="line"><span class="lineno">  349</span>  B.<a class="code hl_function" href="classsaq_1_1bartleby_1_1Bartleby.html#a5a85aeec2258089a9f73d1cb846d9917">prefixGlobalAndDefinedSymbols</a>(<span class="stringliteral">&quot;prefix_&quot;</span>);</div>
+<div class="line"><span class="lineno">  350</span>  <a class="code hl_define" href="Tests_8cpp.html#a374ec43880d0a3f0f5c4d6ea2a195abf">ASSERT_SYM_WILL_BE_RENAMED</a>(B, <span class="stringliteral">&quot;thread_local_var&quot;</span>);</div>
+<div class="line"><span class="lineno">  351</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="ada913b90c973087f22177bcaf16d52b5" name="ada913b90c973087f22177bcaf16d52b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada913b90c973087f22177bcaf16d52b5">&#9670;&#160;</a></span>TEST() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ada913b90c973087f22177bcaf16d52b5">&#9670;&#160;</a></span>TEST() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
