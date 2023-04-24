@@ -1,0 +1,52 @@
+--- !ELF
+FileHeader:
+  Class:           ELFCLASS64
+  Data:            ELFDATA2LSB
+  Type:            ET_REL
+  Machine:         EM_X86_64
+  SectionHeaderStringTable: .strtab
+Sections:
+  - Name:            .text
+    Type:            SHT_PROGBITS
+    Flags:           [ SHF_ALLOC, SHF_EXECINSTR ]
+    AddressAlign:    0x4
+  - Name:            .tbss
+    Type:            SHT_NOBITS
+    Flags:           [ SHF_WRITE, SHF_ALLOC, SHF_TLS ]
+    AddressAlign:    0x4
+    Size:            0x4
+  - Name:            .comment
+    Type:            SHT_PROGBITS
+    Flags:           [ SHF_MERGE, SHF_STRINGS ]
+    AddressAlign:    0x1
+    EntSize:         0x1
+    Content:         0044656269616E20636C616E672076657273696F6E2031352E302E3700
+  - Name:            .note.GNU-stack
+    Type:            SHT_PROGBITS
+    AddressAlign:    0x1
+  - Name:            .llvm_addrsig
+    Type:            SHT_LLVM_ADDRSIG
+    Flags:           [ SHF_EXCLUDE ]
+    Link:            .symtab
+    AddressAlign:    0x1
+    Offset:          0xA8
+    Symbols:         [  ]
+  - Type:            SectionHeaderTable
+    Sections:
+      - Name:            .strtab
+      - Name:            .text
+      - Name:            .tbss
+      - Name:            .comment
+      - Name:            .note.GNU-stack
+      - Name:            .llvm_addrsig
+      - Name:            .symtab
+Symbols:
+  - Name:            test.c
+    Type:            STT_FILE
+    Index:           SHN_ABS
+  - Name:            thread_local_var
+    Type:            STT_TLS
+    Section:         .tbss
+    Binding:         STB_GLOBAL
+    Size:            0x4
+...

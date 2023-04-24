@@ -85,7 +85,6 @@ void collectSymbolInfos(const llvm::object::ObjectFile *Obj,
   }
 
   switch (*SymInfo.Type) {
-  case llvm::object::SymbolRef::Type::ST_Other:
   case llvm::object::SymbolRef::Type::ST_Debug:
   case llvm::object::SymbolRef::Type::ST_File: {
     LLVM_DEBUG(llvm::dbgs()

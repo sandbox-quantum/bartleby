@@ -332,3 +332,20 @@ TEST(BartleByObjectYamlError, ObjectTypeMisMatch) {
   auto Err = B.addBinary(std::move(Objects[1]));
   ASSERT_TRUE(!!Err);
 }
+
+/// \brief Test that a symbol in a BSS section is well renamed.
+TEST(BartleByObjectYamlELF, SymbolInBSS) {
+  llvm::SmallVector<llvm::object::OwningBinary<llvm::object::Binary>, 1>
+      Objects;
+  ASSERT_TRUE(YAML2Objects("uninit_symbol_in_BSS.yaml",
+                           llvm::Triple::ObjectFormatType::ELF, Objects));
+  Bartleby B;
+  auto Err = B.addBinary(std::move(Objects[0]));
+  ASSERT_FALSE(Err);
+
+  ASSERT_SYM_DEFINED(B, "thread_local_var");
+  ASSERT_SYM_GLOBAL(B, "thread_local_var");
+
+  B.prefixGlobalAndDefinedSymbols("prefix_");
+  ASSERT_SYM_WILL_BE_RENAMED(B, "thread_local_var");
+}
