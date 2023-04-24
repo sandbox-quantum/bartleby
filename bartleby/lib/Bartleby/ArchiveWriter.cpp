@@ -21,6 +21,8 @@
 #include "llvm/Object/MachOUniversalWriter.h"
 #include "llvm/Support/SmallVectorMemoryBuffer.h"
 
+#include <unordered_map>
+
 #define DEBUG_TYPE "Bartleby"
 
 using namespace saq::bartleby;
