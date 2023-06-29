@@ -64,3 +64,15 @@ cc_library(
         "@bartleby-llvm-project//llvm:Object",
     ],
 )
+
+cc_library(
+    name = "bartleby-c",
+    srcs = ["Bartleby-c.cpp"],
+    copts = [
+        "-std=c++17",
+    ],
+    deps = [
+        ":bartleby",
+        "//bartleby/include/Bartleby-c:bartleby",
+    ],
+)
