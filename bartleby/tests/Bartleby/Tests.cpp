@@ -19,6 +19,7 @@
 /// \author thb-sb
 
 #include "Bartleby/Bartleby.h"
+#include "Bartleby-c/Bartleby.h"
 
 #include "llvm/ADT/Triple.h"
 #include "llvm/ADT/Twine.h"
@@ -348,4 +349,31 @@ TEST(BartleByObjectYamlELF, SymbolInBSS) {
 
   B.prefixGlobalAndDefinedSymbols("prefix_");
   ASSERT_SYM_WILL_BE_RENAMED(B, "thread_local_var");
+}
+
+/// \brief Test the C API.
+TEST(BartlebyCAPI, CAPI) {
+  llvm::SmallVector<llvm::object::OwningBinary<llvm::object::Binary>, 2>
+      Objects;
+  ASSERT_TRUE(YAML2Objects("symbols_visibility.yaml",
+                           llvm::Triple::ObjectFormatType::ELF, Objects, 2));
+
+  auto* bh = ::saq_bartleby_new();
+  ASSERT_NE(bh, nullptr);
+
+  const auto data = Objects[0].getBinary()->getData();
+
+  ASSERT_EQ(::saq_bartleby_add_binary(bh, data.data(), data.size()), 0);
+
+  ASSERT_EQ(::saq_bartleby_set_prefix(bh, "prefix_"), 0);
+
+  void* out = nullptr;
+  size_t out_n = 0;
+
+  ASSERT_EQ(::saq_bartleby_build_archive(bh, &out, &out_n), 0);
+  ASSERT_TRUE(out_n > 0);
+  ASSERT_NE(out, nullptr);
+
+  ::free(out);
+  ::saq_bartleby_free(bh);
 }
