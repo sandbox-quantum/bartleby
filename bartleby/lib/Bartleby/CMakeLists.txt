@@ -1,5 +1,7 @@
 include(AddLLVM)
 
+set(LLVM_OPTIONAL_SOURCES "ArchiveWriter.cpp;Bartleby.cpp;Error.cpp;Symbol.cpp;Bartleby-c.cpp")
+
 add_llvm_library(
   Bartleby
   ArchiveWriter.cpp
