@@ -1,0 +1,6 @@
+cc_library(
+    name = "bartleby",
+    hdrs = ["Bartleby.h"],
+    strip_include_prefix = "/bartleby/include",
+    visibility = ["//visibility:public"],
+)

@@ -10,6 +10,7 @@ cc_test(
     linkstatic = True,
     deps = [
         "//bartleby/lib/Bartleby:bartleby",
+        "//bartleby/lib/Bartleby:bartleby-c",
         "@bartleby-llvm-project//llvm:ObjectYAML",
         "@com_google_googletest//:gtest_main",
     ],
