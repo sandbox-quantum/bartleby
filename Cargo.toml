@@ -1,0 +1,12 @@
+[package]
+name = "bartleby"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "bartleby"
+path = "lib.rs"
+crate-type = ["staticlib"]
+
+[build-dependencies]
+cmake = "0.1.50"
