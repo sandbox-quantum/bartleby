@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['err_0',['Err',['../structsaq_1_1bartleby_1_1SymbolInfo.html#a5a14bf31ddfafb79e623632c630bf246',1,'saq::bartleby::SymbolInfo']]]
+  ['constraint_0',['Constraint',['../structsaq_1_1bartleby_1_1Error_1_1ObjectFormatTypeMismatchReason.html#ab823aa4cb3de38b28befe99b53b40336',1,'saq::bartleby::Error::ObjectFormatTypeMismatchReason']]]
 ];
