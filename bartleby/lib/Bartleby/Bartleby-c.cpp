@@ -112,7 +112,10 @@ int saq_bartleby_build_archive(struct BartlebyHandle* bh,
   if (auto ArOrErr = bartleby::Bartleby::buildFinalArchive(std::move(bh->B))) {
     const auto MemBuf = std::move(*ArOrErr);
     *n = MemBuf->getBufferSize();
-    *s = new uint8_t[*n];
+    *s = ::malloc(*n);
+    if (*s == nullptr) {
+      return ENOMEM;
+    }
     ::memcpy(*s, MemBuf->getBufferStart(), *n);
     return 0;
   }
