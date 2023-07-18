@@ -140,7 +140,24 @@ jobs:
           command: |
             find . -name CMakeLists.txt -exec cmake-format --check {} \;
             find . -name '*.cmake' -exec cmake-format --check {} \;
+      - run:
+          name: "Run rustfmt check"
+          command: |
+            find . -name '*.rs' -exec rustfmt --check {} \;
 
+  compile-test-rust:
+    resource_class: xlarge
+    docker:
+      - image: us-central1-docker.pkg.dev/pqc-dev-pool-336002/bartleby/bartleby:ci
+        auth:
+          username: _json_key
+          password: $DOCKER_IMAGE_GCR_SA_KEY
+    steps:
+      - checkout
+      - run:
+          name: "Build Bartleby Rust library"
+          command: |
+            LLVM_DIR=/usr/lib/llvm-15/lib/cmake cargo build
 
 workflows:
   check-format:
@@ -151,6 +168,7 @@ workflows:
       - compile-test-using-bazel
       - compile-test-using-cmake
       - compile-test-asan
+      - compile-test-rust
   publish-doc:
     jobs:
       - publish-doc:
