@@ -52,6 +52,10 @@ USER pawn
 WORKDIR /home/pawn
 ENV GOOGLE_APPLICATION_CREDENTIALS=/home/pawn/gcloud-service-key.json
 
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+ENV PATH=$PATH:/home/pawn/.cargo/bin
+RUN rustup update
+
 RUN go version
 RUN buildifier --version
 RUN cmake-format --version
