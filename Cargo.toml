@@ -1,10 +1,26 @@
 [package]
 name = "bartleby"
-version = "0.1.0"
+version = "0.2.2"
+authors = ["thb-sb <thomas@sandboxaq.com>", "SandboxAQ"]
 edition = "2021"
+description = "A symbol renaming toolkit, based on LLVM"
+documentation = "https://doc.rs/bartleby"
+readme = "README.md"
+homepage = "https://sandbox-quantum.github.io/bartleby/"
+repository = "https://github.com/sandbox-quantum/bartleby"
+license = "Apache-2.0"
+keywords = [
+    "elf",
+    "pe",
+    "mach-o",
+    "object",
+    "symbol",
+    "objcopy",
+    "llvm"
+]
+categories = ["development-tools"]
 
 [lib]
-crate-type = ["lib", "staticlib"]
 path = "lib.rs"
 
 [build-dependencies]
