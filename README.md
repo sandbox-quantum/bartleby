@@ -197,6 +197,13 @@ $ cmake --build build
 $ ./build/bin/bartleby
 ```
 
+If an higher version of LLVM is installed, `BARTLEBY_LLVM_VERSION` must be defined:
+
+```shell
+$ cmake -B build -DCMAKE_BUILD_TYPE=Release -DBARTLEBY_LLVM_VERSION=16.0 -DLLVM_DIR=/path/to/llvm-16/lib/cmake
+$ cmake --build build
+```
+
 ### Using Bazel <a name="using-bazel"></a>
 
 It is highly recommended to use [`bazelisk`].
