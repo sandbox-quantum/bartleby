@@ -24,7 +24,8 @@ fn main() {
 
     let llvm_dir = std::env::var("LLVM_DIR").expect("`LLVM_DIR`");
 
-    let dst = cmake::Config::new(".")
+    let mut cmake_cmd = cmake::Config::new(".");
+    cmake_cmd
         .define(
             "CMAKE_BUILD_TYPE",
             if is_debug() { "Debug" } else { "Release" },
@@ -33,8 +34,11 @@ fn main() {
         .build_arg(format!(
             "-j{}",
             std::env::var("NUM_JOBS").unwrap_or("1".into())
-        ))
-        .build();
+        ));
+    if let Ok(ver) = std::env::var("BARTLEBY_LLVM_VERSION") {
+        cmake_cmd.define("BARTLEBY_LLVM_VERSION", ver);
+    }
+    let dst = cmake_cmd.build();
     println!("cargo:rustc-link-search=native={}/lib", dst.display());
     println!("cargo:rustc-link-lib=static=Bartleby");
     println!("cargo:rustc-link-lib=static=Bartleby-c");
