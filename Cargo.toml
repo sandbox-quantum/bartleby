@@ -11,11 +11,9 @@ repository = "https://github.com/sandbox-quantum/bartleby"
 license = "Apache-2.0"
 keywords = [
     "elf",
-    "pe",
     "mach-o",
     "object",
     "symbol",
-    "objcopy",
     "llvm"
 ]
 categories = ["development-tools"]
