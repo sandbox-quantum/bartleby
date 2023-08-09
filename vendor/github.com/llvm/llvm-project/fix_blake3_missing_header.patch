@@ -1,0 +1,12 @@
+diff --git a/utils/bazel/llvm-project-overlay/llvm/BUILD.bazel b/utils/bazel/llvm-project-overlay/llvm/BUILD.bazel
+index b01f0474862d..98cf8e2da242 100644
+--- a/utils/bazel/llvm-project-overlay/llvm/BUILD.bazel
++++ b/utils/bazel/llvm-project-overlay/llvm/BUILD.bazel
+@@ -201,6 +201,7 @@ cc_library(
+         ]),
+     }) + [
+         "lib/Support/BLAKE3/blake3_impl.h",
++        "lib/Support/BLAKE3/llvm_blake3_prefix.h",
+         "lib/Support/BLAKE3/blake3.c",
+         "lib/Support/BLAKE3/blake3_dispatch.c",
+         "lib/Support/BLAKE3/blake3_portable.c",
