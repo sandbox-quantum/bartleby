@@ -14,8 +14,8 @@ cc_library(
         ":error",
         ":export",
         "//bartleby/include/Bartleby:bartleby",
-        "@bartleby-llvm-project//llvm:ObjCopy",
-        "@bartleby-llvm-project//llvm:Object",
+        "@llvm-project//llvm:ObjCopy",
+        "@llvm-project//llvm:Object",
     ],
 )
 
@@ -32,9 +32,9 @@ cc_library(
         ":export",
         ":symbol",
         "//bartleby/include/Bartleby:bartleby",
-        "@bartleby-llvm-project//llvm:ObjCopy",
-        "@bartleby-llvm-project//llvm:Object",
-        "@bartleby-llvm-project//llvm:Support",
+        "@llvm-project//llvm:ObjCopy",
+        "@llvm-project//llvm:Object",
+        "@llvm-project//llvm:Support",
     ],
 )
 
@@ -48,7 +48,7 @@ cc_library(
     strip_include_prefix = "/bartleby/lib/",
     deps = [
         "//bartleby/include/Bartleby:bartleby",
-        "@bartleby-llvm-project//llvm:Support",
+        "@llvm-project//llvm:Support",
     ],
 )
 
@@ -61,7 +61,7 @@ cc_library(
     deps = [
         ":export",
         "//bartleby/include/Bartleby:symbol",
-        "@bartleby-llvm-project//llvm:Object",
+        "@llvm-project//llvm:Object",
     ],
 )
 
