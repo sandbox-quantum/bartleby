@@ -20,6 +20,6 @@ cc_library(
     strip_include_prefix = "/bartleby/include",
     visibility = ["//visibility:public"],
     deps = [
-        "@bartleby-llvm-project//llvm:Object",
+        "@llvm-project//llvm:Object",
     ],
 )
