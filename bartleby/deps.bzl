@@ -1,4 +1,5 @@
 load("@llvm-project.llvm//utils/bazel:configure.bzl", "llvm_configure")
+load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 load("//vendor/github.com/llvm/llvm-project:deps.bzl", "llvm_deps")
 load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
 
@@ -11,6 +12,7 @@ def bartleby_deps(configure_llvm = True):
     in your Bazel workspace.
     """
     rules_foreign_cc_dependencies()
+    bazel_skylib_workspace()
 
     if configure_llvm:
         llvm_configure(name = "llvm-project")
