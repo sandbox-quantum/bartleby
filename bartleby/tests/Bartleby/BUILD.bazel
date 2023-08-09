@@ -1,5 +1,6 @@
 cc_test(
     name = "test",
+    timeout = "short",
     srcs = ["Tests.cpp"],
     copts = [
         "--std=c++17",
