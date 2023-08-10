@@ -1,6 +1,6 @@
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
-load("@bartleby-llvm-project.llvm//utils/bazel:zlib.bzl", "llvm_zlib_external")
-load("@bartleby-llvm-project.llvm//utils/bazel:terminfo.bzl", "llvm_terminfo_disable")
+load("@llvm-project.llvm//utils/bazel:zlib.bzl", "llvm_zlib_external")
+load("@llvm-project.llvm//utils/bazel:terminfo.bzl", "llvm_terminfo_disable")
 
 def llvm_deps():
     # Disable `terminfo` in LLVM builds.

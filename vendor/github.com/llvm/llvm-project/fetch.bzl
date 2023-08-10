@@ -8,7 +8,7 @@ _RELEASE_DATE = "Jan 12 2023"
 def fetch_archive():
     maybe(
         http_archive,
-        name = "bartleby-llvm-project.llvm",
+        name = "llvm-project.llvm",
         urls = ["https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-{version}.tar.gz".format(version = _VERSION)],
         sha256 = _SHA256SUM,
         strip_prefix = "llvm-project-llvmorg-{version}".format(version = _VERSION),
