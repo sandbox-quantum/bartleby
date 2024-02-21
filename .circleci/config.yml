@@ -15,7 +15,7 @@ jobs:
           command: |
             echo "${BAZEL_CACHE_GCS_SA_KEY}" > "${GOOGLE_APPLICATION_CREDENTIALS}"
             echo "build --remote_cache=${BAZEL_REMOTE_CACHE_URL}" > $HOME/.bazelrc
-            bazel test \
+            bazelisk test \
               --action_env=CC="${CC}" \
               --action_env=CXX="${CXX}" \
               --action_env=LLVM_CONFIG="${LLVM_CONFIG}" \
@@ -34,7 +34,7 @@ jobs:
 
             echo "${BAZEL_CACHE_GCS_SA_KEY}" > "${GOOGLE_APPLICATION_CREDENTIALS}"
             echo "build --remote_cache=${BAZEL_REMOTE_CACHE_URL}" > $HOME/.bazelrc
-            bazel build \
+            bazelisk build \
               --google_default_credentials \
               --remote_upload_local_results \
               --spawn_strategy standalone \
@@ -61,7 +61,7 @@ jobs:
               -DCMAKE_C_COMPILER="${CC}" \
               -DCMAKE_CXX_COMPILER="${CXX}" \
               -DCMAKE_BUILD_TYPE=Release \
-              -DLLVM_DIR=/usr/lib/llvm-15/lib/cmake \
+              -DLLVM_DIR=/usr/lib/llvm-17/lib/cmake \
               -GNinja
             cmake --build build/ "-j$(nproc)"
 
@@ -79,7 +79,7 @@ jobs:
           command: |
             echo "${BAZEL_CACHE_GCS_SA_KEY}" > "${GOOGLE_APPLICATION_CREDENTIALS}"
             echo "build --remote_cache=${BAZEL_REMOTE_CACHE_URL}" > $HOME/.bazelrc
-            bazel test \
+            bazelisk test \
               --config asan \
               --action_env=CC="${CC}" \
               --action_env=CXX="${CXX}" \
@@ -157,7 +157,7 @@ jobs:
       - run:
           name: "Build Bartleby Rust library"
           command: |
-            LLVM_DIR=/usr/lib/llvm-15/lib/cmake cargo build
+            LLVM_DIR=/usr/lib/llvm-17/lib/cmake cargo build
 
 workflows:
   check-format:
