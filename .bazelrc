@@ -36,3 +36,5 @@ test --test_verbose_timeout_warnings
 build:ci --google_default_credentials
 build:ci --remote_upload_local_results
 build:ci --spawn_strategy standalone
+
+--@llvm_zlib//:llvm_enable_zlib=true

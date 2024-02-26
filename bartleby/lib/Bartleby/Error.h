@@ -23,8 +23,8 @@
 #include "Bartleby/Bartleby.h"
 
 #include "llvm/ADT/SmallString.h"
-#include "llvm/ADT/Triple.h"
 #include "llvm/Support/Error.h"
+#include "llvm/TargetParser/Triple.h"
 
 #include <variant>
 

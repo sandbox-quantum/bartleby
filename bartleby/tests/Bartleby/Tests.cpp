@@ -21,7 +21,6 @@
 #include "Bartleby/Bartleby.h"
 #include "Bartleby-c/Bartleby.h"
 
-#include "llvm/ADT/Triple.h"
 #include "llvm/ADT/Twine.h"
 #include "llvm/Object/Binary.h"
 #include "llvm/ObjectYAML/yaml2obj.h"
@@ -30,6 +29,7 @@
 #include "llvm/Support/SourceMgr.h"
 #include "llvm/Support/YAMLParser.h"
 #include "llvm/Support/YAMLTraits.h"
+#include "llvm/TargetParser/Triple.h"
 
 #include <unistd.h>
 

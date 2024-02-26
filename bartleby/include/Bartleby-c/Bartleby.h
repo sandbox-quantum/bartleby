@@ -70,7 +70,8 @@ SAQ_BARTLEBY_API int saq_bartleby_add_binary(struct BartlebyHandle *bh,
 /** \brief Builds the final archive and writes its content to a buffer.
  *
  * \warning This function consumes the input Bartleby handle. Thus, users
- *          must not call `saq_bartleby_free` after calling `saq_bartleby_build_archive`.
+ *          must not call `saq_bartleby_free` after calling
+ * `saq_bartleby_build_archive`.
  *
  * \param bh Bartleby handle.
  * \param[out] s Destination buffer.
