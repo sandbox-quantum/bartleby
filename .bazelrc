@@ -36,3 +36,7 @@ test --test_verbose_timeout_warnings
 build:ci --google_default_credentials
 build:ci --remote_upload_local_results
 build:ci --spawn_strategy standalone
+common:ci --action_env=CC=clang-18
+common:ci --action_env=CXX=clang++-18
+
+--@llvm_zlib//:llvm_enable_zlib=true
