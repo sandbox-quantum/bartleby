@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13.4)
 project(Bartleby)
 
-set(BARTLEBY_LLVM_VERSION "15.0" CACHE STRING "LLVM version to use")
+set(BARTLEBY_LLVM_VERSION "18.1.2" CACHE STRING "LLVM version to use")
 
 find_package(LLVM "${BARTLEBY_LLVM_VERSION}" REQUIRED CONFIG)
 list(APPEND CMAKE_MODULE_PATH "${LLVM_CMAKE_DIR}")
