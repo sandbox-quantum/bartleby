@@ -1,15 +1,14 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
-_VERSION = "1.4.1"
-_SHA256SUM = "060426b186670beede4104095324a72bd7494d8b4e785bf0d84a612978285908"
-_RELEASE_DATE = "Feb 9 2023"
+# Release date: Nov 6 2023
+_VERSION = "1.5.0"
+_SHA256SUM = "cd55a062e763b9349921f0f5db8c3933288dc8ba4f76dd9416aac68acee3cb94"
 
 def fetch_archive():
     maybe(
         http_archive,
         name = "bazel_skylib",
         sha256 = _SHA256SUM,
-        strip_prefix = "bazel-skylib-{version}".format(version = _VERSION),
-        url = "https://github.com/bazelbuild/bazel-skylib/archive/{version}.tar.gz".format(version = _VERSION),
+        url = "https://github.com/bazelbuild/bazel-skylib/releases/download/{version}/bazel-skylib-{version}.tar.gz".format(version = _VERSION),
     )
