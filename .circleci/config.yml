@@ -73,10 +73,6 @@ jobs:
             echo "build --remote_cache=${BAZEL_REMOTE_CACHE_URL}" > $HOME/.bazelrc
             bazelisk test \
               --config asan \
-              --action_env=CC="${CC}" \
-              --action_env=CXX="${CXX}" \
-              --action_env=LLVM_CONFIG="${LLVM_CONFIG}" \
-              --repo_env=LLVM_CONFIG="${LLVM_CONFIG}" \
               --config=ci \
               ...
 
