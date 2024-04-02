@@ -26,6 +26,6 @@ build --keep_going
 test  --keep_going
 test --test_verbose_timeout_warnings
 
-build:ci --google_default_credentials
-build:ci --remote_upload_local_results
-build:ci --spawn_strategy standalone
+common:ci --google_default_credentials
+common:ci --remote_upload_local_results
+common:ci --spawn_strategy sandboxed
