@@ -8,6 +8,8 @@ build --experimental_allow_tags_propagation
 fetch --experimental_allow_tags_propagation
 query --experimental_allow_tags_propagation
 
+common --features=layering_check
+
 test --test_env=LANG=en_US.UTF-8
 test --test_output=errors
 test --build_tests_only
@@ -26,6 +28,4 @@ build --keep_going
 test  --keep_going
 test --test_verbose_timeout_warnings
 
-build:ci --google_default_credentials
-build:ci --remote_upload_local_results
-build:ci --spawn_strategy standalone
+common:ci --spawn_strategy sandboxed
