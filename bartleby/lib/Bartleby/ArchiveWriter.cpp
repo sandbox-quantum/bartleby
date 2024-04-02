@@ -119,8 +119,8 @@ public:
 
     for (auto &[Fmt, Ar] : Archives) {
       if (auto BufferOrErr = llvm::writeArchiveToBuffer(
-              Ar.Members,
-              /* WriteSymtab= */ true, Ar.Members[0].detectKindFromObject(),
+              Ar.Members, llvm::SymtabWritingMode::NormalSymtab,
+              Ar.Members[0].detectKindFromObject(),
               /* Deterministic=*/true, /*Thin=*/false)) {
         Ar.OutBuffer = std::move(*BufferOrErr);
       } else {
@@ -204,7 +204,7 @@ public:
     }
 
     return llvm::writeArchive(OutFilepath, ArMembers,
-                              /* WriteSymtab= */ true,
+                              llvm::SymtabWritingMode::NormalSymtab,
                               ArMembers[0].detectKindFromObject(),
                               /* Deterministic= */ true,
                               /* Thin= */ false);
@@ -224,7 +224,7 @@ public:
     }
 
     return llvm::writeArchiveToBuffer(ArMembers,
-                                      /* WriteSymtab= */ true,
+                                      llvm::SymtabWritingMode::NormalSymtab,
                                       ArMembers[0].detectKindFromObject(),
                                       /* Deterministic= */ true,
                                       /* Thin= */ false);
