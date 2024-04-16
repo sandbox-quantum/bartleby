@@ -1,4 +1,4 @@
-load("@llvm-project.llvm//utils/bazel:configure.bzl", "llvm_configure")
+load("@llvm-raw//utils/bazel:configure.bzl", "llvm_configure")
 load("//vendor/github.com/llvm/llvm-project:deps.bzl", "llvm_deps")
 load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
 

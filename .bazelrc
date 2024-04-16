@@ -16,14 +16,16 @@ build --copt -Wno-deprecated-non-prototype
 build --cxxopt -std=c++17
 build --host_cxxopt -std=c++17
 
-build:asan -c dbg
-build:asan --strip=never
-build:asan --copt -fsanitize=address
-build:asan --copt -DADDRESS_SANITIZER
-build:asan --copt -O1
-build:asan --copt -g
-build:asan --copt -fno-omit-frame-pointer
-build:asan --linkopt -fsanitize=address
+common --features=layering_check
+
+common:asan -c dbg
+common:asan --strip=never
+common:asan --copt -fsanitize=address
+common:asan --copt -DADDRESS_SANITIZER
+common:asan --copt -O1
+common:asan --copt -g
+common:asan --copt -fno-omit-frame-pointer
+common:asan --linkopt -fsanitize=address
 
 
 build --experimental_remote_merkle_tree_cache
@@ -33,6 +35,8 @@ build --keep_going
 test  --keep_going
 test --test_verbose_timeout_warnings
 
-build:ci --google_default_credentials
-build:ci --remote_upload_local_results
-build:ci --spawn_strategy standalone
+common:ci --google_default_credentials
+common:ci --remote_upload_local_results
+common:ci --spawn_strategy sandboxed
+
+--@llvm_zlib//:llvm_enable_zlib=true
