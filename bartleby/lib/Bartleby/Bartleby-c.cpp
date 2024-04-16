@@ -18,8 +18,8 @@
 ///
 /// \author thb-sb
 
-#include "Bartleby/Bartleby.h"
 #include "Bartleby-c/Bartleby.h"
+#include "Bartleby/Bartleby.h"
 
 #include "llvm/Object/Binary.h"
 #include "llvm/Support/MemoryBuffer.h"
@@ -44,15 +44,11 @@ struct BartlebyHandle {
 
 extern "C" {
 
-struct BartlebyHandle* saq_bartleby_new(void) {
-  return new BartlebyHandle{};
-}
+struct BartlebyHandle *saq_bartleby_new(void) { return new BartlebyHandle{}; }
 
-void saq_bartleby_free(struct BartlebyHandle* bh) {
-  delete bh;
-}
+void saq_bartleby_free(struct BartlebyHandle *bh) { delete bh; }
 
-int saq_bartleby_set_prefix(struct BartlebyHandle* bh, const char* prefix) {
+int saq_bartleby_set_prefix(struct BartlebyHandle *bh, const char *prefix) {
   if (bh == nullptr) {
     return EINVAL;
   }
@@ -66,9 +62,8 @@ int saq_bartleby_set_prefix(struct BartlebyHandle* bh, const char* prefix) {
   return 0;
 }
 
-int saq_bartleby_add_binary(struct BartlebyHandle* bh,
-  const void* s,
-  const size_t n) {
+int saq_bartleby_add_binary(struct BartlebyHandle *bh, const void *s,
+                            const size_t n) {
   if (bh == nullptr) {
     return EINVAL;
   }
@@ -80,12 +75,14 @@ int saq_bartleby_add_binary(struct BartlebyHandle* bh,
   if (n == 0) {
     return EINVAL;
   }
-  llvm::SmallVector<char, 2048> ObjContent(static_cast<const uint8_t*>(s), static_cast<const uint8_t*>(s) + n);
+  llvm::SmallVector<char, 2048> ObjContent(static_cast<const uint8_t *>(s),
+                                           static_cast<const uint8_t *>(s) + n);
   auto OutBuffer = std::make_unique<llvm::SmallVectorMemoryBuffer>(
       std::move(ObjContent), false);
 
   if (auto ObjOrErr = llvm::object::ObjectFile::createObjectFile(*OutBuffer)) {
-    if (auto Err = bh->B.addBinary({std::move(*ObjOrErr), std::move(OutBuffer)})) {
+    if (auto Err =
+            bh->B.addBinary({std::move(*ObjOrErr), std::move(OutBuffer)})) {
       return EINVAL;
     }
   } else {
@@ -95,9 +92,7 @@ int saq_bartleby_add_binary(struct BartlebyHandle* bh,
   return 0;
 }
 
-int saq_bartleby_build_archive(struct BartlebyHandle* bh,
-  void **s,
-  size_t *n) {
+int saq_bartleby_build_archive(struct BartlebyHandle *bh, void **s, size_t *n) {
   std::unique_ptr<struct BartlebyHandle> handle(bh);
 
   if (handle == nullptr) {
@@ -114,7 +109,8 @@ int saq_bartleby_build_archive(struct BartlebyHandle* bh,
   }
   *n = 0;
 
-  if (auto ArOrErr = bartleby::Bartleby::buildFinalArchive(std::move(handle->B))) {
+  if (auto ArOrErr =
+          bartleby::Bartleby::buildFinalArchive(std::move(handle->B))) {
     const auto MemBuf = std::move(*ArOrErr);
     *n = MemBuf->getBufferSize();
     *s = ::malloc(*n);
