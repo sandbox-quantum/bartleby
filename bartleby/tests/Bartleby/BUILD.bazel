@@ -10,9 +10,16 @@ cc_test(
     ],
     linkstatic = True,
     deps = [
+        "//bartleby/include/Bartleby:bartleby",
+        "//bartleby/include/Bartleby:symbol",
+        "//bartleby/include/Bartleby-c:bartleby",
         "//bartleby/lib/Bartleby:bartleby",
         "//bartleby/lib/Bartleby:bartleby-c",
+        "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
+        "@llvm-project//llvm:Object",
         "@llvm-project//llvm:ObjectYAML",
+        "@llvm-project//llvm:Support",
+        "@llvm-project//llvm:TargetParser",
     ],
 )
