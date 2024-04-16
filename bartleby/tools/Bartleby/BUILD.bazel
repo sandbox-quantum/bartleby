@@ -6,6 +6,8 @@ cc_binary(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "//bartleby/include/Bartleby:bartleby",
         "//bartleby/lib/Bartleby:bartleby",
+        "@llvm-project//llvm:Support",
     ],
 )

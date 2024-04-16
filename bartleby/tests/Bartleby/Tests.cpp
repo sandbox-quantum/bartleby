@@ -18,10 +18,9 @@
 ///
 /// \author thb-sb
 
-#include "Bartleby/Bartleby.h"
 #include "Bartleby-c/Bartleby.h"
+#include "Bartleby/Bartleby.h"
 
-#include "llvm/ADT/Triple.h"
 #include "llvm/ADT/Twine.h"
 #include "llvm/Object/Binary.h"
 #include "llvm/ObjectYAML/yaml2obj.h"
@@ -30,6 +29,7 @@
 #include "llvm/Support/SourceMgr.h"
 #include "llvm/Support/YAMLParser.h"
 #include "llvm/Support/YAMLTraits.h"
+#include "llvm/TargetParser/Triple.h"
 
 #include <unistd.h>
 
@@ -358,7 +358,7 @@ TEST(BartlebyCAPI, CAPI) {
   ASSERT_TRUE(YAML2Objects("symbols_visibility.yaml",
                            llvm::Triple::ObjectFormatType::ELF, Objects, 2));
 
-  auto* bh = ::saq_bartleby_new();
+  auto *bh = ::saq_bartleby_new();
   ASSERT_NE(bh, nullptr);
 
   const auto data = Objects[0].getBinary()->getData();
@@ -367,7 +367,7 @@ TEST(BartlebyCAPI, CAPI) {
 
   ASSERT_EQ(::saq_bartleby_set_prefix(bh, "prefix_"), 0);
 
-  void* out = nullptr;
+  void *out = nullptr;
   size_t out_n = 0;
 
   ASSERT_EQ(::saq_bartleby_build_archive(bh, &out, &out_n), 0);
@@ -379,7 +379,7 @@ TEST(BartlebyCAPI, CAPI) {
 
 /// \brief Test the C API with invalid inputs.
 TEST(BartlebyCAPI, CAPI_Invalid_Input) {
-  auto* bh = ::saq_bartleby_new();
+  auto *bh = ::saq_bartleby_new();
   ASSERT_NE(bh, nullptr);
   char c = 0x42;
 
@@ -388,7 +388,7 @@ TEST(BartlebyCAPI, CAPI_Invalid_Input) {
   ASSERT_EQ(::saq_bartleby_add_binary(bh, &c, 0), EINVAL);
   ASSERT_EQ(::saq_bartleby_add_binary(nullptr, nullptr, 0), EINVAL);
 
-  void* out = nullptr;
+  void *out = nullptr;
   size_t n = 0;
   ASSERT_EQ(::saq_bartleby_build_archive(nullptr, &out, &n), EINVAL);
   ASSERT_EQ(::saq_bartleby_build_archive(bh, nullptr, nullptr), EINVAL);
