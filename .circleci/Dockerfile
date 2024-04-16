@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     gnupg \
     graphviz \
     gzip \
+    doxygen \
     lsb-release \
     make \
     ninja-build \
